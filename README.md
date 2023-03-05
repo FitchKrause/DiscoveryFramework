@@ -4,6 +4,7 @@
 Credits (As far as I know):
 
 ---------- Sonic Worlds Delta ----------
+
 Creator:
 - Damizean
 
@@ -22,6 +23,7 @@ Contributors:
 - LakeFeperd
 
 ---------- Core Framework ----------
+
 Project Leader:
 - Nihil
 
@@ -64,6 +66,7 @@ Special Thanks:
 - Israel
 
 ---------- Sonic Retro's Physics Guide ----------
+
 Creator:
 - Mercury
 
