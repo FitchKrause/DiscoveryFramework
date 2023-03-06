@@ -20,12 +20,8 @@ public class PixelCamera : MonoBehaviour
     public static float YTopFrame;
     public static float YBottomFrame;
 
-    private GameObject HUD_OBJ;
-
     public void Start()
     {
-        HUD_OBJ = GameObject.Find("HUD");
-
         if (aspect != (RenderTarget.width / RenderTarget.height))
         {
             aspect = RenderTarget.width / RenderTarget.height;
@@ -133,10 +129,5 @@ public class PixelCamera : MonoBehaviour
         XRightFrame = Camera.main.transform.position.x + WindowMidWidth;
         YTopFrame = Camera.main.transform.position.y + WindowMidHeight;
         YBottomFrame = Camera.main.transform.position.y - WindowMidHeight;
-
-        if (HUD_OBJ != null)
-        {
-            HUD_OBJ.transform.position = new Vector3(XLeftFrame, YTopFrame, 0f);
-        }
     }
 }

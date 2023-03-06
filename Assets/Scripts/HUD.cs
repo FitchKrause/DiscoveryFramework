@@ -40,4 +40,9 @@ public class HUD : MonoBehaviour
         GUI_FPS[1].GetComponent<SpriteRenderer>().enabled = FPS >= 10;
         GUI_FPS[0].GetComponent<SpriteRenderer>().enabled = true;
     }
+
+    private void LateUpdate()
+    {
+        transform.position = new Vector3(PixelCamera.XLeftFrame, PixelCamera.YTopFrame, 0f);
+    }
 }

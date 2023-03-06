@@ -1,0 +1,703 @@
+fileFormatVersion: 2
+guid: e7862991390b69249b11ae330ff56340
+timeCreated: 1675720921
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Shield_Magnetic_0
+    21300002: Shield_Magnetic_1
+    21300004: Shield_Magnetic_2
+    21300006: Shield_Magnetic_3
+    21300008: Shield_Magnetic_4
+    21300010: Shield_Magnetic_5
+    21300012: Shield_Magnetic_6
+    21300014: Shield_Magnetic_7
+    21300016: Shield_Magnetic_8
+    21300018: Shield_Magnetic_9
+    21300020: Shield_Magnetic_10
+    21300022: Shield_Magnetic_11
+    21300024: Shield_Magnetic_12
+    21300026: Shield_Magnetic_13
+    21300028: Shield_Magnetic_14
+    21300030: Shield_Magnetic_15
+    21300032: Shield_Magnetic_16
+    21300034: Shield_Magnetic_17
+    21300036: Shield_Magnetic_18
+    21300038: Shield_Magnetic_19
+    21300040: Shield_Magnetic_20
+    21300042: Shield_Magnetic_21
+    21300044: Shield_Magnetic_22
+    21300046: Shield_Magnetic_23
+    21300048: Shield_Magnetic_24
+    21300050: Shield_Magnetic_25
+    21300052: Shield_Magnetic_26
+    21300054: Shield_Magnetic_27
+    21300056: Shield_Magnetic_28
+    21300058: Shield_Magnetic_29
+    21300060: Shield_Magnetic_30
+    21300062: Shield_Magnetic_31
+    21300064: Shield_Magnetic_32
+    21300066: Shield_Magnetic_33
+    21300068: Shield_Magnetic_34
+    21300070: Shield_Magnetic_35
+    21300072: Shield_Magnetic_36
+    21300074: Shield_Magnetic_37
+    21300076: Shield_Magnetic_38
+    21300078: Shield_Magnetic_39
+    21300080: Shield_Magnetic_40
+    21300082: Shield_Magnetic_41
+    21300084: Shield_Magnetic_42
+    21300086: Shield_Magnetic_43
+    21300088: Shield_Magnetic_44
+    21300090: Shield_Magnetic_45
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Shield_Magnetic_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_7
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_8
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_9
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_10
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_11
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 148
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_13
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_14
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_15
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_16
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_17
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_18
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_19
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_20
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_21
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_22
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_23
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_24
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_25
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_26
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_27
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_28
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_29
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_30
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_31
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_32
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_33
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_34
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_35
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_36
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_37
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_38
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_39
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_40
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_41
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_42
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_43
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_44
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Magnetic_45
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -85,8 +85,6 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public Collider2D ColliderCeiling;
     [HideInInspector] public Collider2D ColliderWallLeft;
     [HideInInspector] public Collider2D ColliderWallRight;
-    private SpriteRenderer render;
-    private Animator animator;
     private AudioSource audioSource;
     #endregion
     #endregion
@@ -95,8 +93,6 @@ public class PlayerPhysics : BaseObject
     {
         Direction = 1;
 
-        render = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
         base.Start();

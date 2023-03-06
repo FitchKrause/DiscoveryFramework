@@ -1,0 +1,629 @@
+fileFormatVersion: 2
+guid: c8deed8dff0d07d4181ac70e671b3885
+timeCreated: 1675720968
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Flame_Shield_0
+    21300002: Flame_Shield_1
+    21300004: Flame_Shield_2
+    21300006: Flame_Shield_3
+    21300008: Flame_Shield_4
+    21300010: Flame_Shield_5
+    21300012: Flame_Shield_6
+    21300014: Flame_Shield_7
+    21300016: Flame_Shield_8
+    21300018: Flame_Shield_9
+    21300020: Flame_Shield_10
+    21300022: Flame_Shield_11
+    21300024: Flame_Shield_12
+    21300026: Flame_Shield_13
+    21300028: Flame_Shield_14
+    21300030: Flame_Shield_15
+    21300032: Flame_Shield_16
+    21300034: Flame_Shield_17
+    21300036: Flame_Shield_18
+    21300038: Flame_Shield_19
+    21300040: Flame_Shield_20
+    21300042: Flame_Shield_21
+    21300044: Flame_Shield_22
+    21300046: Flame_Shield_23
+    21300048: Flame_Shield_24
+    21300050: Flame_Shield_25
+    21300052: Flame_Shield_26
+    21300054: Flame_Shield_27
+    21300056: Flame_Shield_28
+    21300058: Flame_Shield_29
+    21300060: Flame_Shield_30
+    21300062: Flame_Shield_31
+    21300064: Flame_Shield_32
+    21300066: Flame_Shield_33
+    21300068: Flame_Shield_34
+    21300070: Flame_Shield_35
+    21300072: Flame_Shield_36
+    21300074: Flame_Shield_37
+    21300076: Shield_Flame_0
+    21300078: Shield_Flame_1
+    21300080: Shield_Flame_2
+    21300082: Shield_Flame_3
+    21300084: Shield_Flame_4
+    21300086: Shield_Flame_5
+    21300088: Shield_Flame_6
+    21300090: Shield_Flame_7
+    21300092: Shield_Flame_8
+    21300094: Shield_Flame_9
+    21300096: Shield_Flame_10
+    21300098: Shield_Flame_11
+    21300100: Shield_Flame_12
+    21300102: Shield_Flame_13
+    21300104: Shield_Flame_14
+    21300106: Shield_Flame_15
+    21300108: Shield_Flame_16
+    21300110: Shield_Flame_17
+    21300112: Shield_Flame_18
+    21300114: Shield_Flame_19
+    21300116: Shield_Flame_20
+    21300118: Shield_Flame_21
+    21300120: Shield_Flame_22
+    21300122: Shield_Flame_23
+    21300124: Shield_Flame_24
+    21300126: Shield_Flame_25
+    21300128: Shield_Flame_26
+    21300130: Shield_Flame_27
+    21300132: Shield_Flame_28
+    21300134: Shield_Flame_29
+    21300136: Shield_Flame_30
+    21300138: Shield_Flame_31
+    21300140: Shield_Flame_32
+    21300142: Shield_Flame_33
+    21300144: Shield_Flame_34
+    21300146: Shield_Flame_35
+    21300148: Shield_Flame_36
+    21300150: Shield_Flame_37
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Shield_Flame_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_7
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_8
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_9
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_10
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_11
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_12
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_13
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 99
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_15
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_16
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_17
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_18
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_19
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_20
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_21
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_22
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_23
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_24
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_25
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_26
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_27
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 50
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_28
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_29
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_30
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_31
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_32
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_33
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_34
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_35
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_36
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shield_Flame_37
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 1
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

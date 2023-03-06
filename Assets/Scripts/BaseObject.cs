@@ -16,6 +16,8 @@ public class BaseObject : MonoBehaviour
     [HideInInspector] public int CollisionLayer;
     [HideInInspector] public float AnimationAngle;
     [HideInInspector] public Collider2D ColliderBody;
+    [HideInInspector] public SpriteRenderer render;
+    [HideInInspector] public Animator animator;
     [Header("Object Values")]
     public float WidthRadius;
     public float HeightRadius;
@@ -23,11 +25,18 @@ public class BaseObject : MonoBehaviour
 
     public virtual void ObjectCreated()
     {
+        render = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        ColliderBody = GetComponent<Collider2D>();
+
         transform.position = new Vector3(XPosition, YPosition, transform.position.z);
     }
 
     protected void Start()
     {
+        render = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+
         ColliderBody = GetComponent<Collider2D>();
         CollisionLayer = gameObject.layer;
 
