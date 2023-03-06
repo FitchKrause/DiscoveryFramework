@@ -26,6 +26,7 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public int SkidTimer;
     #endregion
     #region Player miscellaneous values
+    [HideInInspector] public int Character;
     [HideInInspector] public bool SuperForm;
     [HideInInspector] public int Shield;
     [HideInInspector] public int ShieldStatus;
@@ -877,6 +878,7 @@ public class PlayerPhysics : BaseObject
             }
             if (Hurt == 2)
             {
+                StageController.STOP = true;
                 foreach (BaseObject objRef in StageController.CurrentStage.ObjectList)
                 {
                     if (objRef == this) continue;
@@ -1598,6 +1600,7 @@ public class PlayerPhysics : BaseObject
 
         if (YPosition < PixelCamera.YBottomFrame - 32f)
         {
+            GameController.Lives--;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

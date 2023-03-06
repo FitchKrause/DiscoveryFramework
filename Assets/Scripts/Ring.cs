@@ -128,7 +128,7 @@ public class Ring : BaseObject
 
         if (player.Action != 8 && player.Action != 9 && StageController.AABB(Rect, player.Rect))
         {
-            //StageController.Score += 10;
+            GameController.Score += 10;
             SoundManager.PlaySFX(Sound_Ring);
             StageController.CurrentStage.Rings++;
             /*for (int i = 0; i < 3; i++)

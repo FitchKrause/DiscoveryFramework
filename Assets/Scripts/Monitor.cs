@@ -167,7 +167,7 @@ public class Monitor : BaseObject
                  player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
                  player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody)
             {
-                //StageController.Score += 100;
+                GameController.Score += 100;
                 IconObject.transform.SetParent(null);
                 StageController.CreateStageObject("Monitor Explosion", XPosition, YPosition);
                 ColliderBody.enabled = false;
@@ -247,8 +247,8 @@ public class Monitor : BaseObject
                             player.Hurt = 1;
                             break;
                         case Monitor_Rewards.Life:
-                            /*Stage.Lives++;
-                            SoundManager.QueuedMusic = SoundManager.IsPlaying;
+                            GameController.Lives++;
+                            /*SoundManager.QueuedMusic = SoundManager.IsPlaying;
                             SoundManager.ToPlay = "1-UP";*/
                             break;
                         case Monitor_Rewards.SuperForm:

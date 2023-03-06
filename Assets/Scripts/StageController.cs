@@ -7,6 +7,12 @@ public class StageController : MonoBehaviour
     public static StageController CurrentStage;
     public static float LevelTimer;
 
+    public static bool STOP;
+    public float GameTimer;
+    public int Milliseconds;
+    public int Seconds;
+    public int Minutes;
+
     public int Width;
     public int Height;
 
@@ -22,6 +28,8 @@ public class StageController : MonoBehaviour
 
     private void Awake()
     {
+        STOP = false;
+
         ObjectList = new List<BaseObject>();
         ObjectPools = new List<ObjectPool>();
         ObjectCount = 0;
@@ -48,7 +56,16 @@ public class StageController : MonoBehaviour
     {
         Rings = Mathf.Clamp(Rings, 0, 999);
 
-        LevelTimer += 1f;
+        if (!STOP)
+        {
+            LevelTimer += 1f;
+
+            GameTimer += 1000f / 60f;
+
+            Milliseconds = Mathf.FloorToInt(GameTimer / 10) % 100;
+            Seconds = Mathf.FloorToInt(GameTimer / 1000) % 60;
+            Minutes = Mathf.FloorToInt(GameTimer / 60000);
+        }
     }
 
     public static void RingLoss(int ringsToCreate, float creationX, float creationY)
