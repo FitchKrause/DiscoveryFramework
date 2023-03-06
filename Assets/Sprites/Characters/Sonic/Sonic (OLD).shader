@@ -4,7 +4,7 @@
 Shader "Custom Palettes/Sonic (OLD)" {
     Properties {
         [PerRendererData]_MainTex ("MainTex", 2D) = "white" {}
-        [HideInInspector]_Color ("Color", Color) = (1,1,1,1)
+        _Color ("Color", Color) = (1,1,1,1)
         [HideInInspector]_Cutoff ("Alpha cutoff", Range(0,1)) = 0.5
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
         _Stencil ("Stencil ID", Float) = 0

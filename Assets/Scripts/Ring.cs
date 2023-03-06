@@ -7,6 +7,10 @@ public class Ring : BaseObject
     public HitBox Rect;
 
     [Header("Ring Values")]
+    public float Acceleration;
+    public float TopSpeed;
+    public bool Flag0;
+    public bool Flag1;
     public bool MovementActivated;
     public int Life;
 
@@ -24,6 +28,9 @@ public class Ring : BaseObject
     {
         player = FindObjectOfType<PlayerPhysics>();
 
+        Acceleration = 0.7f;
+        TopSpeed = Acceleration * 10f;
+
         base.Start();
 
         Rect.WidthRadius = 8f;
@@ -32,6 +39,47 @@ public class Ring : BaseObject
 
     public void FixedUpdate()
     {
+        if (player.Shield == 3 && !Flag0 &&
+            player.XPosition > XPosition - 100f &&
+            player.XPosition < XPosition + 100f &&
+            player.YPosition > YPosition - 100f &&
+            player.YPosition < YPosition + 100f)
+        {
+            Flag0 = true;
+        }
+
+        if (Flag0 && !Flag1)
+        {
+            if (YPosition < player.YPosition && YSpeed < TopSpeed)
+            {
+                YSpeed += Acceleration;
+            }
+            else if (YPosition > player.YPosition && YSpeed > -TopSpeed)
+            {
+                YSpeed -= Acceleration;
+            }
+
+            if (XPosition > player.XPosition && XSpeed > -TopSpeed)
+            {
+                XSpeed -= Acceleration;
+            }
+            else if (XPosition < player.XPosition && XSpeed < TopSpeed)
+            {
+                XSpeed += Acceleration;
+            }
+        }
+
+        if (Flag0 && player.Shield != 3)
+        {
+            Flag1 = true;
+        }
+
+        if (Flag1 && YSpeed > -TopSpeed * 2f)
+        {
+            XSpeed *= 0.95f;
+            YSpeed -= Acceleration;
+        }
+
         ProcessMovement();
 
         if (MovementActivated)

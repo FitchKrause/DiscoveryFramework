@@ -28,6 +28,7 @@ public class PlayerPhysics : BaseObject
     #region Player miscellaneous values
     [HideInInspector] public bool SuperForm;
     [HideInInspector] public int Shield;
+    [HideInInspector] public int ShieldStatus;
     [HideInInspector] public int Invincibility;
     [HideInInspector] public int InvincibilityTimer;
     [HideInInspector] public bool SpeedSneakers;
@@ -57,16 +58,19 @@ public class PlayerPhysics : BaseObject
     public AudioClip Sound_Release;
     public AudioClip Sound_Hurt;
     public AudioClip Sound_LoseRings;
+    public AudioClip Sound_FireDash;
+    public AudioClip Sound_LightingJump;
+    public AudioClip Sound_BubbleBounce;
     #endregion
     #region Player constants
     [Header("Player constants")]
     public float Acceleration = 0.046875f;
     public float AirAcceleration = 0.09375f;
-    public float Deceleration = 0.5f;
     public float Friction = 0.046875f;
+    public float Deceleration = 0.5f;
     public float TopSpeed = 6f;
     public float GravityForce = 0.21875f;
-    public float JumpForce = 6.5f;
+    public float JumpForce = 6.78125f;
     public float JumpReleaseForce = 4f;
     public float AirDrag = 0.96875f;
     public float RollFriction = 0.0234375f;
@@ -74,8 +78,8 @@ public class PlayerPhysics : BaseObject
     public float SlopeFactor = 0.125f;
     public float SlopeRollUpFactor = 0.078125f;
     public float SlopeRollDownFactor = 0.3125f;
-    public float MaxXSpeed = 15f;
-    public float MaxYSpeed = 15f;
+    public float MaxXSpeed = 20f;
+    public float MaxYSpeed = 20f;
     #endregion
     #region Player components
     public delegate void PlayerAction();
@@ -86,6 +90,7 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public Collider2D ColliderWallLeft;
     [HideInInspector] public Collider2D ColliderWallRight;
     private AudioSource audioSource;
+    private Shield[] Shields;
     #endregion
     #endregion
     #region Player Initialization
@@ -94,6 +99,7 @@ public class PlayerPhysics : BaseObject
         Direction = 1;
 
         audioSource = GetComponent<AudioSource>();
+        Shields = FindObjectsOfType<Shield>();
 
         base.Start();
 
@@ -121,6 +127,42 @@ public class PlayerPhysics : BaseObject
         KeyActionA = Input.GetKey(KeyCode.Z);
 
         int inpDir = (KeyRight ? 1 : 0) - (KeyLeft ? 1 : 0);
+        #endregion
+        #region Player Physics
+        Acceleration = 0.046875f;
+        AirAcceleration = 0.09375f;
+        Friction = 0.046875f;
+        Deceleration = 0.5f;
+        TopSpeed = 6f;
+        GravityForce = 0.21875f;
+        JumpForce = 6.78125f;
+        JumpReleaseForce = 4f;
+        AirDrag = 0.96875f;
+        RollFriction = 0.0234375f;
+        RollDeceleration = 0.125f;
+        SlopeFactor = 0.125f;
+        SlopeRollUpFactor = 0.078125f;
+        SlopeRollDownFactor = 0.3125f;
+        MaxXSpeed = 20f;
+        MaxYSpeed = 20f;
+
+        if (SpeedSneakers)
+        {
+            Acceleration *= 2f;
+            Friction *= 2f;
+            TopSpeed *= 2f;
+            AirAcceleration *= 2f;
+            RollFriction *= 2f;
+        }
+        if (SuperForm)
+        {
+            Acceleration *= 4f;
+            Deceleration *= 2f;
+            TopSpeed = 10f;
+            AirAcceleration *= 4f;
+            JumpForce = 8f;
+            RollFriction *= 4f;
+        }
         #endregion
         #region Player Control (Pre)
         #region Control (Pre)
@@ -487,6 +529,7 @@ public class PlayerPhysics : BaseObject
                     GroundSpeed = XSpeed;
                     Ground = true;
                     Landed = true;
+                    JumpVariable = false;
                 }
                 #endregion
                 #region Ceiling Landing
@@ -517,6 +560,7 @@ public class PlayerPhysics : BaseObject
                                 if (CeilingLand == 3)
                                 {
                                     CeilingLand = 0;
+                                    JumpVariable = false;
                                     GroundSpeed = XSpeed;
                                     Ground = true;
                                     Landed = true;
@@ -1078,6 +1122,125 @@ public class PlayerPhysics : BaseObject
         }
         #endregion
         #endregion
+        #region Shields
+        if (Shield <= 1)
+        {
+            ShieldStatus = 0;
+        }
+        #region Flame Shield
+        if (Shield == 2)
+        {
+            if (KeyActionAPressed && ShieldStatus == 1 && JumpVariable)
+            {
+                SoundManager.PlaySFX(Sound_FireDash);
+                YSpeed = -1f;
+                XSpeed = Direction * 10f;
+                foreach (Shield shield in Shields)
+                {
+                    if (shield.ShieldType != global::Shield.Shield_Types.Flame)
+                    {
+                        continue;
+                    }
+                    shield.GetComponent<Animator>().Play("Walking");
+                    shield.GetComponent<SpriteRenderer>().flipX = render.flipX;
+                }
+                ShieldStatus = 2;
+            }
+            if (JumpVariable && ShieldStatus == 0)
+            {
+                ShieldStatus = 1;
+            }
+            if (ShieldStatus != 0 && Ground)
+            {
+                ShieldStatus = 0;
+                foreach (Shield shield in Shields)
+                {
+                    if (shield.ShieldType != global::Shield.Shield_Types.Flame)
+                    {
+                        continue;
+                    }
+                    shield.GetComponent<Animator>().Play("Stopped");
+                    shield.GetComponent<SpriteRenderer>().flipX = false;
+                }
+            }
+        }
+        #endregion
+        #region Magnetic Shield
+        if (Shield == 3)
+        {
+            if (KeyActionAPressed && ShieldStatus == 1 && JumpVariable)
+            {
+                ShieldStatus = 2;
+                SoundManager.PlaySFX(Sound_LightingJump);
+                YSpeed = 7f;
+            }
+            if (JumpVariable && ShieldStatus == 0)
+            {
+                ShieldStatus = 1;
+            }
+            if (ShieldStatus != 0 && Ground)
+            {
+                ShieldStatus = 0;
+            }
+        }
+        #endregion
+        #region Aquatic Shield
+        if (Shield == 4)
+        {
+            if (KeyActionAPressed && !Ground && ShieldStatus == 1)
+            {
+                ShieldStatus = 2;
+                XSpeed *= 0.1f;
+                YSpeed = Mathf.Min(YSpeed, -8f);
+                foreach (Shield shield in Shields)
+                {
+                    if (shield.ShieldType != global::Shield.Shield_Types.Aquatic)
+                    {
+                        continue;
+                    }
+                    shield.GetComponent<Animator>().Play("Walking");
+                }
+            }
+            if (KeyActionAPressed && JumpVariable && !Ground && ShieldStatus == 0 || ShieldStatus == 2 && !Ground && YSpeed > 0f)
+            {
+                ShieldStatus = 1;
+            }
+            if (Ground && ShieldStatus == 2 && Hurt == 0)
+            {
+                XSpeed = (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * -8f) + (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
+                YSpeed = (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * 8f) + (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
+                Ground = false;
+                GroundAngle = 0f;
+                Action = 1;
+                JumpVariable = true;
+                SoundManager.PlaySFX(Sound_BubbleBounce);
+                ShieldStatus = 1;
+                AllowInput = true;
+                foreach (Shield shield in Shields)
+                {
+                    if (shield.ShieldType != global::Shield.Shield_Types.Aquatic)
+                    {
+                        continue;
+                    }
+                    shield.GetComponent<Animator>().Play("Running");
+                }
+                CurrentAction = Action01_Jump;
+            }
+            if (Ground)
+            {
+                ShieldStatus=0;
+                foreach (Shield shield in Shields)
+                {
+                    if (shield.ShieldType != global::Shield.Shield_Types.Aquatic)
+                    {
+                        continue;
+                    }
+                    shield.GetComponent<Animator>().Play("Stopped");
+                }
+            }
+        }
+        #endregion
+        #endregion
     }
     #endregion
     #region Player Tools
@@ -1227,7 +1390,6 @@ public class PlayerPhysics : BaseObject
         if (!Input.GetKey(KeyCode.Z) && YSpeed > JumpReleaseForce && JumpVariable)
         {
             YSpeed = JumpReleaseForce;
-            JumpVariable = false;
         }
 
         if (Ground)

@@ -230,28 +230,18 @@ public class Monitor : BaseObject
                             SoundManager.PlaySFX(Sound_AquaticShieldGet);
                             break;
                         case Monitor_Rewards.Invincibility:
-                            /*if (!player.SuperForm)
+                            if (!player.SuperForm)
                             {
                                 player.Invincibility = 1;
                                 player.InvincibilityTimer = 2000;
-                                SoundManager.QueuedMusic = SoundManager.IsPlaying;
-                                SoundManager.FadeSpeed = 2f;
-                                SoundManager.FadeStop = true;
-                                SoundManager.FadeStopCount = 0f;
-                                SoundManager.NextMusic = "Invincible";
-                            }*/
+                            }
                             break;
                         case Monitor_Rewards.SpeedSneakers:
-                            /*if (!player.SuperForm)
+                            if (!player.SuperForm)
                             {
                                 player.SpeedSneakers = true;
                                 player.SpeedSneakersTimer = 2000;
-                                SoundManager.QueuedMusic = SoundManager.IsPlaying;
-                                SoundManager.FadeSpeed = 2f;
-                                SoundManager.FadeStop = true;
-                                SoundManager.FadeStopCount = 0f;
-                                SoundManager.NextMusic = "Speed Up";
-                            }*/
+                            }
                             break;
                         case Monitor_Rewards.Eggman:
                             player.Hurt = 1;
