@@ -11,7 +11,10 @@ public class Dust : BaseObject
 
     private void FixedUpdate()
     {
-        YPosition += 1f;
+        if (StageController.GlobalTimer % 2 == 0)
+        {
+            YPosition += 1f;
+        }
 
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {

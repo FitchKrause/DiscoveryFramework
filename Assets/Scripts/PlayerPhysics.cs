@@ -14,6 +14,8 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public bool Landed;
     [HideInInspector] public int LandFrame;
     [HideInInspector] public int CeilingLand;
+    [HideInInspector] public int LandedAction;
+    [HideInInspector] public float LandedSpeed;
     [HideInInspector] public bool Attacking;
     [HideInInspector] public bool AllowInput;
     [HideInInspector] public bool AllowX;
@@ -362,7 +364,7 @@ public class PlayerPhysics : BaseObject
         #endregion
         #region Player Movement
         #region Start Movement
-        ColliderFloor = ColliderCeiling = ColliderWallLeft = ColliderWallRight = null;
+        //ColliderFloor = ColliderCeiling = ColliderWallLeft = ColliderWallRight = null;
 
         //Speed limits
         GroundSpeed = Mathf.Clamp(GroundSpeed, -MaxXSpeed, MaxXSpeed);
@@ -376,6 +378,7 @@ public class PlayerPhysics : BaseObject
             if (LandFrame > 1)
             {
                 Landed = false;
+                LandedAction = -1;
             }
         }
         else
@@ -551,6 +554,8 @@ public class PlayerPhysics : BaseObject
                     //Switch to "Grounded mode"
                     CeilingLand = 0;
                     GroundSpeed = XSpeed;
+                    LandedSpeed = YSpeed;
+                    LandedAction = Action;
                     Ground = true;
                     Landed = true;
                     JumpVariable = false;
@@ -586,6 +591,7 @@ public class PlayerPhysics : BaseObject
                                     CeilingLand = 0;
                                     JumpVariable = false;
                                     GroundSpeed = XSpeed;
+                                    LandedSpeed = YSpeed;
                                     Ground = true;
                                     Landed = true;
                                     Action = 1;
@@ -1091,36 +1097,36 @@ public class PlayerPhysics : BaseObject
             {
                 if (Animation == 1 || Animation == 1.5f)
                 {
-                    animator.speed = 20f + (Mathf.Abs(GroundSpeed) * 3f);
+                    animator.speed = (20f + (Mathf.Abs(GroundSpeed) * 3f)) / 20;
                 }
                 else if (Animation == 2)
                 {
                     if (Mathf.Abs(GroundSpeed) < 14f)
                     {
-                        animator.speed = 20f + (Mathf.Abs(GroundSpeed) * 4f);
+                        animator.speed = (20f + (Mathf.Abs(GroundSpeed) * 4f)) / 30;
                     }
                     else
                     {
-                        animator.speed = 30f + (Mathf.Abs(GroundSpeed) * 4f);
+                        animator.speed = (30f + (Mathf.Abs(GroundSpeed) * 4f)) / 40;
                     }
                 }
             }
             else if (Animation == 1.25f || Animation == 40 && YSpeed <= 0f)
             {
-                animator.speed = 20f + (Mathf.Abs(!(Animation == 40 && YSpeed <= 0f) ? GroundSpeed : XSpeed) * 3f);
+                animator.speed = (20f + (Mathf.Abs(!(Animation == 40 && YSpeed <= 0f) ? GroundSpeed : XSpeed) * 3f)) / 20;
             }
 
             if (Action == 1 && Animation == 3)
             {
-                animator.speed = 25f + (Mathf.Abs(GroundSpeed) * 10f);
+                animator.speed = (25f + (Mathf.Abs(GroundSpeed) * 10f)) / 20;
             }
             if (Action == 5 && Animation == 7)
             {
-                animator.speed = 20f + (Mathf.Abs(SpindashRev) * 10f);
+                animator.speed = (20f + (Mathf.Abs(SpindashRev) * 10f)) / 30;
             }
             if (Action == 6 && Animation == 8)
             {
-                animator.speed = 25f + (Mathf.Abs(GroundSpeed) * 10f);
+                animator.speed = (25f + (Mathf.Abs(GroundSpeed) * 10f)) / 20;
             }
         }
         #endregion
@@ -1184,9 +1190,9 @@ public class PlayerPhysics : BaseObject
         #region Skidding Dust
         if (Action == 4 && StageController.GlobalTimer % 4 == 0)
         {
-            Dust dust = StageController.CreateStageObject("Skid Dust", XPosition, YPosition - 13f) as Dust;
-            dust.XPosition = XPosition - (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * -13f);
-            dust.YPosition = YPosition + (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * -13f);
+            Dust dust = StageController.CreateStageObject("Skid Dust",
+                XPosition - (Mathf.Sin(AnimationAngle * Mathf.Deg2Rad) * -13f),
+                YPosition + (Mathf.Cos(AnimationAngle * Mathf.Deg2Rad) * -13f)) as Dust;
             dust.render.sortingLayerName = render.sortingLayerName;
         }
         #endregion
