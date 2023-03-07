@@ -37,6 +37,7 @@ public class Monitor : BaseObject
     private SpriteRenderer IconObject;
     private SpriteRenderer StaticObject;
     private Animator IconAnimator;
+    private Attacher attacher;
 
     private new void Start()
     {
@@ -48,6 +49,7 @@ public class Monitor : BaseObject
         StaticObject = transform.GetChild(0).GetComponent<SpriteRenderer>();
         IconObject = transform.GetChild(1).GetComponent<SpriteRenderer>();
         IconAnimator = IconObject.GetComponent<Animator>();
+        attacher = GetComponent<Attacher>();
 
         base.Start();
 
@@ -69,7 +71,7 @@ public class Monitor : BaseObject
 
         Rect.XPosition = XPosition + (Ground ? GroundSpeed : XSpeed);
         Rect.YPosition = YPosition + (Ground ? 0f : YSpeed);
-
+        
         if (!Ground)
         {
             for (int i = 0; i < ObjectLoops; i++)
@@ -145,6 +147,11 @@ public class Monitor : BaseObject
                 if (floorHit)
                 {
                     YPosition -= floorHit.distance - HeightRadius;
+                    if (attacher != null)
+                    {
+                        attacher.LinkedPlatform = floorHit.collider.GetComponent<MovingPlatform>();
+                        attacher.Attached = attacher.LinkedPlatform != null;
+                    }
                     Ground = true;
                 }
                 #endregion
@@ -158,6 +165,11 @@ public class Monitor : BaseObject
         {
             if (player.ColliderCeiling == ColliderBody && StageController.AABB(Rect, player.Rect))
             {
+                if (attacher != null)
+                {
+                    attacher.Attached = false;
+                    attacher.LinkedPlatform = null;
+                }
                 YSpeed = 2f;
                 Ground = false;
             }
@@ -167,6 +179,11 @@ public class Monitor : BaseObject
                  player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
                  player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody)
             {
+                if (attacher != null)
+                {
+                    attacher.Attached = false;
+                    attacher.LinkedPlatform = null;
+                }
                 GameController.Score += 100;
                 IconObject.transform.SetParent(null);
                 StageController.CreateStageObject("Monitor Explosion", XPosition, YPosition);
@@ -253,16 +270,16 @@ public class Monitor : BaseObject
                             break;
                         case Monitor_Rewards.SuperForm:
                             StageController.CurrentStage.Rings += 50;
-                            /*if (!player.SuperForm)
+                            if (!player.SuperForm)
                             {
                                 player.SuperForm = true;
-                                SoundManager.QueuedMusic = SoundManager.IsPlaying;
+                                /*SoundManager.QueuedMusic = SoundManager.IsPlaying;
                                 SoundManager.FadeSpeed = 2f;
                                 SoundManager.FadeStop = true;
                                 SoundManager.FadeStopCount = 0f;
                                 SoundManager.NextMusic = "Super";
-                                SoundManager.QueuedPosition = 0f;
-                            }*/
+                                SoundManager.QueuedPosition = 0f;*/
+                            }
                             break;
                     }
 

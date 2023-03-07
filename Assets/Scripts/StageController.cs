@@ -6,6 +6,7 @@ public class StageController : MonoBehaviour
 {
     public static StageController CurrentStage;
     public static float LevelTimer;
+    public static float GlobalTimer;
 
     public static bool STOP;
     public float GameTimer;
@@ -37,6 +38,7 @@ public class StageController : MonoBehaviour
         CurrentStage = this;
 
         LevelTimer = 0f;
+        GlobalTimer = 0f;
     }
 
     private void Start()
@@ -59,6 +61,7 @@ public class StageController : MonoBehaviour
         if (!STOP)
         {
             LevelTimer += 1f;
+            GlobalTimer += 1f;
 
             GameTimer += 1000f / 60f;
 

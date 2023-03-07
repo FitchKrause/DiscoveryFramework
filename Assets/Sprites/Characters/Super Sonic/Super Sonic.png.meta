@@ -1,0 +1,1291 @@
+fileFormatVersion: 2
+guid: bc6acf032c80a824284ea1246a86d06b
+timeCreated: 1675987822
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: SuperSonic_Stopped_0
+    21300002: SuperSonic_Stopped_1
+    21300004: SuperSonic_Stopped_2
+    21300006: SuperSonic_Stopped_3
+    21300008: SuperSonic_Walking_0
+    21300010: SuperSonic_Walking_1
+    21300012: SuperSonic_Walking_2
+    21300014: SuperSonic_Walking_3
+    21300016: SuperSonic_Walking_4
+    21300018: SuperSonic_Walking_5
+    21300020: SuperSonic_Walking_6
+    21300022: SuperSonic_Walking_7
+    21300024: SuperSonic_Walking_8
+    21300026: SuperSonic_Walking_9
+    21300028: SuperSonic_Walking_10
+    21300030: SuperSonic_Walking_11
+    21300032: SuperSonic_AirWalking_0
+    21300034: SuperSonic_AirWalking_1
+    21300036: SuperSonic_AirWalking_2
+    21300038: SuperSonic_AirWalking_3
+    21300040: SuperSonic_AirWalking_4
+    21300042: SuperSonic_AirWalking_5
+    21300044: SuperSonic_AirWalking_6
+    21300046: SuperSonic_AirWalking_7
+    21300048: SuperSonic_AirWalking_8
+    21300050: SuperSonic_AirWalking_9
+    21300052: SuperSonic_AirWalking_10
+    21300054: SuperSonic_AirWalking_11
+    21300056: SuperSonic_Jog_0
+    21300058: SuperSonic_Jog_1
+    21300060: SuperSonic_Jog_2
+    21300062: SuperSonic_Jog_3
+    21300064: SuperSonic_Jog_4
+    21300066: SuperSonic_Jog_5
+    21300068: SuperSonic_Jog_6
+    21300070: SuperSonic_Jog_7
+    21300072: SuperSonic_Jog_8
+    21300074: SuperSonic_Jog_9
+    21300076: SuperSonic_Running_0
+    21300078: SuperSonic_Running_1
+    21300080: SuperSonic_Running_2
+    21300082: SuperSonic_Running_3
+    21300084: SuperSonic_Dash_0
+    21300086: SuperSonic_Dash_1
+    21300088: SuperSonic_Jumping_0
+    21300090: SuperSonic_Jumping_1
+    21300092: SuperSonic_Jumping_2
+    21300094: SuperSonic_Jumping_3
+    21300096: SuperSonic_Jumping_4
+    21300098: SuperSonic_Jumping_5
+    21300100: SuperSonic_Jumping_6
+    21300102: SuperSonic_Jumping_7
+    21300104: SuperSonic_Jumping_8
+    21300106: SuperSonic_Jumping_9
+    21300108: SuperSonic_StandUp_0
+    21300110: SuperSonic_StandUp_1
+    21300112: SuperSonic_StandUp_2
+    21300114: SuperSonic_StandUp_3
+    21300116: SuperSonic_StandUp_4
+    21300118: SuperSonic_StandUp_5
+    21300120: SuperSonic_StandUp_6
+    21300122: SuperSonic_CrouchDown_0
+    21300124: SuperSonic_CrouchDown_1
+    21300126: SuperSonic_CrouchDown_2
+    21300128: SuperSonic_CrouchDown_3
+    21300130: SuperSonic_Skidding_0
+    21300132: SuperSonic_Skidding_1
+    21300134: SuperSonic_Skidding_2
+    21300136: SuperSonic_Skidding_3
+    21300138: SuperSonic_Skidding_4
+    21300140: SuperSonic_Skidding_5
+    21300142: SuperSonic_Skidding_6
+    21300144: SuperSonic_Skidding_7
+    21300146: SuperSonic_Skidding_8
+    21300148: SuperSonic_Skidding_9
+    21300150: SuperSonic_Skidding_10
+    21300152: SuperSonic_Skidding_11
+    21300154: SuperSonic_Spindash_0
+    21300156: SuperSonic_Spindash_1
+    21300158: SuperSonic_Spindash_2
+    21300160: SuperSonic_Spindash_3
+    21300162: SuperSonic_Spindash_4
+    21300164: SuperSonic_Spindash_5
+    21300166: SuperSonic_Spindash_6
+    21300168: SuperSonic_Spindash_7
+    21300170: SuperSonic_Spindash_8
+    21300172: SuperSonic_Springs_0
+    21300174: SuperSonic_Springs_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SuperSonic_Stopped_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 711
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Stopped_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 711
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Stopped_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 711
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Stopped_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 711
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_7
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_8
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_9
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_10
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Walking_11
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 662
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_7
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_8
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_9
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_10
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_AirWalking_11
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 605
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_7
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_8
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jog_9
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 556
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Running_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 507
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Running_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 507
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Running_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 507
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Running_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 507
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Dash_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 458
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Dash_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 458
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_7
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_8
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Jumping_9
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 409
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_StandUp_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 360
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_StandUp_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 360
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_StandUp_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 360
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_StandUp_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 360
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_StandUp_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 360
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_StandUp_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 360
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_StandUp_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 360
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_CrouchDown_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 311
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_CrouchDown_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 311
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_CrouchDown_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 311
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_CrouchDown_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 311
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_7
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_8
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_9
+      rect:
+        serializedVersion: 2
+        x: 442
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_10
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Skidding_11
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 262
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_3
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_4
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_5
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_6
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_7
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Spindash_8
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 213
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2708333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Springs_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 49
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SuperSonic_Springs_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 49
+        width: 48
+        height: 56
+      alignment: 9
+      pivot: {x: 0.5, y: 0.375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

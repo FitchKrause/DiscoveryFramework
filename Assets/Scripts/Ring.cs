@@ -17,6 +17,7 @@ public class Ring : BaseObject
     public AudioClip Sound_Ring;
 
     private PlayerPhysics player;
+    private Attacher attacher;
 
     public override void ObjectCreated()
     {
@@ -27,6 +28,7 @@ public class Ring : BaseObject
     private new void Start()
     {
         player = FindObjectOfType<PlayerPhysics>();
+        attacher = GetComponent<Attacher>();
 
         Acceleration = 0.7f;
         TopSpeed = Acceleration * 10f;
@@ -46,6 +48,11 @@ public class Ring : BaseObject
             player.YPosition < YPosition + 100f)
         {
             Flag0 = true;
+            if (attacher != null)
+            {
+                attacher.Attached = false;
+                attacher.LinkedPlatform = null;
+            }
         }
 
         if (Flag0 && !Flag1)
@@ -131,14 +138,14 @@ public class Ring : BaseObject
             GameController.Score += 10;
             SoundManager.PlaySFX(Sound_Ring);
             StageController.CurrentStage.Rings++;
-            /*for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 float PosX = XPosition + (Random.Range(0f, 16f) - Random.Range(0f, 16f));
                 float PosY = YPosition + (Random.Range(0f, 16f) - Random.Range(0f, 16f));
-                RingSparkle sparkle = StageController.CreateStageObject("RingSparkle", PosX, PosY) as RingSparkle;
+                Sparkle sparkle = StageController.CreateStageObject("Ring Sparkle", PosX, PosY) as Sparkle;
                 sparkle.XPosition = PosX;
                 sparkle.YPosition = PosY;
-            }*/
+            }
             StageController.DestroyStageObject(this);
         }
     }

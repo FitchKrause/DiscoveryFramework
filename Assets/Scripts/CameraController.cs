@@ -176,8 +176,8 @@ public class CameraController : PixelCamera
 
         if (CameraAction == 0 && HardShakeTimer > 0f)
         {
-            CameraX += (Random.Range(0, (int)HardShakeTimer) - Random.Range(0, (int)HardShakeTimer));
-            CameraY += (Random.Range(0, (int)HardShakeTimer) - Random.Range(0, (int)HardShakeTimer));
+            CameraX += Random.Range(0, (int)HardShakeTimer) - Random.Range(0, (int)HardShakeTimer);
+            CameraY += Random.Range(0, (int)HardShakeTimer) - Random.Range(0, (int)HardShakeTimer);
             HardShakeTimer -= 1f;
         }
     }
@@ -186,8 +186,8 @@ public class CameraController : PixelCamera
     {
         Camera.main.transform.position = new Vector3()
         {
-            x = Mathf.Clamp(Camera.main.transform.position.x, WindowMidWidth, StageController.CurrentStage.Width - WindowMidWidth),
-            y = Mathf.Clamp(Camera.main.transform.position.y, -StageController.CurrentStage.Height + WindowMidHeight, -WindowMidHeight),
+            x = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.x), WindowMidWidth, StageController.CurrentStage.Width - WindowMidWidth),
+            y = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.y), -StageController.CurrentStage.Height + WindowMidHeight, -WindowMidHeight),
             z = -10f
         };
 

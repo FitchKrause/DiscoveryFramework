@@ -35,19 +35,19 @@ public class LayerSwitcher : MonoBehaviour
             {
                 case SwitcherType_Enum.LayerALow:
                     player.CollisionLayer = 8;
-                    player.GetComponent<SpriteRenderer>().sortingLayerName = "Low";
+                    player.render.sortingLayerName = "Low";
                     break;
                 case SwitcherType_Enum.LayerAHigh:
                     player.CollisionLayer = 8;
-                    player.GetComponent<SpriteRenderer>().sortingLayerName = "High";
+                    player.render.sortingLayerName = "High";
                     break;
                 case SwitcherType_Enum.LayerBLow:
                     player.CollisionLayer = 9;
-                    player.GetComponent<SpriteRenderer>().sortingLayerName = "Low";
+                    player.render.sortingLayerName = "Low";
                     break;
                 case SwitcherType_Enum.LayerBHigh:
                     player.CollisionLayer = 9;
-                    player.GetComponent<SpriteRenderer>().sortingLayerName = "High";
+                    player.render.sortingLayerName = "High";
                     break;
             }
         }

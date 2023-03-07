@@ -6,6 +6,7 @@ public class PlayerPhysics : BaseObject
 {
     #region Player Values
     #region Player movement values
+    [HideInInspector] public int Quadrant;
     [HideInInspector] public float PreviousX;
     [HideInInspector] public float PreviousY;
     [HideInInspector] public int Action;
@@ -13,6 +14,7 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public bool Landed;
     [HideInInspector] public int LandFrame;
     [HideInInspector] public int CeilingLand;
+    [HideInInspector] public bool Attacking;
     [HideInInspector] public bool AllowInput;
     [HideInInspector] public bool AllowX;
     [HideInInspector] public bool AllowY;
@@ -86,6 +88,9 @@ public class PlayerPhysics : BaseObject
     public delegate void PlayerAction();
     public PlayerAction CurrentAction;
     public HitBox Rect;
+    public GameObject[] Skins;
+    public GameObject[] SuperSkins;
+    public GameObject SpindashDust;
     [HideInInspector] public Collider2D ColliderFloor;
     [HideInInspector] public Collider2D ColliderCeiling;
     [HideInInspector] public Collider2D ColliderWallLeft;
@@ -103,6 +108,24 @@ public class PlayerPhysics : BaseObject
         Shields = FindObjectsOfType<Shield>();
 
         base.Start();
+
+        render.enabled = false;
+
+        animator = Skins[0].GetComponent<Animator>();
+        render = Skins[0].GetComponent<SpriteRenderer>();
+
+        for (int i = 0; i < Skins.Length; i++)
+        {
+            Skins[i].transform.SetParent(transform);
+            Skins[i].transform.position = transform.position;
+            Skins[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
+        }
+        for (int i = 0; i < SuperSkins.Length; i++)
+        {
+            SuperSkins[i].transform.SetParent(transform);
+            SuperSkins[i].transform.position = transform.position;
+            SuperSkins[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
+        }
 
         AllowInput = AllowX = AllowY = AllowLanding = AllowFalling = AllowDirection = true;
     }
@@ -149,20 +172,20 @@ public class PlayerPhysics : BaseObject
 
         if (SpeedSneakers)
         {
-            Acceleration *= 2f;
-            Friction *= 2f;
-            TopSpeed *= 2f;
-            AirAcceleration *= 2f;
-            RollFriction *= 2f;
+            Acceleration = 0.09375f;
+            Friction = 0.09375f;
+            TopSpeed = 12f;
+            AirAcceleration = 0.1875f;
+            RollFriction = 0.046875f;
         }
         if (SuperForm)
         {
-            Acceleration *= 4f;
-            Deceleration *= 2f;
+            Acceleration = 0.1875f;
+            Deceleration = 1f;
             TopSpeed = 10f;
-            AirAcceleration *= 4f;
+            AirAcceleration = 0.375f;
             JumpForce = 8f;
-            RollFriction *= 4f;
+            RollFriction = 0.09375f;
         }
         #endregion
         #region Player Control (Pre)
@@ -740,6 +763,7 @@ public class PlayerPhysics : BaseObject
         #region Manage Actions
         if (CurrentAction != null)
         {
+            Attacking = false;
             CurrentAction();
         }
 
@@ -751,6 +775,7 @@ public class PlayerPhysics : BaseObject
         }
         if (Action == 1)
         {
+            Attacking = true;
             AllowDirection = true;
             AllowInput = true;
             CurrentAction = Action01_Jump;
@@ -775,12 +800,14 @@ public class PlayerPhysics : BaseObject
         }
         if (Action == 5)
         {
+            Attacking = true;
             AllowDirection = false;
             AllowInput = false;
             CurrentAction = Action05_Spindash;
         }
         if (Action == 6)
         {
+            Attacking = true;
             AllowDirection = true;
             AllowInput = false;
             CurrentAction = Action06_Rolling;
@@ -889,7 +916,7 @@ public class PlayerPhysics : BaseObject
                 foreach (Animator animator in FindObjectsOfType<Animator>())
                 {
                     if (animator == this.animator) continue;
-                    animator.Stop();
+                    animator.enabled = false;
                 }
                 CameraController.CameraMode = 3;
                 Ground = false;
@@ -905,6 +932,27 @@ public class PlayerPhysics : BaseObject
         #endregion
         #endregion
         #region Player Animations
+        #region Change Character
+        for (int i = 0; i < SuperSkins.Length; i++)
+        {
+            SuperSkins[i].SetActive(i == Character && SuperForm);
+        }
+        for (int i = 0; i < Skins.Length; i++)
+        {
+            Skins[i].SetActive(i == Character && !SuperForm);
+        }
+
+        if (SuperForm)
+        {
+            animator = SuperSkins[Character].GetComponent<Animator>();
+            render = SuperSkins[Character].GetComponent<SpriteRenderer>();
+        }
+        else
+        {
+            animator = Skins[Character].GetComponent<Animator>();
+            render = Skins[Character].GetComponent<SpriteRenderer>();
+        }
+        #endregion
         #region Change Direction
         if (AllowDirection)
         {
@@ -1124,6 +1172,25 @@ public class PlayerPhysics : BaseObject
         }
         #endregion
         #endregion
+        #region Effects
+        #region Spindash Dust
+        SpindashDust.SetActive(Action == 5);
+        SpindashDust.GetComponent<Animator>().speed = this.animator.speed;
+        SpindashDust.GetComponent<SpriteRenderer>().flipX = this.render.flipX;
+        SpindashDust.GetComponent<SpriteRenderer>().sortingLayerName = this.render.sortingLayerName;
+        SpindashDust.transform.position = new Vector3(XPosition - (Mathf.Sin(AnimationAngle * Mathf.Deg2Rad) * -13f), YPosition + (Mathf.Cos(AnimationAngle * Mathf.Deg2Rad) * -13f), 0f);
+        SpindashDust.transform.rotation = Quaternion.Euler(0f, 0f, AnimationAngle);
+        #endregion
+        #region Skidding Dust
+        if (Action == 4 && StageController.GlobalTimer % 4 == 0)
+        {
+            Dust dust = StageController.CreateStageObject("Skid Dust", XPosition, YPosition - 13f) as Dust;
+            dust.XPosition = XPosition - (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * -13f);
+            dust.YPosition = YPosition + (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * -13f);
+            dust.render.sortingLayerName = render.sortingLayerName;
+        }
+        #endregion
+        #endregion
         #region Shields
         if (Shield <= 1)
         {
@@ -1250,7 +1317,7 @@ public class PlayerPhysics : BaseObject
     private void DetectAngle(bool useNormal = false)
     {
         //Get quadrant
-        Quadrant = (int)((GroundAngle + (360f + 45f) % 360f) / 90f);
+        Quadrant = (int)(((GroundAngle + (360f + 45f)) % 360f) / 90f);
 
         RaycastHit2D angleLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, 32f);
         RaycastHit2D angleRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, 32f);

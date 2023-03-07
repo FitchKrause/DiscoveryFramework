@@ -11,7 +11,6 @@ public class BaseObject : MonoBehaviour
     [HideInInspector] public float YSpeed;
     [HideInInspector] public float GroundSpeed;
     [HideInInspector] public float GroundAngle;
-    [HideInInspector] public int Quadrant;
     [HideInInspector] public bool Ground;
     [HideInInspector] public int CollisionLayer;
     [HideInInspector] public float AnimationAngle;
@@ -69,7 +68,7 @@ public class BaseObject : MonoBehaviour
     
     protected void LateUpdate()
     {
-        transform.position = new Vector3(XPosition, YPosition, transform.position.z);
+        transform.position = new Vector3(Mathf.Floor(XPosition), Mathf.Floor(YPosition), transform.position.z);
         transform.rotation = Quaternion.Euler(0f, 0f, AnimationAngle);
     }
 
