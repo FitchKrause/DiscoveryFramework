@@ -187,7 +187,6 @@ public class PlayerPhysics : BaseObject
             TopSpeed = 10f;
             AirAcceleration = 0.375f;
             JumpForce = 8f;
-            RollFriction = 0.09375f;
         }
         #endregion
         #region Player Control (Pre)
