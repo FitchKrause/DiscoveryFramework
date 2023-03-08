@@ -7,8 +7,11 @@ public class StageController : MonoBehaviour
     public static StageController CurrentStage;
     public static float LevelTimer;
     public static float GlobalTimer;
-
-    public static bool STOP;
+    public static bool AllowTime;
+    public static bool AllowPause;
+    public static bool PauseTrigger;
+    public static bool Paused;
+    
     public float GameTimer;
     public int Milliseconds;
     public int Seconds;
@@ -29,7 +32,8 @@ public class StageController : MonoBehaviour
 
     private void Awake()
     {
-        STOP = false;
+        Paused = false;
+        AllowTime = AllowPause = true;
 
         ObjectList = new List<BaseObject>();
         ObjectPools = new List<ObjectPool>();
@@ -58,7 +62,60 @@ public class StageController : MonoBehaviour
     {
         Rings = Mathf.Clamp(Rings, 0, 999);
 
-        if (!STOP)
+        if (AllowPause)
+        {
+            if (PauseTrigger)
+            {
+                Paused = !Paused;
+
+                foreach (BaseObject objRef in ObjectList)
+                {
+                    objRef.enabled = !Paused;
+                }
+
+                foreach (Animator animator in FindObjectsOfType<Animator>())
+                {
+                    animator.enabled = !Paused;
+                }
+
+                foreach (Attacher attacher in FindObjectsOfType<Attacher>())
+                {
+                    attacher.enabled = !Paused;
+                }
+
+                if (Paused) SoundManager.Pause();
+                else SoundManager.Resume();
+
+                PauseTrigger = false;
+            }
+        }
+        else
+        {
+            if (Paused || PauseTrigger)
+            {
+                foreach (BaseObject objRef in ObjectList)
+                {
+                    objRef.enabled = true;
+                }
+
+                foreach (Animator animator in FindObjectsOfType<Animator>())
+                {
+                    animator.enabled = true;
+                }
+
+                foreach (Attacher attacher in FindObjectsOfType<Attacher>())
+                {
+                    attacher.enabled = true;
+                }
+
+                SoundManager.Resume();
+
+                PauseTrigger = false;
+                Paused = false;
+            }
+        }
+
+        if (AllowTime && !Paused)
         {
             LevelTimer += 1f;
             GlobalTimer += 1f;

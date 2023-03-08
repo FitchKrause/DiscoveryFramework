@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class HUD : MonoBehaviour
@@ -9,8 +10,23 @@ public class HUD : MonoBehaviour
     public Digit[] GUI_Lives = new Digit[2];
     public Digit[] GUI_FPS = new Digit[4];
 
+    public GameObject GUI_Pause;
+    public GameObject GUI_PauseCursor;
+    public int PauseOption;
+
     private int FPS;
     private int FPS_Timer;
+
+    private bool KeyStart;
+    private bool KeyStartPressed;
+    private bool KeyUp;
+    private bool KeyUpPressed;
+    private bool KeyDown;
+    private bool KeyDownPressed;
+    private bool KeyActionA;
+    private bool KeyActionAPressed;
+    private bool KeyActionB;
+    private bool KeyActionBPressed;
 
     private void Update()
     {
@@ -23,6 +39,21 @@ public class HUD : MonoBehaviour
 
     private void FixedUpdate()
     {
+        KeyStartPressed = Input.GetKey(KeyCode.Return) && !KeyStart;
+        KeyStart = Input.GetKey(KeyCode.Return);
+
+        KeyUpPressed = Input.GetKey(KeyCode.UpArrow) && !KeyUp;
+        KeyUp = Input.GetKey(KeyCode.UpArrow);
+
+        KeyDownPressed = Input.GetKey(KeyCode.DownArrow) && !KeyDown;
+        KeyDown = Input.GetKey(KeyCode.DownArrow);
+
+        KeyActionAPressed = Input.GetKey(KeyCode.Z) && !KeyActionA;
+        KeyActionA = Input.GetKey(KeyCode.Z);
+
+        KeyActionBPressed = Input.GetKey(KeyCode.X) && !KeyActionB;
+        KeyActionB = Input.GetKey(KeyCode.X);
+
         GUI_Score[6].SetValue(GameController.Score / 1000000);
         GUI_Score[5].SetValue(GameController.Score / 100000 % 10);
         GUI_Score[4].SetValue(GameController.Score / 10000 % 10);
@@ -73,6 +104,53 @@ public class HUD : MonoBehaviour
         GUI_FPS[2].GetComponent<SpriteRenderer>().enabled = FPS >= 100;
         GUI_FPS[1].GetComponent<SpriteRenderer>().enabled = FPS >= 10;
         GUI_FPS[0].GetComponent<SpriteRenderer>().enabled = true;
+
+        if (StageController.Paused ? KeyActionBPressed : KeyStartPressed)
+        {
+            PauseOption = 0;
+            StageController.PauseTrigger = true;
+        }
+
+        if (StageController.Paused)
+        {
+            if (KeyDownPressed)
+            {
+                PauseOption++;
+                if (PauseOption > 2)
+                {
+                    PauseOption = 0;
+                }
+            }
+            if (KeyUpPressed)
+            {
+                PauseOption--;
+                if (PauseOption < 0)
+                {
+                    PauseOption = 2;
+                }
+            }
+
+            if (KeyStartPressed || KeyActionAPressed)
+            {
+                if (PauseOption == 0)
+                {
+                    StageController.PauseTrigger = true;
+                }
+                if (PauseOption == 1)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
+                if (PauseOption == 2)
+                {
+                    Application.Quit();
+                }
+            }
+        }
+
+        GUI_Pause.SetActive(StageController.Paused);
+        Vector3 vector = GUI_PauseCursor.transform.position;
+        vector.y = GUI_Pause.transform.position.y + (-16f * PauseOption);
+        GUI_PauseCursor.transform.position = vector;
     }
 
     private void LateUpdate()

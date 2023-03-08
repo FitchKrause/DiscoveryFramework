@@ -1,0 +1,158 @@
+fileFormatVersion: 2
+guid: b55f5c2b524f6ea47b605f580e7911a7
+timeCreated: 1678293753
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: GUI_Pause_0
+    21300002: GUI_PauseOption_0
+    21300004: GUI_PauseOption_0
+    21300006: GUI_Pause_1
+    21300008: GUI_PauseOption_1
+    21300010: GUI_PauseOption_2
+    21300012: GUI_Pause_2
+    21300014: GUI_Pause_3
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GUI_Pause_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 61
+        width: 128
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: -0.22222222}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GUI_PauseOption_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 45
+        width: 128
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GUI_Pause_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 128
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5, y: 1.6666666}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GUI_PauseOption_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 29
+        width: 128
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GUI_PauseOption_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 13
+        width: 128
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GUI_Pause_2
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 80
+        width: 111
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.5294118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GUI_Pause_3
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 62
+        width: 111
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.5294118}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

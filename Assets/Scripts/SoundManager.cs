@@ -25,4 +25,14 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(sfx);
     }
+
+    public static void Pause()
+    {
+        audioSource.Pause();
+    }
+
+    public static void Resume()
+    {
+        audioSource.UnPause();
+    }
 }

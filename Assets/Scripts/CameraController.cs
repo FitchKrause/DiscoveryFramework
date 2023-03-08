@@ -57,6 +57,8 @@ public class CameraController : PixelCamera
             CameraShiftX = CameraShiftY = 0f;
         }
 
+        if (StageController.Paused) return;
+
         if (LagTimer == 0f && CameraMode == 0)
         {
             if (CameraX < CameraMaximumX - WindowMidWidth && player.XPosition > CameraX + 8f - CameraShiftX - CameraShiftXSpeed)

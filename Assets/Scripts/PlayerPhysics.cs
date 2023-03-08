@@ -839,7 +839,7 @@ public class PlayerPhysics : BaseObject
             }
             if (Hurt == 2)
             {
-                StageController.STOP = true;
+                StageController.AllowTime = StageController.AllowPause = false;
                 foreach (BaseObject objRef in StageController.CurrentStage.ObjectList)
                 {
                     if (objRef == this) continue;
