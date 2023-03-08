@@ -38,6 +38,7 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public int InvincibilityTimer;
     [HideInInspector] public bool SpeedSneakers;
     [HideInInspector] public int SpeedSneakersTimer;
+    public bool Underwater;
     [HideInInspector] public int Hurt;
     [HideInInspector] public int Direction;
     [HideInInspector] public float Animation;
@@ -161,7 +162,7 @@ public class PlayerPhysics : BaseObject
         Deceleration = 0.5f;
         TopSpeed = 6f;
         GravityForce = 0.21875f;
-        JumpForce = 6.78125f;
+        JumpForce = 6.5f;
         JumpReleaseForce = 4f;
         AirDrag = 0.96875f;
         RollFriction = 0.0234375f;
@@ -174,19 +175,35 @@ public class PlayerPhysics : BaseObject
 
         if (SpeedSneakers)
         {
-            Acceleration = 0.09375f;
-            Friction = 0.09375f;
-            TopSpeed = 12f;
-            AirAcceleration = 0.1875f;
-            RollFriction = 0.046875f;
+            Acceleration *= 2f;
+            Friction *= 2f;
+            TopSpeed *= 2f;
+            AirAcceleration *= 2f;
+            RollFriction *= 2f;
         }
         if (SuperForm)
         {
-            Acceleration = 0.1875f;
-            Deceleration = 1f;
-            TopSpeed = 10f;
-            AirAcceleration = 0.375f;
-            JumpForce = 8f;
+            Acceleration *= 2f;
+            Deceleration *= 2f;
+            Friction /= 2f;
+            TopSpeed -= 2f;
+            AirAcceleration *= 2f;
+            JumpForce += 1.5f;
+            RollFriction /= 2f;
+        }
+
+        if (Underwater)
+        {
+            Acceleration /= 2f;
+            Deceleration /= 2f;
+            Friction /= 2f;
+            TopSpeed /= 2f;
+            AirAcceleration /= 2f;
+            RollFriction /= 2f;
+            GravityForce = 0.0625f;
+            SlopeFactor /= 2f;
+            JumpForce -= 3f;
+            JumpReleaseForce /= 2f;
         }
         #endregion
         #region Player Control (Pre)

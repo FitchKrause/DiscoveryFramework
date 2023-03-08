@@ -3,36 +3,48 @@ using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
-    private static AudioSource audioSource;
+    private static AudioSource sfxSource;
+    public static AudioSource bgmSource;
 
-    public static float VOLUME = 50f;
+    public static float MASTER_VOLUME = 100f;
+
+    public static float SFX_VOLUME = 50f;
+    public static float BGM_VOLUME = 50f;
 
     private void Start()
     {
-        if (GameObject.Find("Audio Source"))
+        if (GameObject.Find("SFX Source"))
         {
-            audioSource = GameObject.Find("Audio Source").GetComponent<AudioSource>();
+            sfxSource = GameObject.Find("SFX Source").GetComponent<AudioSource>();
+            bgmSource = GameObject.Find("BGM Source").GetComponent<AudioSource>();
         }
         else
         {
-            audioSource = new GameObject("Audio Source").AddComponent<AudioSource>();
-            audioSource.volume = VOLUME / 100f;
-            DontDestroyOnLoad(audioSource.gameObject);
+            sfxSource = new GameObject("SFX Source").AddComponent<AudioSource>();
+            bgmSource = new GameObject("BGM Source").AddComponent<AudioSource>();
+
+            sfxSource.volume = (SFX_VOLUME * (MASTER_VOLUME / 100f)) / 100f;
+            bgmSource.volume = (BGM_VOLUME * (MASTER_VOLUME / 100f)) / 100f;
+
+            DontDestroyOnLoad(sfxSource.gameObject);
+            DontDestroyOnLoad(bgmSource.gameObject);
         }
     }
 
     public static void PlaySFX(AudioClip sfx)
     {
-        audioSource.PlayOneShot(sfx);
+        sfxSource.PlayOneShot(sfx);
     }
 
     public static void Pause()
     {
-        audioSource.Pause();
+        sfxSource.Pause();
+        bgmSource.Pause();
     }
 
     public static void Resume()
     {
-        audioSource.UnPause();
+        sfxSource.UnPause();
+        bgmSource.UnPause();
     }
 }

@@ -265,8 +265,7 @@ public class Monitor : BaseObject
                             break;
                         case Monitor_Rewards.Life:
                             GameController.Lives++;
-                            /*SoundManager.QueuedMusic = SoundManager.IsPlaying;
-                            SoundManager.ToPlay = "1-UP";*/
+                            MusicController.ToPlay = "1-UP";
                             break;
                         case Monitor_Rewards.SuperForm:
                             StageController.CurrentStage.Rings += 50;

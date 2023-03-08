@@ -879,6 +879,7 @@ GameObject:
   - 114: {fileID: 116026673}
   - 114: {fileID: 116026671}
   - 114: {fileID: 116026674}
+  - 114: {fileID: 116026675}
   m_Layer: 0
   m_Name: StageController
   m_TagString: Untagged
@@ -956,6 +957,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982e8387b725c194ca1a8d137e01661a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &116026675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 116026670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eface1d4db7f0d54d8899160cee28d91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Music_Invincibility: {fileID: 8300000, guid: cf121bae3efc72047beffeca7b81b06a, type: 3}
+  Music_SpeedUp: {fileID: 8300000, guid: ce0600afd26aaa347b7392253ea875bf, type: 3}
+  Music_1UP: {fileID: 8300000, guid: a2e8a4e41ba9d3b46a4c4df8b5761baa, type: 3}
+  Music_Clear: {fileID: 8300000, guid: 4fe46545f5f04c54084459853b83f624, type: 3}
+  Music_Boss: {fileID: 8300000, guid: a00ba1c2f243e3b4f8cdd6a378a77e77, type: 3}
+  Music_Stage: {fileID: 8300000, guid: 0cda4177b72f6164fba698fdae8e45ed, type: 3}
+  Music_Drowning: {fileID: 8300000, guid: bcb1a3d0787c89f4887b0e035dd797f2, type: 3}
+  Music_SuperForm: {fileID: 8300000, guid: d19de07b35f8fcd42ad2e9d56b35b3aa, type: 3}
+  Music_GameOver: {fileID: 8300000, guid: 8c90d92b1ffc3284eac13d78341f0f0b, type: 3}
+  Boss_LoopStart: 0
+  Boss_LoopEnd: 74410
+  Stage_LoopStart: 12000
+  Stage_LoopEnd: 120000
 --- !u!1 &124146119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,6 +2510,7 @@ MonoBehaviour:
   - {fileID: 728906542}
   GUI_Pause: {fileID: 653424992}
   GUI_PauseCursor: {fileID: 584551026}
+  PauseOption: 0
 --- !u!1 &526417905
 GameObject:
   m_ObjectHideFlags: 0
@@ -4415,6 +4441,7 @@ MonoBehaviour:
   InvincibilityTimer: 0
   SpeedSneakers: 0
   SpeedSneakersTimer: 0
+  Underwater: 0
   Hurt: 0
   Direction: 0
   Animation: 0
