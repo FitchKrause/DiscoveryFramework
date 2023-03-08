@@ -107,4 +107,37 @@ public class BaseObject : MonoBehaviour
 
         return result;
     }
+
+    public Collider2D BoxCast(Vector2 offset, Vector2 size)
+    {
+        Collider2D result = null;
+
+        Vector2 pos = Quaternion.Euler(0f, 0f, GroundAngle) * offset;
+
+        Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(-size.x, size.y) / 2f);
+        Vector2 vector2 = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(size.x, size.y) / 2f);
+        Vector2 vector3 = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(size.x, -size.y) / 2f);
+        Vector2 vector4 = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(-size.x, -size.y) / 2f);
+
+        Vector2 pos2 = new Vector2(XPosition, YPosition) + pos;
+
+        Debug.DrawLine(pos2 + vector, pos2 + vector2);
+        Debug.DrawLine(pos2 + vector2, pos2 + vector3);
+        Debug.DrawLine(pos2 + vector3, pos2 + vector4);
+        Debug.DrawLine(pos2 + vector4, pos2 + vector);
+
+        foreach (Collider2D col in Physics2D.OverlapBoxAll(new Vector2(XPosition, YPosition) + pos, size, GroundAngle, 1 << CollisionLayer))
+        {
+            if (col == ColliderBody) continue;
+
+            if (col.tag == "Solid" ||
+                col.tag == "Platform" && offset.y < 0f && YSpeed <= 0f && (YPosition - HeightRadius) > (col.transform.position.y - 4f))
+            {
+                result = col;
+                break;
+            }
+        }
+
+        return result;
+    }
 }

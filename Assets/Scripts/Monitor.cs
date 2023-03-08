@@ -177,7 +177,7 @@ public class Monitor : BaseObject
             if ((player.Action == 6 &&
                 (player.GroundSpeed >= 0f && player.ColliderWallRight == ColliderBody ||
                  player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
-                 player.LandedAction == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody)
+                 player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody)
             {
                 if (attacher != null)
                 {
@@ -198,11 +198,11 @@ public class Monitor : BaseObject
                     debris.YSpeed = Random.Range(80f, 20f) / 10f;
                     debris.transform.rotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 45f) * 8f);
                 }
-                if (player.LandedAction == 1)
+                if (player.Action == 1)
                 {
                     player.Ground = false;
                     player.JumpVariable = true;
-                    player.YSpeed = player.LandedSpeed * -1.15f;
+                    player.YSpeed = player.OldYSpeed * -1.15f;
                 }
                 SoundManager.PlaySFX(Sound_Destroy);
                 YSpeed = 2f;

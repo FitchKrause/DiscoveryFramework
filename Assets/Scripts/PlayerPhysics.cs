@@ -9,13 +9,13 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public int Quadrant;
     [HideInInspector] public float PreviousX;
     [HideInInspector] public float PreviousY;
+    [HideInInspector] public float OldXSpeed;
+    [HideInInspector] public float OldYSpeed;
     [HideInInspector] public int Action;
     [HideInInspector] public int ControlLock;
     [HideInInspector] public bool Landed;
     [HideInInspector] public int LandFrame;
     [HideInInspector] public int CeilingLand;
-    [HideInInspector] public int LandedAction;
-    [HideInInspector] public float LandedSpeed;
     [HideInInspector] public bool Attacking;
     [HideInInspector] public bool AllowInput;
     [HideInInspector] public bool AllowX;
@@ -377,7 +377,6 @@ public class PlayerPhysics : BaseObject
             if (LandFrame > 1)
             {
                 Landed = false;
-                LandedAction = -1;
             }
         }
         else
@@ -403,6 +402,12 @@ public class PlayerPhysics : BaseObject
             if (AllowY) AddY = YSpeed;
         }
 
+        PreviousX = XPosition;
+        PreviousY = YPosition;
+
+        if (Ground) OldXSpeed = GroundSpeed;
+        else OldYSpeed = YSpeed;
+
         ObjectLoops = (int)(Mathf.Sqrt((XSpeed * XSpeed) + (YSpeed * YSpeed)) + 1f);
 
         AddX /= ObjectLoops;
@@ -413,24 +418,13 @@ public class PlayerPhysics : BaseObject
             //Move
             XPosition += AddX;
             YPosition += AddY;
-
-            RaycastHit2D floorLeftHit = default(RaycastHit2D);
-            RaycastHit2D floorRightHit = default(RaycastHit2D);
-            RaycastHit2D floorHit = default(RaycastHit2D);
-
-            RaycastHit2D ceilingLeftHit = default(RaycastHit2D);
-            RaycastHit2D ceilingRightHit = default(RaycastHit2D);
-            RaycastHit2D ceilingHit = default(RaycastHit2D);
-
-            RaycastHit2D wallLeftHit = default(RaycastHit2D);
-            RaycastHit2D wallRightHit = default(RaycastHit2D);
             #endregion
             #region Wall Collisions
             if (AllowX)
             {
                 //Wall Collisions
-                wallLeftHit = SensorCast(new Vector2(0f, WallShift), Vector2.left, WidthRadius);
-                wallRightHit = SensorCast(new Vector2(0f, WallShift), Vector2.right, WidthRadius);
+                RaycastHit2D wallLeftHit = SensorCast(new Vector2(0f, WallShift), Vector2.left, WidthRadius);
+                RaycastHit2D wallRightHit = SensorCast(new Vector2(0f, WallShift), Vector2.right, WidthRadius);
 
                 //Left side
                 if (wallLeftHit)
@@ -458,13 +452,13 @@ public class PlayerPhysics : BaseObject
             {
                 #region Floor and Ceiling Collisions
                 //Ceiling and Floor collisions
-                floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, HeightRadius);
-                floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius);
-                floorHit = default(RaycastHit2D);
+                RaycastHit2D floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, HeightRadius);
+                RaycastHit2D floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius);
+                RaycastHit2D floorHit = default(RaycastHit2D);
 
-                ceilingLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.up, HeightRadius);
-                ceilingRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.up, HeightRadius);
-                ceilingHit = default(RaycastHit2D);
+                RaycastHit2D ceilingLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.up, HeightRadius);
+                RaycastHit2D ceilingRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.up, HeightRadius);
+                RaycastHit2D ceilingHit = default(RaycastHit2D);
 
                 #region Ceiling Collisions
                 //If "C" and "D" are colliding
@@ -553,8 +547,6 @@ public class PlayerPhysics : BaseObject
                     //Switch to "Grounded mode"
                     CeilingLand = 0;
                     GroundSpeed = XSpeed;
-                    LandedSpeed = YSpeed;
-                    LandedAction = Action;
                     Ground = true;
                     Landed = true;
                     JumpVariable = false;
@@ -590,7 +582,6 @@ public class PlayerPhysics : BaseObject
                                     CeilingLand = 0;
                                     JumpVariable = false;
                                     GroundSpeed = XSpeed;
-                                    LandedSpeed = YSpeed;
                                     Ground = true;
                                     Landed = true;
                                     Action = 1;
@@ -614,9 +605,9 @@ public class PlayerPhysics : BaseObject
             if (Ground)
             {
                 #region Stick to Ground
-                floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, 32f);
-                floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, 32f);
-                floorHit = default(RaycastHit2D);
+                RaycastHit2D floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, 32f);
+                RaycastHit2D floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, 32f);
+                RaycastHit2D floorHit = default(RaycastHit2D);
 
                 //If "A" and "B" are colliding
                 if (floorLeftHit && floorRightHit)
@@ -673,78 +664,16 @@ public class PlayerPhysics : BaseObject
             Rect.YPosition = YPosition;
             Rect.WidthRadius = WidthRadius;
             Rect.HeightRadius = HeightRadius;
+        }
 
-            floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, HeightRadius - Mathf.Min(Ground ? -4f : YSpeed, 0f));
-            floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius - Mathf.Min(Ground ? -4f : YSpeed, 0f));
-            floorHit = default(RaycastHit2D);
+        ColliderFloor = BoxCast(new Vector2(0f, -HeightRadius + Mathf.Min(Ground ? 0f : YSpeed, 0f)), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
+        ColliderCeiling = BoxCast(new Vector2(0f, HeightRadius + Mathf.Max(Ground ? 0f : YSpeed, 0f)), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
+        ColliderWallLeft = BoxCast(new Vector2(-WidthRadius + Mathf.Min(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
+        ColliderWallRight = BoxCast(new Vector2(WidthRadius + Mathf.Max(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
 
-            ceilingLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.up, HeightRadius + Mathf.Max(Ground ? 4f : YSpeed, 0f));
-            ceilingRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.up, HeightRadius + Mathf.Max(Ground ? 4f : YSpeed, 0f));
-            ceilingHit = default(RaycastHit2D);
-
-            wallLeftHit = SensorCast(new Vector2(0f, WallShift), Vector2.left, WidthRadius - Mathf.Min(Ground ? GroundSpeed : XSpeed, 0f));
-            wallRightHit = SensorCast(new Vector2(0f, WallShift), Vector2.right, WidthRadius + Mathf.Max(Ground ? GroundSpeed : XSpeed, 0f));
-
-            #region Ceiling Collisions
-            //If "C" and "D" are colliding
-            if (ceilingLeftHit && ceilingRightHit)
-            {
-                //If distance of "C" is less than distance of "D"
-                if (ceilingLeftHit.distance < ceilingRightHit.distance)
-                {
-                    ceilingHit = ceilingLeftHit;
-                }
-                else
-                {
-                    ceilingHit = ceilingRightHit;
-                }
-            }
-            //If "C" is not colliding but "D" is
-            else if (!ceilingLeftHit && ceilingRightHit)
-            {
-                ceilingHit = ceilingRightHit;
-            }
-            //If "C" is colliding but "D" is not
-            else if (ceilingLeftHit && !ceilingRightHit)
-            {
-                ceilingHit = ceilingLeftHit;
-            }
-            #endregion
-            #region Floor Collisions
-            //If "A" and "B" are colliding
-            if (floorLeftHit && floorRightHit)
-            {
-                //If distance of "A" is less than distance of "B"
-                if (floorLeftHit.distance < floorRightHit.distance)
-                {
-                    floorHit = floorLeftHit;
-                }
-                else
-                {
-                    floorHit = floorRightHit;
-                }
-            }
-            //If "A" is not colliding but "B" is
-            else if (!floorLeftHit && floorRightHit)
-            {
-                floorHit = floorRightHit;
-            }
-            //If "A" is colliding but "B" is not
-            else if (floorLeftHit && !floorRightHit)
-            {
-                floorHit = floorLeftHit;
-            }
-            #endregion
-
-            ColliderFloor = floorHit.collider;
-            ColliderCeiling = ceilingHit.collider;
-            ColliderWallLeft = wallLeftHit.collider;
-            ColliderWallRight = wallRightHit.collider;
-
-            if (YPosition < -StageController.CurrentStage.Height)
-            {
-                Hurt = 2;
-            }
+        if (YPosition < -StageController.CurrentStage.Height)
+        {
+            Hurt = 2;
         }
         #endregion
         #endregion
@@ -1302,7 +1231,7 @@ public class PlayerPhysics : BaseObject
             }
             if (Ground)
             {
-                ShieldStatus=0;
+                ShieldStatus = 0;
                 foreach (Shield shield in Shields)
                 {
                     if (shield.ShieldType != global::Shield.Shield_Types.Aquatic)
