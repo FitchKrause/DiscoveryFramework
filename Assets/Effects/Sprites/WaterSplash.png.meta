@@ -1,0 +1,283 @@
+fileFormatVersion: 2
+guid: e83860f4935d743419af6e9819e1432e
+timeCreated: 1675797186
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: WaterSplash_0
+    21300002: WaterSplash_1
+    21300004: WaterSplash_2
+    21300006: WaterSplash_3
+    21300008: WaterSplash_4
+    21300010: WaterSplash_5
+    21300012: WaterSplash_6
+    21300014: WaterSplash_7
+    21300016: WaterSplash_8
+    21300018: WaterSplash_9
+    21300020: WaterSplash_10
+    21300022: WaterSplash_11
+    21300024: WaterSplash_12
+    21300026: WaterSplash_13
+    21300028: WaterSplash_14
+    21300030: WaterSplash_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: WaterSplash_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 66
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_1
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 66
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_2
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 66
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_3
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 66
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_4
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 66
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_5
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 66
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_6
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 66
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_7
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 66
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_9
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 1
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_10
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 1
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_11
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 1
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_12
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 1
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_13
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 1
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_14
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 1
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WaterSplash_15
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 1
+        width: 87
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

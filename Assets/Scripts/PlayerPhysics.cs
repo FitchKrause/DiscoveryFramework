@@ -67,6 +67,7 @@ public class PlayerPhysics : BaseObject
     public AudioClip Sound_FireDash;
     public AudioClip Sound_LightingJump;
     public AudioClip Sound_BubbleBounce;
+    public AudioClip Sound_Splash;
     #endregion
     #region Player constants
     [Header("Player constants")]
@@ -1137,6 +1138,38 @@ public class PlayerPhysics : BaseObject
             render.enabled = true;
         }
         #endregion
+        #endregion
+        #region Water
+        if (!Underwater && Action != 9 && StageController.CurrentStage.Water && YPosition <= StageController.CurrentStage.WaterLevel)
+        {
+            Underwater = true;
+            if (!Ground)
+            {
+                YSpeed *= 0.2f;
+                XSpeed *= 0.5f;
+            }
+            SoundManager.PlaySFX(Sound_Splash);
+            Splash waterSplash = StageController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
+            waterSplash.XPosition = XPosition;
+            waterSplash.render.sortingLayerName = render.sortingLayerName;
+        }
+        if (Underwater && Action != 9 && StageController.CurrentStage.Water && YPosition >= StageController.CurrentStage.WaterLevel)
+        {
+            Underwater = false;
+            if (!Ground)
+            {
+                YSpeed *= 1.3f;
+            }
+            SoundManager.PlaySFX(Sound_Splash);
+            Splash waterSplash = StageController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
+            waterSplash.XPosition = XPosition;
+            waterSplash.render.sortingLayerName = render.sortingLayerName;
+        }
+
+        if (Action == 9)
+        {
+            Underwater = false;
+        }
         #endregion
         #region Effects
         #region Spindash Dust

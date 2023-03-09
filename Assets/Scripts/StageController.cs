@@ -12,6 +12,8 @@ public class StageController : MonoBehaviour
     public static bool PauseTrigger;
     public static bool Paused;
     public static bool Boss;
+    public bool Water;
+    public float WaterLevel;
     
     public float GameTimer;
     public int Milliseconds;
@@ -196,6 +198,19 @@ public class StageController : MonoBehaviour
             CurrentStage.ObjectCount--;
             CurrentStage.ObjectList.Remove(objRef);
         }
+    }
+
+    public static BaseObject FindStageObject(string objName)
+    {
+        foreach (BaseObject objRef in CurrentStage.ObjectList)
+        {
+            if (objRef.name == objName)
+            {
+                return objRef;
+            }
+        }
+
+        return null;
     }
 
     public static bool AABB(HitBox rectA, HitBox rectB)
