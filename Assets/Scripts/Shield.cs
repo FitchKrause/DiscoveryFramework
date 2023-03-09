@@ -23,7 +23,7 @@ public class Shield : MonoBehaviour
 
     private void FixedUpdate()
     {
-        render.enabled = player.Shield == (int)ShieldType;
+        render.enabled = player.Shield == (int)ShieldType && player.Invincibility != 1;
         if (render.enabled)
         {
             render.sortingLayerName = player.render.sortingLayerName;
