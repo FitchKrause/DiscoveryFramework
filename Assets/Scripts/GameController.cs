@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    private static GameController instance;
+    public static GameController instance;
+
+    public static bool Preload;
 
     public static int CurrentSlot = 1;
     public static int GameCharacter = 0;
@@ -82,5 +86,22 @@ public class GameController : MonoBehaviour
     {
         Score = Mathf.Clamp(Score, 0, 9999999);
         Lives = Mathf.Clamp(Lives, 0, 99);
+    }
+
+    public void LoadLevel(string name)
+    {
+        Preload = true;
+        Debug.Log("Load");
+        StartCoroutine(LoadScene(name));
+    }
+
+    IEnumerator LoadScene(string name)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(name);
+        while (!operation.isDone)
+        {
+            yield return null;
+        }
+        Preload = !operation.isDone;
     }
 }

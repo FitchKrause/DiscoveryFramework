@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerPhysics : BaseObject
@@ -704,7 +703,7 @@ public class PlayerPhysics : BaseObject
         ColliderWallLeft = BoxCast(new Vector2(-WidthRadius + Mathf.Min(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
         ColliderWallRight = BoxCast(new Vector2(WidthRadius + Mathf.Max(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
 
-        if (YPosition < -StageController.CurrentStage.Height)
+        if (YPosition < -StageController.CurrentStage.Height - 32f)
         {
             Hurt = 2;
         }
@@ -1679,10 +1678,13 @@ public class PlayerPhysics : BaseObject
     {
         Animation = 10;
 
-        if (YPosition < PixelCamera.YBottomFrame - 32f)
+        if (YPosition < PixelCamera.YBottomFrame - 48f)
         {
-            GameController.Lives--;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (!GameController.Preload)
+            {
+                GameController.Lives--;
+                GameController.instance.LoadLevel(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            }
         }
     }
     #endregion

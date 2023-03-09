@@ -22,6 +22,7 @@ public class CameraController : PixelCamera
     public float CrouchDownTimer;
 
     private PlayerPhysics player;
+    private bool init;
 
     private void Awake()
     {
@@ -36,15 +37,19 @@ public class CameraController : PixelCamera
 
         CameraMaximumX = StageController.CurrentStage.Width;
         CameraMaximumY = StageController.CurrentStage.Height;
-
-        CameraX = player.XPosition;
-        CameraY = -player.YPosition;
-        CameraX += 0.1f * (player.XPosition - CameraX);
-        CameraY += 0.1f * (-player.YPosition - CameraY);
     }
 
     private void FixedUpdate()
     {
+        if (!init && player.enabled)
+        {
+            CameraX = player.XPosition;
+            CameraY = -player.YPosition;
+            CameraX += 0.1f * (player.XPosition - CameraX);
+            CameraY += 0.1f * (-player.YPosition - CameraY);
+            init = true;
+        }
+
         if (CameraAction == 0)
         {
             CameraMinimumX = 0f;

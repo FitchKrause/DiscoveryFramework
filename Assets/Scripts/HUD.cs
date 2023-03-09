@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class HUD : MonoBehaviour
@@ -136,9 +135,9 @@ public class HUD : MonoBehaviour
                 {
                     StageController.PauseTrigger = true;
                 }
-                if (PauseOption == 1)
+                if (PauseOption == 1 && !GameController.Preload)
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    GameController.instance.LoadLevel(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
                 }
                 if (PauseOption == 2)
                 {

@@ -31,6 +31,11 @@ public class BaseObject : MonoBehaviour
         transform.position = new Vector3(XPosition, YPosition, transform.position.z);
     }
 
+    protected void Awake()
+    {
+        enabled = false;
+    }
+
     protected void Start()
     {
         render = GetComponent<SpriteRenderer>();

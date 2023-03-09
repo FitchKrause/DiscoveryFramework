@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageController : MonoBehaviour
 {
     public static StageController CurrentStage;
+
     public static float LevelTimer;
     public static float GlobalTimer;
     public static bool AllowTime;
@@ -65,6 +67,19 @@ public class StageController : MonoBehaviour
             }
             CurrentStage.ObjectList.Add(objRef);
             CurrentStage.ObjectCount++;
+            objRef.enabled = true;
+        }
+
+        foreach (ObjectPool pool in ObjectPools)
+        {
+            for (int i = 0; i < pool.PoolSize; i++)
+            {
+                BaseObject objRef = Instantiate(pool.ObjectToPool).GetComponent<BaseObject>();
+                objRef.ObjectName = pool.PoolName;
+                objRef.gameObject.SetActive(false);
+                pool.PooledObjects.Add(objRef);
+                objRef.enabled = true;
+            }
         }
     }
 

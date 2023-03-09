@@ -37,8 +37,12 @@ public class MusicController : SoundManager
 
     private void Start()
     {
-        Playing = StageMusic = QueuedMusic = string.Empty;
-        bgmSource.clip = null;
+        if (bgmSource.clip != null)
+        {
+            Playing = StageMusic = QueuedMusic = string.Empty;
+            QueuedTime = bgmSource.time = 0f;
+            bgmSource.clip = null;
+        }
         player = FindObjectOfType<PlayerPhysics>();
     }
 

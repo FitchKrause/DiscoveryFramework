@@ -39,11 +39,19 @@ public class SoundManager : MonoBehaviour
     {
         sfxSource.Pause();
         bgmSource.Pause();
+        foreach (AudioSource source in FindObjectsOfType<AudioSource>())
+        {
+            source.Pause();
+        }
     }
 
     public static void Resume()
     {
         sfxSource.UnPause();
         bgmSource.UnPause();
+        foreach (AudioSource source in FindObjectsOfType<AudioSource>())
+        {
+            source.UnPause();
+        }
     }
 }
