@@ -12,6 +12,13 @@ public class StageController : MonoBehaviour
     public static bool PauseTrigger;
     public static bool Paused;
     public static bool Boss;
+
+    public static bool CheckPoint;
+    public static float CheckPointX;
+    public static float CheckPointY;
+    public static float CheckPointLevelTime;
+    public static float CheckPointGameTime;
+
     public bool Water;
     public float WaterLevel;
     
@@ -44,9 +51,6 @@ public class StageController : MonoBehaviour
         ObjectCount = 0;
 
         CurrentStage = this;
-
-        LevelTimer = 0f;
-        GlobalTimer = 0f;
     }
 
     private void Start()

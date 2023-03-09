@@ -113,6 +113,21 @@ public class PlayerPhysics : BaseObject
 
         base.Start();
 
+        if (!StageController.CheckPoint)
+        {
+            XPosition = transform.position.x;
+            YPosition = transform.position.y;
+            StageController.LevelTimer = 0f;
+            StageController.CurrentStage.GameTimer = 0f;
+        }
+        else
+        {
+            XPosition = StageController.CheckPointX;
+            YPosition = StageController.CheckPointY;
+            StageController.LevelTimer = StageController.CheckPointLevelTime;
+            StageController.CurrentStage.GameTimer = StageController.CheckPointGameTime;
+        }
+
         render.enabled = false;
 
         animator = Skins[0].GetComponent<Animator>();
