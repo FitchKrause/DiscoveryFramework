@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MusicController : MonoBehaviour
+public class MusicController : SoundManager
 {
     public AudioClip Music_Invincibility;
     public AudioClip Music_SpeedUp;
@@ -20,7 +20,8 @@ public class MusicController : MonoBehaviour
 
     public static string ToPlay;
     public static string Playing;
-    public static string QueuedPlaying;
+    public static string StageMusic;
+    public static string QueuedMusic;
     public static float QueuedTime;
     public static int Fade;
     public static bool FadeStop;
@@ -32,32 +33,36 @@ public class MusicController : MonoBehaviour
     private float LoopEnd;
     private float LifeDuration;
 
-    private float BGM_VOLUME;
-    private AudioSource musicSource;
+    private PlayerPhysics player;
 
     private void Start()
     {
-        musicSource = SoundManager.bgmSource;
-        BGM_VOLUME = (SoundManager.BGM_VOLUME * (SoundManager.MASTER_VOLUME / 100f)) / 100f;
-
-        ToPlay = "Stage";
-        musicSource.time = 0f;
+        Playing = StageMusic = QueuedMusic = string.Empty;
+        player = FindObjectOfType<PlayerPhysics>();
     }
 
     private void FixedUpdate()
     {
+        if (!player.SuperForm && player.Invincibility == 0 && !player.SpeedSneakers && !StageController.Boss && player.Action != 9 &&
+            Playing != "Stage" && Playing != "1-UP")
+        {
+            ToPlay = "Stage";
+        }
+
+        float bgmVol = (BGM_VOLUME * (MASTER_VOLUME / 100f)) / 100f;
+
         //Fade
         if (Fade == 0)
         {
-            musicSource.volume = BGM_VOLUME;
+            bgmSource.volume = bgmVol;
         }
         if (Fade >= 1)
         {
-            musicSource.volume = Mathf.Min(musicSource.volume + (FadeSpeed / 100f), BGM_VOLUME);
+            bgmSource.volume = Mathf.Min(bgmSource.volume + (FadeSpeed / 100f), bgmVol);
         }
         if (Fade <= -1)
         {
-            musicSource.volume = Mathf.Max(musicSource.volume - (FadeSpeed / 100f), 0f);
+            bgmSource.volume = Mathf.Max(bgmSource.volume - (FadeSpeed / 100f), 0f);
         }
 
         if (FadeStop && SongToPlay != Playing)
@@ -72,9 +77,9 @@ public class MusicController : MonoBehaviour
             FadeStop = false;
             FadeStopCount = 0f;
         }
-        if (FadeStop && (FadeStopCount > 100f || musicSource.volume <= 0f))
+        if (FadeStop && (FadeStopCount > 100f || bgmSource.volume <= 0f))
         {
-            musicSource.Stop();
+            bgmSource.Stop();
             ToPlay = SongToPlay;
             Fade = 0;
             SongToPlay = string.Empty;
@@ -83,122 +88,122 @@ public class MusicController : MonoBehaviour
         }
 
         //Loop
-        if (LoopEnd > 0f && musicSource.time >= (LoopEnd / 1000f))
+        if (LoopEnd > 0f && bgmSource.time >= (LoopEnd / 1000f))
         {
-            musicSource.time = LoopStart / 1000f;
+            bgmSource.time = LoopStart / 1000f;
         }
 
         //Playlist
         if (ToPlay == "Invincible")
         {
             Playing = ToPlay;
-            musicSource.clip = Music_Invincibility;
+            bgmSource.clip = Music_Invincibility;
             LoopStart = 1420f;
             LoopEnd = 52540f;
-            musicSource.loop = true;
-            musicSource.time = QueuedTime;
-            musicSource.Play();
+            bgmSource.loop = true;
+            bgmSource.time = QueuedTime;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
         if (ToPlay == "Speed Up")
         {
             Playing = ToPlay;
-            musicSource.clip = Music_SpeedUp;
+            bgmSource.clip = Music_SpeedUp;
             LoopStart = 1470f;
             LoopEnd = 25030f;
-            musicSource.loop = true;
-            musicSource.time = QueuedTime;
-            musicSource.Play();
+            bgmSource.loop = true;
+            bgmSource.time = QueuedTime;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
         if (ToPlay == "1-UP")
         {
-            QueuedPlaying = Playing;
-            QueuedTime = musicSource.time;
+            QueuedMusic = Playing;
+            QueuedTime = bgmSource.time;
 
             Playing = ToPlay;
-            musicSource.clip = Music_1UP;
+            bgmSource.clip = Music_1UP;
             LifeDuration = Music_1UP.length;
             LoopStart = 0f;
             LoopEnd = 0f;
-            musicSource.loop = false;
-            musicSource.time = 0f;
-            musicSource.Play();
+            bgmSource.loop = false;
+            bgmSource.time = 0f;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
-        if (Playing == "1-UP" && musicSource.time >= (LifeDuration - 0.01f))
+        if (Playing == "1-UP" && bgmSource.time >= (LifeDuration - 0.01f))
         {
             Fade = 1;
             FadeSpeed = 2f;
-            musicSource.volume = 0f;
-            ToPlay = QueuedPlaying;
+            bgmSource.volume = 0f;
+            ToPlay = QueuedMusic;
         }
         if (ToPlay == "Clear")
         {
             Playing = ToPlay;
-            musicSource.clip = Music_Clear;
+            bgmSource.clip = Music_Clear;
             LoopStart = 0f;
             LoopEnd = 0f;
-            musicSource.loop = false;
-            musicSource.Play();
+            bgmSource.loop = false;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
         if (ToPlay == "Boss")
         {
-            Playing = ToPlay;
-            musicSource.clip = Music_Boss;
+            StageMusic = Playing = ToPlay;
+            bgmSource.clip = Music_Boss;
             LoopStart = Boss_LoopStart;
             LoopEnd = Boss_LoopEnd;
-            musicSource.loop = true;
-            musicSource.time = QueuedTime;
-            musicSource.Play();
+            bgmSource.loop = true;
+            bgmSource.time = QueuedTime;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
         if (ToPlay == "Stage")
         {
-            Playing = ToPlay;
-            musicSource.clip = Music_Stage;
+            StageMusic = Playing = ToPlay;
+            bgmSource.clip = Music_Stage;
             LoopStart = Stage_LoopStart;
             LoopEnd = Stage_LoopEnd;
-            musicSource.loop = true;
-            musicSource.time = QueuedTime;
-            musicSource.Play();
+            bgmSource.loop = true;
+            bgmSource.time = QueuedTime;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
         if (ToPlay == "Drowning")
         {
-            QueuedPlaying = Playing;
+            QueuedMusic = Playing;
             QueuedTime = 0f;
 
             Playing = ToPlay;
-            musicSource.clip = Music_Drowning;
+            bgmSource.clip = Music_Drowning;
             LoopStart = 0f;
             LoopEnd = 0f;
-            musicSource.loop = false;
-            musicSource.time = 0f;
-            musicSource.Play();
+            bgmSource.loop = false;
+            bgmSource.time = 0f;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
         if (ToPlay == "Super")
         {
-            Playing = ToPlay;
-            musicSource.clip = Music_SuperForm;
+            StageMusic = Playing = ToPlay;
+            bgmSource.clip = Music_SuperForm;
             LoopStart = 23270f;
             LoopEnd = 104720f;
-            musicSource.loop = true;
-            musicSource.time = QueuedTime;
-            musicSource.Play();
+            bgmSource.loop = true;
+            bgmSource.time = QueuedTime;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
         if (ToPlay == "Game Over")
         {
             Playing = ToPlay;
-            musicSource.clip = Music_GameOver;
+            bgmSource.clip = Music_GameOver;
             LoopStart = 0f;
             LoopEnd = 0f;
-            musicSource.loop = false;
-            musicSource.time = 0f;
-            musicSource.Play();
+            bgmSource.loop = false;
+            bgmSource.time = 0f;
+            bgmSource.Play();
             ToPlay = string.Empty;
         }
     }

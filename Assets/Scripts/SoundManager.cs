@@ -3,20 +3,19 @@ using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
-    private static AudioSource sfxSource;
-    public static AudioSource bgmSource;
+    protected static AudioSource sfxSource;
+    protected static AudioSource bgmSource;
 
     public static float MASTER_VOLUME = 100f;
 
     public static float SFX_VOLUME = 50f;
     public static float BGM_VOLUME = 50f;
 
-    private void Start()
+    private void Awake()
     {
         if (GameObject.Find("SFX Source"))
         {
             sfxSource = GameObject.Find("SFX Source").GetComponent<AudioSource>();
-            bgmSource = GameObject.Find("BGM Source").GetComponent<AudioSource>();
         }
         else
         {

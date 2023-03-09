@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        if (!File.Exists(Application.dataPath + string.Format("/save{0}.txt", CurrentSlot)))
+        if (!File.Exists(Application.dataPath + string.Format("/save{0}.sav", CurrentSlot)))
         {
             string[] dataContent = new string[]
             {
@@ -38,13 +38,13 @@ public class GameController : MonoBehaviour
                 (Lives >= 1) ? Lives.ToString() : "3",
             };
             string dataTXT = string.Join(DATA_SEPARATOR, dataContent);
-            File.WriteAllText(Application.dataPath + string.Format("/save{0}.txt", CurrentSlot), dataTXT);
+            File.WriteAllText(Application.dataPath + string.Format("/save{0}.sav", CurrentSlot), dataTXT);
         }
         else
         {
             if (CurrentSlot >= 1)
             {
-                string dataTXT = File.ReadAllText(Application.dataPath + string.Format("/save{0}.txt", CurrentSlot));
+                string dataTXT = File.ReadAllText(Application.dataPath + string.Format("/save{0}.sav", CurrentSlot));
                 string[] dataContent = dataTXT.Split(new[] { DATA_SEPARATOR }, StringSplitOptions.None);
 
                 //Score = int.Parse(dataContent[0]);
@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour
                 (Lives >= 1) ? Lives.ToString() : "3",
             };
             string dataTXT = string.Join(DATA_SEPARATOR, dataContent);
-            File.WriteAllText(Application.dataPath + string.Format("/save{0}.txt", CurrentSlot), dataTXT);
+            File.WriteAllText(Application.dataPath + string.Format("/save{0}.sav", CurrentSlot), dataTXT);
         }
     }
 

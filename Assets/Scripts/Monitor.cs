@@ -251,6 +251,7 @@ public class Monitor : BaseObject
                             {
                                 player.Invincibility = 1;
                                 player.InvincibilityTimer = 2000;
+                                MusicController.ToPlay = "Invincible";
                             }
                             break;
                         case Monitor_Rewards.SpeedSneakers:
@@ -258,6 +259,7 @@ public class Monitor : BaseObject
                             {
                                 player.SpeedSneakers = true;
                                 player.SpeedSneakersTimer = 2000;
+                                MusicController.ToPlay = "Speed Up";
                             }
                             break;
                         case Monitor_Rewards.Eggman:
@@ -272,12 +274,8 @@ public class Monitor : BaseObject
                             if (!player.SuperForm)
                             {
                                 player.SuperForm = true;
-                                /*SoundManager.QueuedMusic = SoundManager.IsPlaying;
-                                SoundManager.FadeSpeed = 2f;
-                                SoundManager.FadeStop = true;
-                                SoundManager.FadeStopCount = 0f;
-                                SoundManager.NextMusic = "Super";
-                                SoundManager.QueuedPosition = 0f;*/
+                                MusicController.QueuedTime = 0f;
+                                MusicController.ToPlay = "Super";
                             }
                             break;
                     }

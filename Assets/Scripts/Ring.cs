@@ -21,8 +21,8 @@ public class Ring : BaseObject
 
     public override void ObjectCreated()
     {
-        base.ObjectCreated();
         Life = 0;
+        base.ObjectCreated();
     }
 
     private new void Start()

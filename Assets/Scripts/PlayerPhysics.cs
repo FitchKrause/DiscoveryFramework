@@ -784,6 +784,16 @@ public class PlayerPhysics : BaseObject
             {
                 Invincibility = 1;
                 SpeedSneakers = true;
+                if (StageController.LevelTimer % 60 == 0 && StageController.CurrentStage.Rings > 0)
+                {
+                    StageController.CurrentStage.Rings--;
+                }
+                else if (StageController.CurrentStage.Rings <= 0)
+                {
+                    SuperForm = false;
+                    MusicController.QueuedTime = 0f;
+                    MusicController.ToPlay = "Stage";
+                }
             }
             else
             {
@@ -793,6 +803,10 @@ public class PlayerPhysics : BaseObject
                 }
                 if (Invincibility > 0 && InvincibilityTimer <= 0)
                 {
+                    if (Invincibility == 1)
+                    {
+                        MusicController.ToPlay = MusicController.StageMusic;
+                    }
                     InvincibilityTimer = 0;
                     Invincibility = 0;
                 }
@@ -803,6 +817,7 @@ public class PlayerPhysics : BaseObject
                 }
                 if (SpeedSneakers && SpeedSneakersTimer <= 0)
                 {
+                    MusicController.ToPlay = MusicController.StageMusic;
                     SpeedSneakersTimer = 0;
                     SpeedSneakers = false;
                 }

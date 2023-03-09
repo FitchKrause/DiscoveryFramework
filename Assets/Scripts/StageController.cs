@@ -11,6 +11,7 @@ public class StageController : MonoBehaviour
     public static bool AllowPause;
     public static bool PauseTrigger;
     public static bool Paused;
+    public static bool Boss;
     
     public float GameTimer;
     public int Milliseconds;
@@ -26,9 +27,10 @@ public class StageController : MonoBehaviour
     public List<ObjectPool> ObjectPools;
     public int ObjectCount;
 
+    private static int RingsInThisRow;
     private static float CreationStrength;
-    private static float InitialStrength = 4f;
-    private static float StepStrength = 2f;
+    private static int CreationDirection = 1;
+    private static float CreationAngle = 101.25f;
 
     private void Awake()
     {
@@ -47,6 +49,8 @@ public class StageController : MonoBehaviour
 
     private void Start()
     {
+        CreationAngle = 101.25f;
+
         foreach (BaseObject objRef in FindObjectsOfType<BaseObject>())
         {
             if (objRef.ObjectName == string.Empty)
@@ -130,40 +134,31 @@ public class StageController : MonoBehaviour
 
     public static void RingLoss(int ringsToCreate, float creationX, float creationY)
     {
-        ringsToCreate = Mathf.Min(ringsToCreate, 32);
-        CreationStrength = InitialStrength;
-        for (int i = 0; i < 1 + Mathf.CeilToInt(ringsToCreate / 16); i++)
+        CreationAngle = 101.25f;
+        CreationDirection = 1;
+        CreationStrength = 4f;
+
+        for (int i = 0; i < 32; i++)
         {
-            int ringsInThisRow = Mathf.Min(16, ringsToCreate);
-            ringsToCreate = Mathf.Max(ringsToCreate - 16, 0);
-            int CreationDirection = 0;
-            float CreationAngle = 11.25f;
-            for (int j = 0; j < ringsInThisRow; j++)
+            if (ringsToCreate > 0)
             {
-                if (CreationDirection == 0)
-                {
-                    Ring movingRing = CreateStageObject("Moving Ring", creationX, creationY) as Ring;
-                    movingRing.MovementActivated = true;
-                    movingRing.XPosition = creationX;
-                    movingRing.YPosition = creationY;
-                    movingRing.XSpeed = -Mathf.Sin(CreationAngle * Mathf.Deg2Rad) * CreationStrength;
-                    movingRing.YSpeed = Mathf.Cos(CreationAngle * Mathf.Deg2Rad) * CreationStrength;
-                    movingRing.transform.position = new Vector3(movingRing.XPosition, movingRing.YPosition, 0f);
-                }
-                else if (CreationDirection == 1)
-                {
-                    Ring movingRing = CreateStageObject("Moving Ring", creationX, creationY) as Ring;
-                    movingRing.MovementActivated = true;
-                    movingRing.XPosition = creationX;
-                    movingRing.YPosition = creationY;
-                    movingRing.XSpeed = Mathf.Sin(CreationAngle * Mathf.Deg2Rad) * CreationStrength;
-                    movingRing.YSpeed = Mathf.Cos(CreationAngle * Mathf.Deg2Rad) * CreationStrength;
-                    movingRing.transform.position = new Vector3(movingRing.XPosition, movingRing.YPosition, 0f);
-                    CreationAngle += 22.5f;
-                }
-                CreationDirection = 1 - CreationDirection;
+                Ring movingRing = CreateStageObject("Moving Ring", creationX, creationY) as Ring;
+                movingRing.MovementActivated = true;
+                movingRing.XPosition = creationX;
+                movingRing.YPosition = creationY;
+                movingRing.XSpeed = Mathf.Cos(CreationAngle * Mathf.Deg2Rad) * CreationStrength * CreationDirection;
+                movingRing.YSpeed = Mathf.Sin(CreationAngle * Mathf.Deg2Rad) * CreationStrength;
+                movingRing.transform.position = new Vector3(movingRing.XPosition, movingRing.YPosition, 0f);
+                CreationDirection *= -1;
+                CreationAngle += 22.5f + Mathf.Max(0, CreationDirection);
+                ringsToCreate--;
             }
-            CreationStrength -= StepStrength;
+            if (i == 15)
+            {
+                CreationAngle = 101.25f;
+                CreationDirection = 1;
+                CreationStrength = 2f;
+            }
         }
     }
 
@@ -195,7 +190,7 @@ public class StageController : MonoBehaviour
 
     public static void DestroyStageObject(BaseObject objRef)
     {
-        if (objRef.gameObject.activeSelf != false)
+        if (objRef.gameObject.activeSelf)
         {
             objRef.gameObject.SetActive(false);
             CurrentStage.ObjectCount--;
