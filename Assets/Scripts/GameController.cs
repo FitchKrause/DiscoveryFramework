@@ -91,7 +91,6 @@ public class GameController : MonoBehaviour
     public void LoadLevel(string name)
     {
         Preload = true;
-        Debug.Log("Load");
         StartCoroutine(LoadScene(name));
     }
 

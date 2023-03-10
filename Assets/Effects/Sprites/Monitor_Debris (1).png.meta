@@ -1,17 +1,19 @@
 fileFormatVersion: 2
-guid: 459bd970a3632744a9696abc11a48527
-timeCreated: 1678065779
+guid: e92ff5d9bee9e60489a0fa3c162e37e1
+timeCreated: 1678444935
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Separator_MasterObjects
-    21300002: Separator_PlayerObjects
-    21300004: Separator_LayerSwitchers
-    21300006: Separator_Rings
-    21300008: Separator_Springs
-    21300010: Separator_Spikes
-    21300012: Separator_Monitors
-    21300014: Separator_Effects
+    21300000: Monitor_Debris (1)_0
+    21300002: Monitor_Debris (1)_1
+    21300004: Monitor_Debris (1)_2
+    21300006: Monitor_Debris (1)_3
+    21300008: Monitor_Debris (1)_4
+    21300010: Monitor_Debris (1)_5
+    21300012: Monitor_Debris (1)_6
+    21300014: Monitor_Debris (1)_7
+    21300016: Monitor_Debris (1)_8
+    21300018: Monitor_Debris (1)_9
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -49,7 +51,7 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 1
+  alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 1
@@ -61,106 +63,132 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Separator_MasterObjects
+      name: Monitor_Debris (1)_0
       rect:
         serializedVersion: 2
-        x: 368
-        y: 336
-        width: 128
-        height: 128
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 1
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Separator_PlayerObjects
+      name: Monitor_Debris (1)_1
       rect:
         serializedVersion: 2
-        x: 368
-        y: 64
-        width: 128
-        height: 256
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 10
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Separator_LayerSwitchers
+      name: Monitor_Debris (1)_2
       rect:
         serializedVersion: 2
-        x: 224
-        y: 384
-        width: 64
-        height: 80
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 19
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Separator_Rings
+      name: Monitor_Debris (1)_3
       rect:
         serializedVersion: 2
-        x: 232
-        y: 326
-        width: 56
-        height: 50
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 28
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Separator_Springs
+      name: Monitor_Debris (1)_4
       rect:
         serializedVersion: 2
-        x: 200
-        y: 120
-        width: 88
-        height: 192
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 37
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Separator_Spikes
+      name: Monitor_Debris (1)_5
       rect:
         serializedVersion: 2
-        x: 328
-        y: 0
-        width: 168
-        height: 56
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 46
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Separator_Monitors
+      name: Monitor_Debris (1)_6
       rect:
         serializedVersion: 2
-        x: 296
-        y: 89
-        width: 64
-        height: 375
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 55
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Separator_Effects
+      name: Monitor_Debris (1)_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 368
-        width: 208
-        height: 96
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 64
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Monitor_Debris (1)_8
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Monitor_Debris (1)_9
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 1
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

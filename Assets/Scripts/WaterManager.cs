@@ -17,6 +17,11 @@ public class WaterManager : MonoBehaviour
         WaterLevel = WaterMark.transform.position.y;
         StageController.CurrentStage.Water = Water;
         StageController.CurrentStage.WaterLevel = WaterLevel;
+
+        float screenWidth = (PixelCamera.XRightFrame - PixelCamera.XLeftFrame);
+        float screenHeight = (PixelCamera.YTopFrame - PixelCamera.YBottomFrame);
+
+        WaterObject.transform.localScale = new Vector3(screenWidth / 16f, screenHeight / 16f, 1f);
     }
 
     private void FixedUpdate()

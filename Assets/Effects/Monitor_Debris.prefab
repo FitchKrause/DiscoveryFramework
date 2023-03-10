@@ -78,7 +78,6 @@ MonoBehaviour:
   YSpeed: 0
   GroundSpeed: 0
   GroundAngle: 0
-  Quadrant: 0
   Ground: 0
   CollisionLayer: 0
   AnimationAngle: 0
@@ -117,7 +116,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2136474687
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 479479f7d64f2b245a83bd84f21d07f2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e92ff5d9bee9e60489a0fa3c162e37e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -6,6 +6,9 @@ public class SoundManager : MonoBehaviour
     protected static AudioSource sfxSource;
     protected static AudioSource bgmSource;
 
+    [Range(0, 100)]
+    public int MasterVolume, SFXVolume, BGMVolume;
+
     public static float MASTER_VOLUME = 100f;
 
     public static float SFX_VOLUME = 50f;
@@ -13,6 +16,10 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        MASTER_VOLUME = MasterVolume;
+        SFX_VOLUME = SFXVolume;
+        BGM_VOLUME = BGMVolume;
+
         if (GameObject.Find("SFX Source"))
         {
             sfxSource = GameObject.Find("SFX Source").GetComponent<AudioSource>();

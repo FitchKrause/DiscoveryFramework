@@ -16,16 +16,12 @@ public class HUD : MonoBehaviour
     private int FPS;
     private int FPS_Timer;
 
-    private bool KeyStart;
-    private bool KeyStartPressed;
-    private bool KeyUp;
-    private bool KeyUpPressed;
-    private bool KeyDown;
-    private bool KeyDownPressed;
-    private bool KeyActionA;
-    private bool KeyActionAPressed;
-    private bool KeyActionB;
-    private bool KeyActionBPressed;
+    private InputManager input;
+
+    private void Start()
+    {
+        input = InputManager.instance;
+    }
 
     private void Update()
     {
@@ -38,21 +34,6 @@ public class HUD : MonoBehaviour
 
     private void FixedUpdate()
     {
-        KeyStartPressed = Input.GetKey(KeyCode.Return) && !KeyStart;
-        KeyStart = Input.GetKey(KeyCode.Return);
-
-        KeyUpPressed = Input.GetKey(KeyCode.UpArrow) && !KeyUp;
-        KeyUp = Input.GetKey(KeyCode.UpArrow);
-
-        KeyDownPressed = Input.GetKey(KeyCode.DownArrow) && !KeyDown;
-        KeyDown = Input.GetKey(KeyCode.DownArrow);
-
-        KeyActionAPressed = Input.GetKey(KeyCode.Z) && !KeyActionA;
-        KeyActionA = Input.GetKey(KeyCode.Z);
-
-        KeyActionBPressed = Input.GetKey(KeyCode.X) && !KeyActionB;
-        KeyActionB = Input.GetKey(KeyCode.X);
-
         GUI_Score[6].SetValue(GameController.Score / 1000000);
         GUI_Score[5].SetValue(GameController.Score / 100000 % 10);
         GUI_Score[4].SetValue(GameController.Score / 10000 % 10);
@@ -104,7 +85,7 @@ public class HUD : MonoBehaviour
         GUI_FPS[1].GetComponent<SpriteRenderer>().enabled = FPS >= 10;
         GUI_FPS[0].GetComponent<SpriteRenderer>().enabled = true;
 
-        if (StageController.Paused ? KeyActionBPressed : KeyStartPressed)
+        if (StageController.Paused ? input.KeyActionBPressed : input.KeyStartPressed)
         {
             PauseOption = 0;
             StageController.PauseTrigger = true;
@@ -112,7 +93,7 @@ public class HUD : MonoBehaviour
 
         if (StageController.Paused)
         {
-            if (KeyDownPressed)
+            if (input.KeyDownPressed)
             {
                 PauseOption++;
                 if (PauseOption > 2)
@@ -120,7 +101,7 @@ public class HUD : MonoBehaviour
                     PauseOption = 0;
                 }
             }
-            if (KeyUpPressed)
+            if (input.KeyUpPressed)
             {
                 PauseOption--;
                 if (PauseOption < 0)
@@ -129,7 +110,7 @@ public class HUD : MonoBehaviour
                 }
             }
 
-            if (KeyStartPressed || KeyActionAPressed)
+            if (input.KeyStartPressed || input.KeyActionAPressed)
             {
                 if (PauseOption == 0)
                 {
