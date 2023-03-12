@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CheckPoint : BaseObject
+public class LampPost : BaseObject
 {
     public bool Flag0;
     public bool Flag1;

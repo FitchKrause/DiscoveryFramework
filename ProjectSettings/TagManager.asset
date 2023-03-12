@@ -17,8 +17,8 @@ TagManager:
   - 
   - Layer A
   - Layer B
-  - 
-  - 
+  - Layer C
+  - Layer D
   - 
   - 
   - 
@@ -49,11 +49,11 @@ TagManager:
   - name: High
     uniqueID: 3283253211
     locked: 0
-  - name: Water
-    uniqueID: 4014409731
-    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Water
+    uniqueID: 4014409731
     locked: 0
   - name: HUD
     uniqueID: 1077528889
