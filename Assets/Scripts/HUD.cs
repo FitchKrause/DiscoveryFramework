@@ -50,21 +50,21 @@ public class HUD : MonoBehaviour
         GUI_Score[1].GetComponent<SpriteRenderer>().enabled = GameController.Score >= 10;
         GUI_Score[0].GetComponent<SpriteRenderer>().enabled = true;
 
-        GUI_Time[5].SetValue(StageController.CurrentStage.Minutes / 10);
-        GUI_Time[4].SetValue(StageController.CurrentStage.Minutes % 10);
-        GUI_Time[3].SetValue(StageController.CurrentStage.Seconds / 10);
-        GUI_Time[2].SetValue(StageController.CurrentStage.Seconds % 10);
-        GUI_Time[1].SetValue(StageController.CurrentStage.Milliseconds / 10);
-        GUI_Time[0].SetValue(StageController.CurrentStage.Milliseconds % 10);
+        GUI_Time[5].SetValue(LevelController.CurrentLevel.Minutes / 10);
+        GUI_Time[4].SetValue(LevelController.CurrentLevel.Minutes % 10);
+        GUI_Time[3].SetValue(LevelController.CurrentLevel.Seconds / 10);
+        GUI_Time[2].SetValue(LevelController.CurrentLevel.Seconds % 10);
+        GUI_Time[1].SetValue(LevelController.CurrentLevel.Milliseconds / 10);
+        GUI_Time[0].SetValue(LevelController.CurrentLevel.Milliseconds % 10);
 
-        GUI_Time[5].GetComponent<SpriteRenderer>().enabled = StageController.CurrentStage.Minutes >= 10;
+        GUI_Time[5].GetComponent<SpriteRenderer>().enabled = LevelController.CurrentLevel.Minutes >= 10;
 
-        GUI_Rings[2].SetValue(StageController.CurrentStage.Rings / 100);
-        GUI_Rings[1].SetValue(StageController.CurrentStage.Rings / 10 % 10);
-        GUI_Rings[0].SetValue(StageController.CurrentStage.Rings % 10);
+        GUI_Rings[2].SetValue(LevelController.CurrentLevel.Rings / 100);
+        GUI_Rings[1].SetValue(LevelController.CurrentLevel.Rings / 10 % 10);
+        GUI_Rings[0].SetValue(LevelController.CurrentLevel.Rings % 10);
 
-        GUI_Rings[2].GetComponent<SpriteRenderer>().enabled = StageController.CurrentStage.Rings >= 100;
-        GUI_Rings[1].GetComponent<SpriteRenderer>().enabled = StageController.CurrentStage.Rings >= 10;
+        GUI_Rings[2].GetComponent<SpriteRenderer>().enabled = LevelController.CurrentLevel.Rings >= 100;
+        GUI_Rings[1].GetComponent<SpriteRenderer>().enabled = LevelController.CurrentLevel.Rings >= 10;
         GUI_Rings[0].GetComponent<SpriteRenderer>().enabled = true;
 
         GUI_Lives[1].SetValue(GameController.Lives / 10);
@@ -85,13 +85,13 @@ public class HUD : MonoBehaviour
         GUI_FPS[1].GetComponent<SpriteRenderer>().enabled = FPS >= 10;
         GUI_FPS[0].GetComponent<SpriteRenderer>().enabled = true;
 
-        if (StageController.Paused ? input.KeyActionBPressed : input.KeyStartPressed)
+        if (LevelController.Paused ? input.KeyActionBPressed : input.KeyStartPressed)
         {
             PauseOption = 0;
-            StageController.PauseTrigger = true;
+            LevelController.PauseTrigger = true;
         }
 
-        if (StageController.Paused)
+        if (LevelController.Paused)
         {
             if (input.KeyDownPressed)
             {
@@ -114,7 +114,7 @@ public class HUD : MonoBehaviour
             {
                 if (PauseOption == 0)
                 {
-                    StageController.PauseTrigger = true;
+                    LevelController.PauseTrigger = true;
                 }
                 if (PauseOption == 1 && !GameController.Preload)
                 {
@@ -127,7 +127,7 @@ public class HUD : MonoBehaviour
             }
         }
 
-        GUI_Pause.SetActive(StageController.Paused);
+        GUI_Pause.SetActive(LevelController.Paused);
         Vector3 vector = GUI_PauseCursor.transform.position;
         vector.y = GUI_Pause.transform.position.y + (-16f * PauseOption);
         GUI_PauseCursor.transform.position = vector;
@@ -135,6 +135,6 @@ public class HUD : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.position = new Vector3(PixelCamera.XLeftFrame, PixelCamera.YTopFrame, 0f);
+        transform.position = new Vector3(SceneController.XLeftFrame, SceneController.YTopFrame, 0f);
     }
 }

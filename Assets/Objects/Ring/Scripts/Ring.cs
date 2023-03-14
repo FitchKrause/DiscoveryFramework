@@ -12,7 +12,7 @@ public class Ring : BaseObject
     public bool Flag0;
     public bool Flag1;
     public bool MovementActivated;
-    public int Life;
+    public float Life;
 
     public AudioClip Sound_Ring;
 
@@ -59,20 +59,20 @@ public class Ring : BaseObject
         {
             if (YPosition < player.YPosition && YSpeed < TopSpeed)
             {
-                YSpeed += Acceleration;
+                YSpeed += Acceleration * GameController.DeltaTime;
             }
             else if (YPosition > player.YPosition && YSpeed > -TopSpeed)
             {
-                YSpeed -= Acceleration;
+                YSpeed -= Acceleration * GameController.DeltaTime;
             }
 
             if (XPosition > player.XPosition && XSpeed > -TopSpeed)
             {
-                XSpeed -= Acceleration;
+                XSpeed -= Acceleration * GameController.DeltaTime;
             }
             else if (XPosition < player.XPosition && XSpeed < TopSpeed)
             {
-                XSpeed += Acceleration;
+                XSpeed += Acceleration * GameController.DeltaTime;
             }
         }
 
@@ -83,15 +83,15 @@ public class Ring : BaseObject
 
         if (Flag1 && YSpeed > -TopSpeed * 2f)
         {
-            XSpeed *= 0.95f;
-            YSpeed -= Acceleration;
+            XSpeed *= 0.95f / GameController.DeltaTime;
+            YSpeed -= Acceleration * GameController.DeltaTime;
         }
 
         ProcessMovement();
 
         if (MovementActivated)
         {
-            YSpeed -= 0.09375f;
+            YSpeed -= 0.09375f * GameController.DeltaTime;
             for (int i = 0; i < ObjectLoops; i++)
             {
                 Vector2 top = new Vector2(XPosition, YPosition + Mathf.Max(YSpeed + 8f, 8f));
@@ -99,21 +99,21 @@ public class Ring : BaseObject
                 Vector2 left = new Vector2(XPosition + Mathf.Min(XSpeed - 8f, -8f), YPosition);
                 Vector2 right = new Vector2(XPosition + Mathf.Max(XSpeed + 8f, 8f), YPosition);
 
-                if (XSpeed >= 0f && StageController.PointCast(this, right))
+                if (XSpeed >= 0f && Utils.PointCast(this, right))
                 {
                     XSpeed = Mathf.Min(-XSpeed, -2f);
                 }
-                if (XSpeed <= 0f && StageController.PointCast(this, left))
+                if (XSpeed <= 0f && Utils.PointCast(this, left))
                 {
                     XSpeed = Mathf.Max(-XSpeed, 2f);
                 }
 
-                if (YSpeed <= 0f && StageController.PointCast(this, bottom))
+                if (YSpeed <= 0f && Utils.PointCast(this, bottom))
                 {
                     YSpeed = Mathf.Max(-YSpeed, 2f);
                     Ground = true;
                 }
-                if (!Ground && YSpeed >= 0f && StageController.PointCast(this, top))
+                if (!Ground && YSpeed >= 0f && Utils.PointCast(this, top))
                 {
                     YSpeed = Mathf.Min(-YSpeed, -2f);
                 }
@@ -121,32 +121,32 @@ public class Ring : BaseObject
                 Ground = false;
             }
 
-            Life++;
+            Life += GameController.DeltaTime;
 
-            if (Life >= 312)
+            if (Life >= 312f)
             {
                 MovementActivated = false;
-                StageController.DestroyStageObject(this);
+                SceneController.DestroyStageObject(this);
             }
         }
 
         Rect.XPosition = XPosition;
         Rect.YPosition = YPosition;
 
-        if (player.Action != 8 && player.Action != 9 && StageController.AABB(Rect, player.Rect))
+        if (player.Action != 8 && player.Action != 9 && Utils.AABB(Rect, player.Rect))
         {
             GameController.Score += 10;
-            SoundManager.PlaySFX(Sound_Ring);
-            StageController.CurrentStage.Rings++;
+            AudioController.PlaySFX(Sound_Ring);
+            LevelController.CurrentLevel.Rings++;
             for (int i = 0; i < 3; i++)
             {
                 float PosX = XPosition + (Random.Range(0f, 16f) - Random.Range(0f, 16f));
                 float PosY = YPosition + (Random.Range(0f, 16f) - Random.Range(0f, 16f));
-                Sparkle sparkle = StageController.CreateStageObject("Ring Sparkle", PosX, PosY) as Sparkle;
+                Sparkle sparkle = SceneController.CreateStageObject("Ring Sparkle", PosX, PosY) as Sparkle;
                 sparkle.XPosition = PosX;
                 sparkle.YPosition = PosY;
             }
-            StageController.DestroyStageObject(this);
+            SceneController.DestroyStageObject(this);
         }
     }
 }

@@ -6,13 +6,10 @@ public class PlayerPhysics : BaseObject
     #region Player Values
     #region Player movement values
     [HideInInspector] public int Quadrant;
-    [HideInInspector] public float PreviousX;
-    [HideInInspector] public float PreviousY;
-    [HideInInspector] public float OldXSpeed;
-    [HideInInspector] public float OldYSpeed;
     [HideInInspector] public int Action;
     [HideInInspector] public int ControlLock;
     [HideInInspector] public bool Landed;
+    [HideInInspector] public float LandingSpeed;
     [HideInInspector] public int LandFrame;
     [HideInInspector] public int CeilingLand;
     [HideInInspector] public bool Attacking;
@@ -37,10 +34,11 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public int InvincibilityTimer;
     [HideInInspector] public bool SpeedSneakers;
     [HideInInspector] public int SpeedSneakersTimer;
-    public bool Underwater;
+    [HideInInspector] public bool Underwater;
     [HideInInspector] public int Hurt;
     [HideInInspector] public int Direction;
     [HideInInspector] public float Animation;
+    [HideInInspector] public float AnimationAngle;
     [HideInInspector] public float SmoothAngle;
     #endregion
     #region Player sounds
@@ -99,24 +97,24 @@ public class PlayerPhysics : BaseObject
         Direction = 1;
 
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = (SoundManager.SFX_VOLUME * (SoundManager.MASTER_VOLUME / 100f)) / 100f;
+        audioSource.volume = (AudioController.SFX_VOLUME * (AudioController.MASTER_VOLUME / 100f)) / 100f;
         Shields = FindObjectsOfType<Shield>();
 
         base.Start();
 
-        if (!StageController.CheckPoint)
+        if (!LevelController.CheckPoint)
         {
             XPosition = transform.position.x;
             YPosition = transform.position.y;
-            StageController.LevelTimer = 0f;
-            StageController.CurrentStage.GameTimer = 0f;
+            LevelController.LevelTimer = 0f;
+            LevelController.CurrentLevel.GameTimer = 0f;
         }
         else
         {
-            XPosition = StageController.CheckPointX;
-            YPosition = StageController.CheckPointY;
-            StageController.LevelTimer = StageController.CheckPointLevelTime;
-            StageController.CurrentStage.GameTimer = StageController.CheckPointGameTime;
+            XPosition = LevelController.CheckPointX;
+            YPosition = LevelController.CheckPointY;
+            LevelController.LevelTimer = LevelController.CheckPointLevelTime;
+            LevelController.CurrentLevel.GameTimer = LevelController.CheckPointGameTime;
         }
 
         render.enabled = false;
@@ -204,119 +202,91 @@ public class PlayerPhysics : BaseObject
             #region Slope Factor
             if (AllowInput && Ground && Action != 6)
             {
-                //Slip down on the slopes
-                GroundSpeed -= SlopeFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                GroundSpeed -= (SlopeFactor * GameController.DeltaTime) * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
             }
             #endregion
             #region X Control
-            //If the player is on the ground and the input lock is deactivated
             if (AllowInput && !(Ground && ControlLock > 0) && Action != 6)
             {
-                //If the player is pressing left
                 if (inpDir < 0)
                 {
-                    //If the player is on the ground
                     if (Ground)
                     {
-                        //If moving to the right
                         if (GroundSpeed > 0f)
                         {
-                            //Decelerate
-                            GroundSpeed -= Deceleration;
+                            GroundSpeed -= Deceleration * GameController.DeltaTime;
 
                             if (GroundSpeed <= 0f)
                             {
-                                //Emulate deceleration quirk
                                 GroundSpeed = -0.5f;
                             }
                         }
-                        //If moving to the left
                         else if (GroundSpeed > -TopSpeed)
                         {
-                            //Accelerate
-                            GroundSpeed -= Acceleration;
+                            GroundSpeed -= Acceleration * GameController.DeltaTime;
 
                             if (GroundSpeed <= -TopSpeed)
                             {
-                                //Impose top speed limit
                                 GroundSpeed = -TopSpeed;
                             }
                         }
                     }
-                    //If moving to the left (while in air)
                     else if (XSpeed > -TopSpeed)
                     {
-                        //Accelerate
-                        XSpeed -= AirAcceleration;
+                        XSpeed -= AirAcceleration * GameController.DeltaTime;
 
                         if (XSpeed <= -TopSpeed)
                         {
-                            //Impose top speed limit
                             XSpeed = -TopSpeed;
                         }
                     }
                 }
-
-                //If the player is pressing right
+                
                 if (inpDir > 0)
                 {
-                    //If the player is on the ground
                     if (Ground)
                     {
-                        //If moving to the left
                         if (GroundSpeed < 0f)
                         {
-                            //Decelerate
-                            GroundSpeed += Deceleration;
+                            GroundSpeed += Deceleration * GameController.DeltaTime;
 
                             if (GroundSpeed >= 0f)
                             {
-                                //Emulate deceleration quirk
                                 GroundSpeed = 0.5f;
                             }
                         }
-                        //If moving to the right
                         else if (GroundSpeed < TopSpeed)
                         {
-                            //Accelerate
-                            GroundSpeed += Acceleration;
+                            GroundSpeed += Acceleration * GameController.DeltaTime;
 
                             if (GroundSpeed >= TopSpeed)
                             {
-                                //Impose top speed limit
                                 GroundSpeed = TopSpeed;
                             }
                         }
                     }
-                    //If moving to the right (while in air)
                     else if (XSpeed < TopSpeed)
                     {
-                        //Accelerate 
-                        XSpeed += AirAcceleration;
+                        XSpeed += AirAcceleration * GameController.DeltaTime;
 
                         if (XSpeed >= TopSpeed)
                         {
-                            //Impose top speed limit
                             XSpeed = TopSpeed;
                         }
                     }
                 }
-
-                //If the player is not pressing left or right
+                
                 if (Ground && inpDir == 0)
                 {
-                    //Decelerate
-                    GroundSpeed -= Mathf.Min(Mathf.Abs(GroundSpeed), Friction) * Mathf.Sign(GroundSpeed);
-
-                    //Set speed to 0 when it's very low
-                    if (Mathf.Abs(GroundSpeed) < Friction)
+                    GroundSpeed -= Mathf.Min(Mathf.Abs(GroundSpeed), (Friction * GameController.DeltaTime)) * Mathf.Sign(GroundSpeed);
+                    
+                    if (Mathf.Abs(GroundSpeed) < Deceleration)
                     {
                         GroundSpeed = 0f;
                     }
                 }
             }
-
-            //Keep the player inside the level boundaries
+            
             if ((Ground ? GroundSpeed : XSpeed) < 0f && XPosition <= CameraController.CameraMinimumX + 16f)
             {
                 if (Ground) GroundSpeed = 0f;
@@ -345,17 +315,18 @@ public class PlayerPhysics : BaseObject
                             XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
                             YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
                             GroundAngle = 0f;
+                            SmoothAngle = 0f;
                             Ground = false;
                         }
                         else
                         {
                             if (GroundAngle < 180f)
                             {
-                                GroundSpeed -= 0.5f;
+                                GroundSpeed -= 0.5f * GameController.DeltaTime;
                             }
                             else
                             {
-                                GroundSpeed += 0.5f;
+                                GroundSpeed += 0.5f * GameController.DeltaTime;
                             }
                         }
                     }
@@ -371,14 +342,10 @@ public class PlayerPhysics : BaseObject
         #endregion
         #region Player Movement
         #region Start Movement
-        //ColliderFloor = ColliderCeiling = ColliderWallLeft = ColliderWallRight = null;
-
-        //Speed limits
         GroundSpeed = Mathf.Clamp(GroundSpeed, -MaxXSpeed, MaxXSpeed);
         XSpeed = Mathf.Clamp(XSpeed, -MaxXSpeed, MaxXSpeed);
         YSpeed = Mathf.Clamp(YSpeed, -MaxYSpeed, MaxYSpeed);
-
-        //Reset land flag
+        
         if (Landed)
         {
             LandFrame++;
@@ -391,8 +358,7 @@ public class PlayerPhysics : BaseObject
         {
             LandFrame = 0;
         }
-
-        //Move along slopes
+        
         float AddX = 0f;
         float AddY = 0f;
 
@@ -401,20 +367,14 @@ public class PlayerPhysics : BaseObject
             XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
             YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
 
-            AddX = XSpeed;
-            AddY = YSpeed;
+            AddX = XSpeed * GameController.DeltaTime;
+            AddY = YSpeed * GameController.DeltaTime;
         }
         else if (!Ground)
         {
-            if (AllowX) AddX = XSpeed;
-            if (AllowY) AddY = YSpeed;
+            if (AllowX) AddX = XSpeed * GameController.DeltaTime;
+            if (AllowY) AddY = YSpeed * GameController.DeltaTime;
         }
-
-        PreviousX = XPosition;
-        PreviousY = YPosition;
-
-        if (Ground) OldXSpeed = GroundSpeed;
-        else OldYSpeed = YSpeed;
 
         ObjectLoops = (int)(Mathf.Sqrt((XSpeed * XSpeed) + (YSpeed * YSpeed)) + 1f);
 
@@ -423,18 +383,15 @@ public class PlayerPhysics : BaseObject
 
         for (int i = 0; i < ObjectLoops; i++)
         {
-            //Move
             XPosition += AddX;
             YPosition += AddY;
             #endregion
-            #region Wall Collisions
+            #region Horizontal Collisions
             if (AllowX)
             {
-                //Wall Collisions
                 RaycastHit2D wallLeftHit = SensorCast(new Vector2(0f, WallShift), Vector2.left, WidthRadius);
                 RaycastHit2D wallRightHit = SensorCast(new Vector2(0f, WallShift), Vector2.right, WidthRadius);
-
-                //Left side
+                
                 if (wallLeftHit)
                 {
                     Vector2 vector = new Vector2(-Mathf.Cos(GroundAngle * Mathf.Deg2Rad), -Mathf.Sin(GroundAngle * Mathf.Deg2Rad)) * (wallLeftHit.distance - WidthRadius);
@@ -443,8 +400,7 @@ public class PlayerPhysics : BaseObject
                     if (Ground) GroundSpeed = 0f;
                     else XSpeed = 0f;
                 }
-
-                //Right side
+                
                 if (wallRightHit)
                 {
                     Vector2 vector = new Vector2(Mathf.Cos(GroundAngle * Mathf.Deg2Rad), Mathf.Sin(GroundAngle * Mathf.Deg2Rad)) * (wallRightHit.distance - WidthRadius);
@@ -455,11 +411,10 @@ public class PlayerPhysics : BaseObject
                 }
             }
             #endregion
-            #region Floor and Ceiling Collisions / Landing
+            #region Vertical Collisions
             if (AllowY && !Ground)
             {
                 #region Floor and Ceiling Collisions
-                //Ceiling and Floor collisions
                 RaycastHit2D floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, HeightRadius);
                 RaycastHit2D floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius);
                 RaycastHit2D floorHit = default(RaycastHit2D);
@@ -469,10 +424,8 @@ public class PlayerPhysics : BaseObject
                 RaycastHit2D ceilingHit = default(RaycastHit2D);
 
                 #region Ceiling Collisions
-                //If "C" and "D" are colliding
                 if (ceilingLeftHit && ceilingRightHit)
                 {
-                    //If distance of "C" is less than distance of "D"
                     if (ceilingLeftHit.distance < ceilingRightHit.distance)
                     {
                         ceilingHit = ceilingLeftHit;
@@ -482,32 +435,23 @@ public class PlayerPhysics : BaseObject
                         ceilingHit = ceilingRightHit;
                     }
                 }
-                //If "C" is not colliding but "D" is
                 else if (!ceilingLeftHit && ceilingRightHit)
                 {
                     ceilingHit = ceilingRightHit;
                 }
-                //If "C" is colliding but "D" is not
                 else if (ceilingLeftHit && !ceilingRightHit)
                 {
                     ceilingHit = ceilingLeftHit;
                 }
-
-                //If "sensor with shortest distance" is colliding
+                
                 if (ceilingHit)
                 {
                     YPosition += ceilingHit.distance - HeightRadius;
-                    if (CeilingLand == -1)
-                    {
-                        YSpeed = 0f;
-                    }
                 }
                 #endregion
                 #region Floor Collisions
-                //If "A" and "B" are colliding
                 if (floorLeftHit && floorRightHit)
                 {
-                    //If distance of "A" is less than distance of "B"
                     if (floorLeftHit.distance < floorRightHit.distance)
                     {
                         floorHit = floorLeftHit;
@@ -517,18 +461,15 @@ public class PlayerPhysics : BaseObject
                         floorHit = floorRightHit;
                     }
                 }
-                //If "A" is not colliding but "B" is
                 else if (!floorLeftHit && floorRightHit)
                 {
                     floorHit = floorRightHit;
                 }
-                //If "A" is colliding but "B" is not
                 else if (floorLeftHit && !floorRightHit)
                 {
                     floorHit = floorLeftHit;
                 }
-
-                //If "sensor with shortest distance" is colliding
+                
                 if (floorHit)
                 {
                     YPosition -= floorHit.distance - HeightRadius;
@@ -539,10 +480,8 @@ public class PlayerPhysics : BaseObject
                 #region Floor Landing
                 if (AllowLanding && YSpeed <= 0f && floorHit)
                 {
-                    //Detect angle
                     DetectAngle(true);
-
-                    //When landing, add an additional speed.
+                    
                     if (GroundAngle >= 45f && GroundAngle <= 315f)
                     {
                         XSpeed += Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * YSpeed;
@@ -551,10 +490,10 @@ public class PlayerPhysics : BaseObject
                     {
                         XSpeed += Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * (YSpeed * 0.5f);
                     }
-
-                    //Switch to "Grounded mode"
+                    
                     CeilingLand = 0;
                     GroundSpeed = XSpeed;
+                    LandingSpeed = YSpeed;
                     Ground = true;
                     Landed = true;
                     JumpVariable = false;
@@ -577,7 +516,7 @@ public class PlayerPhysics : BaseObject
                             if (GroundAngle >= 170f && GroundAngle <= 190f)
                             {
                                 YSpeed = 0f;
-                                CeilingLand = 0;
+                                CeilingLand = -1;
                                 GroundAngle = 0f;
                                 SmoothAngle = 0f;
                             }
@@ -588,8 +527,8 @@ public class PlayerPhysics : BaseObject
                                 if (CeilingLand == 3)
                                 {
                                     CeilingLand = 0;
-                                    JumpVariable = false;
                                     GroundSpeed = XSpeed;
+                                    LandingSpeed = YSpeed;
                                     Ground = true;
                                     Landed = true;
                                     Action = 1;
@@ -613,14 +552,12 @@ public class PlayerPhysics : BaseObject
             if (Ground)
             {
                 #region Stick to Ground
-                RaycastHit2D floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, 32f);
-                RaycastHit2D floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, 32f);
+                RaycastHit2D floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, HeightRadius + 12f);
+                RaycastHit2D floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius + 12f);
                 RaycastHit2D floorHit = default(RaycastHit2D);
 
-                //If "A" and "B" are colliding
                 if (floorLeftHit && floorRightHit)
                 {
-                    //If distance of "A" is less than distance of "B"
                     if (floorLeftHit.distance < floorRightHit.distance)
                     {
                         floorHit = floorLeftHit;
@@ -630,31 +567,28 @@ public class PlayerPhysics : BaseObject
                         floorHit = floorRightHit;
                     }
                 }
-                //If "A" is not colliding but "B" is
                 else if (!floorLeftHit && floorRightHit)
                 {
                     floorHit = floorRightHit;
                 }
-                //If "A" is colliding but "B" is not
                 else if (floorLeftHit && !floorRightHit)
                 {
                     floorHit = floorLeftHit;
                 }
 
-                //If "sensor with shortest distance" is colliding
                 if (floorHit)
                 {
                     Vector2 vector = new Vector2(Mathf.Sin(GroundAngle * Mathf.Deg2Rad), -Mathf.Cos(GroundAngle * Mathf.Deg2Rad)) * (floorHit.distance - HeightRadius);
                     XPosition += vector.x;
                     YPosition += vector.y;
                 }
-                //Fall when not in ground anymore
-                else if (AllowFalling)
+                else
                 {
                     CeilingLand = -1;
                     XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
                     YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
                     GroundAngle = 0f;
+                    SmoothAngle = 0f;
                     Ground = false;
                 }
                 #endregion
@@ -672,16 +606,11 @@ public class PlayerPhysics : BaseObject
             Rect.YPosition = YPosition;
             Rect.WidthRadius = WidthRadius;
             Rect.HeightRadius = HeightRadius;
-        }
 
-        ColliderFloor = BoxCast(new Vector2(0f, -HeightRadius + Mathf.Min(Ground ? 0f : YSpeed, 0f)), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
-        ColliderCeiling = BoxCast(new Vector2(0f, HeightRadius + Mathf.Max(Ground ? 0f : YSpeed, 0f)), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
-        ColliderWallLeft = BoxCast(new Vector2(-WidthRadius + Mathf.Min(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
-        ColliderWallRight = BoxCast(new Vector2(WidthRadius + Mathf.Max(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
-
-        if (YPosition < -StageController.CurrentStage.Height - 32f)
-        {
-            Hurt = 2;
+            ColliderFloor = BoxCast(new Vector2(0f, -HeightRadius + Mathf.Min(Ground ? 0f : YSpeed, 0f)), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
+            ColliderCeiling = BoxCast(new Vector2(0f, HeightRadius + Mathf.Max(Ground ? 0f : YSpeed, 0f)), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
+            ColliderWallLeft = BoxCast(new Vector2(-WidthRadius + Mathf.Min(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
+            ColliderWallRight = BoxCast(new Vector2(WidthRadius + Mathf.Max(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
         }
         #endregion
         #endregion
@@ -690,13 +619,11 @@ public class PlayerPhysics : BaseObject
         #region Y Control
         if (!Ground)
         {
-            //Gravity
-            YSpeed -= GravityForce;
-
-            //Air drag
+            YSpeed -= GravityForce * GameController.DeltaTime;
+            
             if (YSpeed > 0f && YSpeed < 4f && Mathf.Abs(XSpeed) >= 0.125f)
             {
-                XSpeed *= AirDrag;
+                XSpeed *= AirDrag / GameController.DeltaTime;
             }
         }
         #endregion
@@ -775,11 +702,11 @@ public class PlayerPhysics : BaseObject
             {
                 Invincibility = 1;
                 SpeedSneakers = true;
-                if (StageController.LevelTimer % 60 == 0 && StageController.CurrentStage.Rings > 0)
+                if (LevelController.LevelTimer % 60 == 0 && LevelController.CurrentLevel.Rings > 0)
                 {
-                    StageController.CurrentStage.Rings--;
+                    LevelController.CurrentLevel.Rings--;
                 }
-                else if (StageController.CurrentStage.Rings <= 0)
+                else if (LevelController.CurrentLevel.Rings <= 0)
                 {
                     SuperForm = false;
                     MusicController.QueuedTime = 0f;
@@ -836,10 +763,10 @@ public class PlayerPhysics : BaseObject
                     Invincibility = 2;
                     InvincibilityTimer = 250;
                     Shield = 0;
-                    SoundManager.PlaySFX(Sound_Hurt);
+                    AudioController.PlaySFX(Sound_Hurt);
                     CurrentAction = Action08_Hurt;
                 }
-                else if (StageController.CurrentStage.Rings > 0)
+                else if (LevelController.CurrentLevel.Rings > 0)
                 {
                     XSpeed = -2.2f * Direction;
                     YSpeed = 4.2f;
@@ -850,20 +777,24 @@ public class PlayerPhysics : BaseObject
                     Hurt = 0;
                     Invincibility = 2;
                     InvincibilityTimer = 250;
-                    StageController.RingLoss(StageController.CurrentStage.Rings, XPosition, YPosition);
-                    StageController.CurrentStage.Rings = 0;
-                    SoundManager.PlaySFX(Sound_LoseRings);
+                    LevelController.RingLoss(LevelController.CurrentLevel.Rings, XPosition, YPosition);
+                    LevelController.CurrentLevel.Rings = 0;
+                    AudioController.PlaySFX(Sound_LoseRings);
                     CurrentAction = Action08_Hurt;
                 }
-                else if (StageController.CurrentStage.Rings == 0)
+                else if (LevelController.CurrentLevel.Rings == 0)
                 {
                     Hurt = 2;
                 }
             }
+            if (YPosition < -LevelController.CurrentLevel.Height - 32f)
+            {
+                Hurt = 2;
+            }
             if (Hurt == 2)
             {
-                StageController.AllowTime = StageController.AllowPause = false;
-                foreach (BaseObject objRef in StageController.CurrentStage.ObjectList)
+                LevelController.AllowTime = LevelController.AllowPause = false;
+                foreach (BaseObject objRef in LevelController.CurrentLevel.ObjectList)
                 {
                     if (objRef == this) continue;
 
@@ -883,7 +814,7 @@ public class PlayerPhysics : BaseObject
                 Hurt = 0;
                 CollisionLayer = 0;
                 CurrentAction = Action09_Die;
-                SoundManager.PlaySFX(Sound_Hurt);
+                AudioController.PlaySFX(Sound_Hurt);
             }
         }
         #endregion
@@ -913,12 +844,10 @@ public class PlayerPhysics : BaseObject
         #region Change Direction
         if (AllowDirection)
         {
-            //Right
             if (inpDir > 0)
             {
                 Direction = 1;
             }
-            //Left
             if (inpDir < 0)
             {
                 Direction = -1;
@@ -1086,11 +1015,11 @@ public class PlayerPhysics : BaseObject
         {
             if (Mathf.Abs(((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) < 60f && Mathf.Abs(((0f - GroundAngle + 540f) % 360f) - 180f) >= 40f)
             {
-                SmoothAngle = ((720f + SmoothAngle) % 360f) + ((((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) * Mathf.Max(0.165f, Mathf.Abs(XSpeed) / MaxXSpeed * 0.8f));
+                SmoothAngle = ((720f + SmoothAngle) % 360f) + (((((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) * Mathf.Max(0.165f, Mathf.Abs(XSpeed) / MaxXSpeed * 0.8f)) * GameController.DeltaTime);
             }
             else if (Mathf.Abs(((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) < 60f && Mathf.Abs(((0f - GroundAngle + 540f) % 360f) - 180f) < 40f)
             {
-                SmoothAngle = ((720f + SmoothAngle) % 360f) + ((((0f - SmoothAngle + 540f) % 360f) - 180f) * Mathf.Max(0.165f, Mathf.Abs(XSpeed) / MaxXSpeed * 0.8f));
+                SmoothAngle = ((720f + SmoothAngle) % 360f) + (((((0f - SmoothAngle + 540f) % 360f) - 180f) * Mathf.Max(0.165f, Mathf.Abs(XSpeed) / MaxXSpeed * 0.8f)) * GameController.DeltaTime);
             }
             else if (Mathf.Abs(((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) >= 60f)
             {
@@ -1110,18 +1039,20 @@ public class PlayerPhysics : BaseObject
 
             if (AnimationAngle < 180f)
             {
-                AnimationAngle = Mathf.Max(AnimationAngle - 4f, 0f);
+                AnimationAngle = Mathf.Max(AnimationAngle - (4f * GameController.DeltaTime), 0f);
             }
             else
             {
-                AnimationAngle = Mathf.Min(AnimationAngle + 4f, 360f) % 360f;
+                AnimationAngle = Mathf.Min(AnimationAngle + (4f * GameController.DeltaTime), 360f) % 360f;
             }
         }
+
+        Angle = AnimationAngle;
         #endregion
         #region Flash!
         if (Action != 8 && Invincibility == 2 && InvincibilityTimer > 0f)
         {
-            render.enabled = (StageController.LevelTimer % 6f) < 3f;
+            render.enabled = (LevelController.LevelTimer % 6f) < 3f;
         }
         else if (Invincibility != 2)
         {
@@ -1130,28 +1061,28 @@ public class PlayerPhysics : BaseObject
         #endregion
         #endregion
         #region Water
-        if (!Underwater && Action != 9 && StageController.CurrentStage.Water && YPosition <= StageController.CurrentStage.WaterLevel)
+        if (!Underwater && Action != 9 && LevelController.CurrentLevel.Water && YPosition <= LevelController.CurrentLevel.WaterLevel)
         {
             Underwater = true;
             if (!Ground)
             {
-                YSpeed *= 0.2f;
-                XSpeed *= 0.5f;
+                YSpeed *= 0.2f / GameController.DeltaTime;
+                XSpeed *= 0.5f / GameController.DeltaTime;
             }
-            SoundManager.PlaySFX(Sound_Splash);
-            Splash waterSplash = StageController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
+            AudioController.PlaySFX(Sound_Splash);
+            Splash waterSplash = SceneController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
             waterSplash.XPosition = XPosition;
             waterSplash.render.sortingLayerName = render.sortingLayerName;
         }
-        if (Underwater && Action != 9 && StageController.CurrentStage.Water && YPosition >= StageController.CurrentStage.WaterLevel)
+        if (Underwater && Action != 9 && LevelController.CurrentLevel.Water && YPosition >= LevelController.CurrentLevel.WaterLevel)
         {
             Underwater = false;
             if (!Ground)
             {
-                YSpeed *= 1.3f;
+                YSpeed *= 1.3f / GameController.DeltaTime;
             }
-            SoundManager.PlaySFX(Sound_Splash);
-            Splash waterSplash = StageController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
+            AudioController.PlaySFX(Sound_Splash);
+            Splash waterSplash = SceneController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
             waterSplash.XPosition = XPosition;
             waterSplash.render.sortingLayerName = render.sortingLayerName;
         }
@@ -1171,9 +1102,9 @@ public class PlayerPhysics : BaseObject
         SpindashDust.transform.rotation = Quaternion.Euler(0f, 0f, AnimationAngle);
         #endregion
         #region Skidding Dust
-        if (Action == 4 && StageController.GlobalTimer % 4 == 0)
+        if (Action == 4 && LevelController.GlobalTimer % 4 == 0)
         {
-            Dust dust = StageController.CreateStageObject("Skid Dust",
+            Dust dust = SceneController.CreateStageObject("Skid Dust",
                 XPosition - (Mathf.Sin(AnimationAngle * Mathf.Deg2Rad) * -13f),
                 YPosition + (Mathf.Cos(AnimationAngle * Mathf.Deg2Rad) * -13f)) as Dust;
             dust.render.sortingLayerName = render.sortingLayerName;
@@ -1190,7 +1121,7 @@ public class PlayerPhysics : BaseObject
         {
             if (input.KeyActionAPressed && ShieldStatus == 1 && JumpVariable)
             {
-                SoundManager.PlaySFX(Sound_FireDash);
+                AudioController.PlaySFX(Sound_FireDash);
                 YSpeed = -1f;
                 XSpeed = Direction * 10f;
                 foreach (Shield shield in Shields)
@@ -1229,7 +1160,7 @@ public class PlayerPhysics : BaseObject
             if (input.KeyActionAPressed && ShieldStatus == 1 && JumpVariable)
             {
                 ShieldStatus = 2;
-                SoundManager.PlaySFX(Sound_LightingJump);
+                AudioController.PlaySFX(Sound_LightingJump);
                 YSpeed = 7f;
             }
             if (JumpVariable && ShieldStatus == 0)
@@ -1248,7 +1179,7 @@ public class PlayerPhysics : BaseObject
             if (input.KeyActionAPressed && !Ground && ShieldStatus == 1)
             {
                 ShieldStatus = 2;
-                XSpeed *= 0.1f;
+                XSpeed *= 0.1f / GameController.DeltaTime;
                 YSpeed = Mathf.Min(YSpeed, -8f);
                 foreach (Shield shield in Shields)
                 {
@@ -1271,7 +1202,7 @@ public class PlayerPhysics : BaseObject
                 GroundAngle = 0f;
                 Action = 1;
                 JumpVariable = true;
-                SoundManager.PlaySFX(Sound_BubbleBounce);
+                AudioController.PlaySFX(Sound_BubbleBounce);
                 ShieldStatus = 1;
                 AllowInput = true;
                 foreach (Shield shield in Shields)
@@ -1305,16 +1236,13 @@ public class PlayerPhysics : BaseObject
     #region Detect Angle
     private void DetectAngle(bool useNormal = false)
     {
-        //Get quadrant
         Quadrant = (int)(((GroundAngle + (360f + 45f)) % 360f) / 90f);
 
-        RaycastHit2D angleLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, 32f);
-        RaycastHit2D angleRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, 32f);
+        RaycastHit2D angleLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, HeightRadius + 12f);
+        RaycastHit2D angleRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius + 12f);
 
-        //If "A" and "B" are colliding
         if (angleLeftHit && angleRightHit)
         {
-            //Calculate angle
             float numX = angleRightHit.point.x - angleLeftHit.point.x;
             float numY = angleRightHit.point.y - angleLeftHit.point.y;
             float numR = Mathf.Atan2(numY, numX) * Mathf.Rad2Deg;
@@ -1325,7 +1253,6 @@ public class PlayerPhysics : BaseObject
         {
             if (!angleLeftHit && angleRightHit)
             {
-                //Calculate angle
                 float numX = angleRightHit.normal.x;
                 float numY = angleRightHit.normal.y;
                 float numR = Mathf.Atan2(numX, numY) * -Mathf.Rad2Deg;
@@ -1334,7 +1261,6 @@ public class PlayerPhysics : BaseObject
             }
             else if (angleLeftHit && !angleRightHit)
             {
-                //Calculate angle
                 float numX = angleLeftHit.normal.x;
                 float numY = angleLeftHit.normal.y;
                 float numR = Mathf.Atan2(numX, numY) * -Mathf.Rad2Deg;
@@ -1342,7 +1268,6 @@ public class PlayerPhysics : BaseObject
                 GroundAngle = (720f + numR) % 360f;
             }
         }
-        //If "A" and/or "B" is not colliding, change the angle based on the quadrant
         else
         {
             GroundAngle = 90f * Quadrant;
@@ -1402,7 +1327,7 @@ public class PlayerPhysics : BaseObject
                 AllowDirection = false;
                 Direction = 1;
                 Animation = 6;
-                SoundManager.PlaySFX(Sound_Skidding);
+                AudioController.PlaySFX(Sound_Skidding);
                 CurrentAction = Action04_Skidding;
             }
             if (GroundSpeed <= -4f && input.KeyRight)
@@ -1412,7 +1337,7 @@ public class PlayerPhysics : BaseObject
                 AllowDirection = false;
                 Direction = -1;
                 Animation = 6;
-                SoundManager.PlaySFX(Sound_Skidding);
+                AudioController.PlaySFX(Sound_Skidding);
                 CurrentAction = Action04_Skidding;
             }
         }
@@ -1422,7 +1347,7 @@ public class PlayerPhysics : BaseObject
             Action = 6;
             AllowInput = false;
             Animation = 8;
-            SoundManager.PlaySFX(Sound_Rolling);
+            AudioController.PlaySFX(Sound_Rolling);
             CurrentAction = Action06_Rolling;
         }
 
@@ -1435,7 +1360,7 @@ public class PlayerPhysics : BaseObject
             Action = 1;
             ControlLock = 0;
             JumpVariable = true;
-            SoundManager.PlaySFX(Sound_Jump);
+            AudioController.PlaySFX(Sound_Jump);
             CurrentAction = Action01_Jump;
         }
     }
@@ -1496,7 +1421,10 @@ public class PlayerPhysics : BaseObject
     #region Actions - [04] Skidding
     public void Action04_Skidding()
     {
-        if (SkidTimer > 0) SkidTimer--;
+        if (SkidTimer > 0)
+        {
+            SkidTimer--;
+        }
 
         if (SkidTimer == 0 && (Mathf.Abs(GroundSpeed) >= 0f && !(input.KeyLeft || input.KeyRight) ||
             Animation == 6 && Mathf.Abs(GroundSpeed) > 1.5f && (input.KeyLeft && GroundSpeed <= 0f || input.KeyRight && GroundSpeed >= 0f)) ||
@@ -1527,7 +1455,7 @@ public class PlayerPhysics : BaseObject
             Action = 6;
             AllowInput = false;
             Animation = 8;
-            SoundManager.PlaySFX(Sound_Rolling);
+            AudioController.PlaySFX(Sound_Rolling);
             CurrentAction = Action06_Rolling;
         }
 
@@ -1541,7 +1469,7 @@ public class PlayerPhysics : BaseObject
             ControlLock = 0;
             AllowInput = true;
             JumpVariable = true;
-            SoundManager.PlaySFX(Sound_Jump);
+            AudioController.PlaySFX(Sound_Jump);
             CurrentAction = Action01_Jump;
         }
     }
@@ -1550,7 +1478,7 @@ public class PlayerPhysics : BaseObject
     public void Action05_Spindash()
     {
         Animation = 7;
-        SpindashRev -= ((SpindashRev / 0.125f) / 512f);
+        SpindashRev -= ((SpindashRev / 0.125f) / 512f) * GameController.DeltaTime;
 
         if (SpindashRev <= 0.1f)
         {
@@ -1572,7 +1500,7 @@ public class PlayerPhysics : BaseObject
             AllowInput = false;
             Animation = 8;
             CameraController.LagTimer = 16f;
-            SoundManager.PlaySFX(Sound_Release);
+            AudioController.PlaySFX(Sound_Release);
             CurrentAction = Action06_Rolling;
         }
     }
@@ -1584,23 +1512,23 @@ public class PlayerPhysics : BaseObject
 
         Animation = 8;
 
-        GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - RollFriction, 0f) * Mathf.Sign(GroundSpeed);
+        GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollFriction * GameController.DeltaTime), 0f) * Mathf.Sign(GroundSpeed);
 
         if (GroundSpeed < 0f && input.KeyRight ||
             GroundSpeed > 0f && input.KeyLeft)
         {
-            GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - RollDeceleration, 0f) * Mathf.Sign(GroundSpeed);
+            GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollDeceleration * GameController.DeltaTime), 0f) * Mathf.Sign(GroundSpeed);
         }
 
         if (Ground)
         {
             if (Mathf.Sign(GroundSpeed) == Mathf.Sign(Mathf.Sin(GroundAngle * Mathf.Deg2Rad)))
             {
-                GroundSpeed -= SlopeRollUpFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                GroundSpeed -= (SlopeRollUpFactor * GameController.DeltaTime) * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
             }
             else
             {
-                GroundSpeed -= SlopeRollDownFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                GroundSpeed -= (SlopeRollDownFactor * GameController.DeltaTime) * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
             }
         }
 
@@ -1623,7 +1551,7 @@ public class PlayerPhysics : BaseObject
             ControlLock = 0;
             JumpVariable = true;
             Animation = 3;
-            SoundManager.PlaySFX(Sound_Jump);
+            AudioController.PlaySFX(Sound_Jump);
             CurrentAction = Action01_Jump;
         }
 
@@ -1654,7 +1582,7 @@ public class PlayerPhysics : BaseObject
     {
         Animation = 10;
 
-        if (YPosition < PixelCamera.YBottomFrame - 48f)
+        if (YPosition < SceneController.YBottomFrame - 48f)
         {
             if (!GameController.Preload)
             {

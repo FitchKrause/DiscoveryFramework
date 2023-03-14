@@ -11,14 +11,14 @@ public class Dust : BaseObject
 
     private void FixedUpdate()
     {
-        if (StageController.GlobalTimer % 2 == 0)
+        if (LevelController.GlobalTimer % 2 == 0)
         {
             YPosition += 1f;
         }
 
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            StageController.DestroyStageObject(this);
+            LevelController.DestroyStageObject(this);
         }
     }
 }

@@ -15,11 +15,11 @@ public class WaterManager : MonoBehaviour
     private void Start()
     {
         WaterLevel = WaterMark.transform.position.y;
-        StageController.CurrentStage.Water = Water;
-        StageController.CurrentStage.WaterLevel = WaterLevel;
+        LevelController.CurrentLevel.Water = Water;
+        LevelController.CurrentLevel.WaterLevel = WaterLevel;
 
-        float screenWidth = (PixelCamera.XRightFrame - PixelCamera.XLeftFrame);
-        float screenHeight = (PixelCamera.YTopFrame - PixelCamera.YBottomFrame);
+        float screenWidth = (SceneController.XRightFrame - SceneController.XLeftFrame);
+        float screenHeight = (SceneController.YTopFrame - SceneController.YBottomFrame);
 
         WaterObject.transform.localScale = new Vector3(screenWidth / 16f, screenHeight / 16f, 1f);
     }
@@ -28,24 +28,17 @@ public class WaterManager : MonoBehaviour
     {
         if (!Water) return;
 
-        WaterLevelApparent = WaterLevel + 3f * Mathf.Cos((StageController.LevelTimer * 1.5f) * Mathf.Deg2Rad);
+        WaterLevelApparent = WaterLevel + 3f * Mathf.Cos((LevelController.LevelTimer * 1.5f) * Mathf.Deg2Rad);
     }
 
     private void LateUpdate()
     {
         if (!Water) return;
 
-        Vector2 vector = new Vector2(PixelCamera.XLeftFrame - (PixelCamera.XLeftFrame % 64), WaterLevelApparent);
-        Vector2 vector2 = new Vector2(PixelCamera.XLeftFrame, Mathf.Min(PixelCamera.YTopFrame, WaterLevelApparent));
+        Vector2 vector = new Vector2(SceneController.XLeftFrame - (SceneController.XLeftFrame % 64), WaterLevelApparent);
+        Vector2 vector2 = new Vector2(SceneController.XLeftFrame, Mathf.Min(SceneController.YTopFrame, WaterLevelApparent));
 
         WaterHorizonObject.transform.position = vector;
         WaterObject.transform.position = vector2;
-
-        Splash splash = StageController.FindStageObject("Water Splash") as Splash;
-
-        if (splash != null)
-        {
-            splash.transform.position = new Vector2(splash.transform.position.x, WaterLevelApparent);
-        }
     }
 }

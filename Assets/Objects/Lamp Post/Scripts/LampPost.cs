@@ -25,7 +25,7 @@ public class LampPost : BaseObject
 
         base.Start();
 
-        if (XPosition == StageController.CheckPointX && YPosition == (StageController.CheckPointY - 13f))
+        if (XPosition == LevelController.CheckPointX && YPosition == (LevelController.CheckPointY - 13f))
         {
             Flag0 = Flag1 = true;
             Age = 49f;
@@ -46,10 +46,10 @@ public class LampPost : BaseObject
 
     private void FixedUpdate()
     {
-        if (!Flag1 && StageController.AABB(Rect, player.Rect))
+        if (!Flag1 && Utils.AABB(Rect, player.Rect))
         {
             Flag0 = true;
-            SoundManager.PlaySFX(Sound_LampPost);
+            AudioController.PlaySFX(Sound_LampPost);
         }
 
         Vector2 vector = new Vector2(BaseX + (Range * Mathf.Sin(Delta * Mathf.Deg2Rad)), BaseY + (Range * Mathf.Cos(Delta * Mathf.Deg2Rad)));
@@ -62,11 +62,11 @@ public class LampPost : BaseObject
             Flag2 = true;
             Flag0 = false;
             Flag1 = true;
-            StageController.CheckPointX = XPosition;
-            StageController.CheckPointY = YPosition + 13f;
-            StageController.CheckPointLevelTime = StageController.LevelTimer;
-            StageController.CheckPointGameTime = StageController.CurrentStage.GameTimer;
-            StageController.CheckPoint = true;
+            LevelController.CheckPointX = XPosition;
+            LevelController.CheckPointY = YPosition + 13f;
+            LevelController.CheckPointLevelTime = LevelController.LevelTimer;
+            LevelController.CheckPointGameTime = LevelController.CurrentLevel.GameTimer;
+            LevelController.CheckPoint = true;
         }
 
         if (Flag2)

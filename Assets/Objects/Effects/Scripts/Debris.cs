@@ -9,9 +9,9 @@ public class Debris : BaseObject
 
         YSpeed -= 0.4f;
 
-        if (YPosition < PixelCamera.YBottomFrame - 16f)
+        if (YPosition < SceneController.YBottomFrame - 16f)
         {
-            StageController.DestroyStageObject(this);
+            LevelController.DestroyStageObject(this);
         }
     }
 }

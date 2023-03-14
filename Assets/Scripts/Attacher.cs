@@ -17,6 +17,8 @@ public class Attacher : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!objRef.enabled) return;
+
         if (Attached && LinkedPlatform != null)
         {
             objRef.XPosition -= LinkedPlatform.DifferenceX;

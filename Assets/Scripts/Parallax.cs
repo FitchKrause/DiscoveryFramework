@@ -41,7 +41,7 @@ public class Parallax : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!StageController.Paused)
+        if (!LevelController.Paused)
         {
             AddX += XSpeed;
             AddY += YSpeed;
@@ -70,11 +70,11 @@ public class Parallax : MonoBehaviour
             }
         }
 
-        float PosX = (((PixelCamera.XLeftFrame + PixelCamera.XRightFrame) / 2f) - ((PixelCamera.XRightFrame - PixelCamera.XLeftFrame) / 2f)) * (1f - XFactor);
-        float PosY = (((PixelCamera.YBottomFrame + PixelCamera.YTopFrame) / 2f) + ((PixelCamera.YTopFrame - PixelCamera.YBottomFrame) / 2f)) * (1f - YFactor);
+        float PosX = (((SceneController.XLeftFrame + SceneController.XRightFrame) / 2f) - ((SceneController.XRightFrame - SceneController.XLeftFrame) / 2f)) * (1f - XFactor);
+        float PosY = (((SceneController.YBottomFrame + SceneController.YTopFrame) / 2f) + ((SceneController.YTopFrame - SceneController.YBottomFrame) / 2f)) * (1f - YFactor);
 
-        float XPosition = InitialX + PixelCamera.XLeftFrame - (RepeatX ? Mathf.Repeat(PosX + AddX, Width) : (PosX + AddX));
-        float YPosition = InitialY + PixelCamera.YTopFrame - (RepeatY ? Mathf.Repeat(PosY + AddY, Height) : (PosY + AddY));
+        float XPosition = InitialX + SceneController.XLeftFrame - (RepeatX ? Mathf.Repeat(PosX + AddX, Width) : (PosX + AddX));
+        float YPosition = InitialY + SceneController.YTopFrame - (RepeatY ? Mathf.Repeat(PosY + AddY, Height) : (PosY + AddY));
 
         transform.position = new Vector3(XPosition, YPosition, transform.position.z);
     }

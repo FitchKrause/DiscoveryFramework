@@ -50,7 +50,7 @@ public class Spring : BaseObject
                             player.Action = 40;
                             player.CurrentAction = player.Action40_Springs;
                             player.JumpVariable = false;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.Down:
@@ -61,7 +61,7 @@ public class Spring : BaseObject
                             player.Ground = false;
                             player.Action = 40;
                             player.CurrentAction = player.Action40_Springs;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.Left:
@@ -71,7 +71,7 @@ public class Spring : BaseObject
                             if (player.Ground) player.GroundSpeed = -16f;
                             else player.XSpeed = -16f;
                             player.ControlLock = 16;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.Right:
@@ -81,7 +81,7 @@ public class Spring : BaseObject
                             if (player.Ground) player.GroundSpeed = 16f;
                             else player.XSpeed = 16f;
                             player.ControlLock = 16;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.UpLeft:
@@ -94,7 +94,7 @@ public class Spring : BaseObject
                             player.Action = 40;
                             player.CurrentAction = player.Action40_Springs;
                             player.JumpVariable = false;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.UpRight:
@@ -107,7 +107,7 @@ public class Spring : BaseObject
                             player.Action = 40;
                             player.CurrentAction = player.Action40_Springs;
                             player.JumpVariable = false;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                 }
@@ -124,7 +124,7 @@ public class Spring : BaseObject
                             player.Action = 40;
                             player.CurrentAction = player.Action40_Springs;
                             player.JumpVariable = false;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.Down:
@@ -135,7 +135,7 @@ public class Spring : BaseObject
                             player.Ground = false;
                             player.Action = 40;
                             player.CurrentAction = player.Action40_Springs;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.Left:
@@ -145,7 +145,7 @@ public class Spring : BaseObject
                             if (player.Ground) player.GroundSpeed = -10f;
                             else player.XSpeed = -10f;
                             player.ControlLock = 16;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.Right:
@@ -155,7 +155,7 @@ public class Spring : BaseObject
                             if (player.Ground) player.GroundSpeed = -10f;
                             else player.XSpeed = -10f;
                             player.ControlLock = 16;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.UpLeft:
@@ -168,7 +168,7 @@ public class Spring : BaseObject
                             player.Action = 40;
                             player.CurrentAction = player.Action40_Springs;
                             player.JumpVariable = false;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                     case Spring_Directions.UpRight:
@@ -181,7 +181,7 @@ public class Spring : BaseObject
                             player.Action = 40;
                             player.CurrentAction = player.Action40_Springs;
                             player.JumpVariable = false;
-                            SoundManager.PlaySFX(Sound_Spring);
+                            AudioController.PlaySFX(Sound_Spring);
                         }
                         break;
                 }

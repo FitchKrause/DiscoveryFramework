@@ -13,7 +13,7 @@ public class Splash : BaseObject
     {
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            StageController.DestroyStageObject(this);
+            LevelController.DestroyStageObject(this);
         }
     }
 }

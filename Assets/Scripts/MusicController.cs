@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MusicController : SoundManager
+public class MusicController : AudioController
 {
     public AudioClip Music_Invincibility;
     public AudioClip Music_SpeedUp;
@@ -48,7 +48,7 @@ public class MusicController : SoundManager
 
     private void FixedUpdate()
     {
-        if (!player.SuperForm && player.Invincibility == 0 && !player.SpeedSneakers && !StageController.Boss && player.Action != 9 &&
+        if (!player.SuperForm && player.Invincibility == 0 && !player.SpeedSneakers && !LevelController.Boss && player.Action != 9 &&
             Playing != "Stage" && Playing != "1-UP")
         {
             ToPlay = "Stage";

@@ -12,6 +12,6 @@ public class ObjectPool : MonoBehaviour
     private void Start()
     {
         PooledObjects = new List<BaseObject>();
-        StageController.CurrentStage.ObjectPools.Add(this);
+        LevelController.CurrentLevel.ObjectPools.Add(this);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SoundManager : MonoBehaviour
+public class AudioController : MonoBehaviour
 {
     protected static AudioSource sfxSource;
     protected static AudioSource bgmSource;

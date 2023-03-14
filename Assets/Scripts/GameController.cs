@@ -8,6 +8,11 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance;
 
+    public static float DeltaTime = 1f;
+
+    public int Width = 426;
+    public int Height = 240;
+
     public static bool Preload;
 
     public static int CurrentSlot = 1;
@@ -28,6 +33,9 @@ public class GameController : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = (1f / 60f) * Time.timeScale;
     }
 
     private void Start()

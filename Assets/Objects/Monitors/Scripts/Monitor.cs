@@ -64,10 +64,7 @@ public class Monitor : BaseObject
 
     private void FixedUpdate()
     {
-        if (!Ground)
-        {
-            ProcessMovement();
-        }
+        ProcessMovement();
 
         Rect.XPosition = XPosition + (Ground ? GroundSpeed : XSpeed);
         Rect.YPosition = YPosition + (Ground ? 0f : YSpeed);
@@ -77,7 +74,6 @@ public class Monitor : BaseObject
             for (int i = 0; i < ObjectLoops; i++)
             {
                 #region Floor and Ceiling Collisions
-                //Ceiling and Floor collisions
                 RaycastHit2D floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, HeightRadius);
                 RaycastHit2D floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius);
                 RaycastHit2D floorHit = default(RaycastHit2D);
@@ -87,10 +83,8 @@ public class Monitor : BaseObject
                 RaycastHit2D ceilingHit = default(RaycastHit2D);
 
                 #region Ceiling Collisions
-                //If "C" and "D" are colliding
                 if (ceilingLeftHit && ceilingRightHit)
                 {
-                    //If distance of "C" is less than distance of "D"
                     if (ceilingLeftHit.distance < ceilingRightHit.distance)
                     {
                         ceilingHit = ceilingLeftHit;
@@ -100,18 +94,15 @@ public class Monitor : BaseObject
                         ceilingHit = ceilingRightHit;
                     }
                 }
-                //If "C" is not colliding but "D" is
                 else if (!ceilingLeftHit && ceilingRightHit)
                 {
                     ceilingHit = ceilingRightHit;
                 }
-                //If "C" is colliding but "D" is not
                 else if (ceilingLeftHit && !ceilingRightHit)
                 {
                     ceilingHit = ceilingLeftHit;
                 }
 
-                //If "sensor with shortest distance" is colliding
                 if (ceilingHit)
                 {
                     YPosition += ceilingHit.distance - HeightRadius;
@@ -119,10 +110,8 @@ public class Monitor : BaseObject
                 }
                 #endregion
                 #region Floor Collisions
-                //If "A" and "B" are colliding
                 if (floorLeftHit && floorRightHit)
                 {
-                    //If distance of "A" is less than distance of "B"
                     if (floorLeftHit.distance < floorRightHit.distance)
                     {
                         floorHit = floorLeftHit;
@@ -132,18 +121,15 @@ public class Monitor : BaseObject
                         floorHit = floorRightHit;
                     }
                 }
-                //If "A" is not colliding but "B" is
                 else if (!floorLeftHit && floorRightHit)
                 {
                     floorHit = floorRightHit;
                 }
-                //If "A" is colliding but "B" is not
                 else if (floorLeftHit && !floorRightHit)
                 {
                     floorHit = floorLeftHit;
                 }
 
-                //If "sensor with shortest distance" is colliding
                 if (floorHit)
                 {
                     YPosition -= floorHit.distance - HeightRadius;
@@ -157,13 +143,12 @@ public class Monitor : BaseObject
                 #endregion
                 #endregion
             }
-
-            YSpeed = Mathf.Max(YSpeed - 0.2f, -10f);
+            YSpeed = Mathf.Max(YSpeed - (0.2f * GameController.DeltaTime), -10f);
         }
 
         if (!Destroyed)
         {
-            if (player.ColliderCeiling == ColliderBody && StageController.AABB(Rect, player.Rect))
+            if (player.ColliderCeiling == ColliderBody && Utils.AABB(Rect, player.Rect))
             {
                 if (attacher != null)
                 {
@@ -186,12 +171,11 @@ public class Monitor : BaseObject
                 }
                 GameController.Score += 100;
                 IconObject.transform.SetParent(null);
-                StageController.CreateStageObject("Monitor Explosion", XPosition, YPosition);
-                ColliderBody.enabled = false;
+                SceneController.CreateStageObject("Monitor Explosion", XPosition, YPosition);
                 render.sprite = MonitorBroken[Random.Range(0, 3)];
                 for (int i = 0; i < 4; i++)
                 {
-                    Debris debris = StageController.CreateStageObject("Monitor Debris", XPosition, YPosition) as Debris;
+                    Debris debris = SceneController.CreateStageObject("Monitor Debris", XPosition, YPosition) as Debris;
                     debris.XPosition = XPosition;
                     debris.YPosition = YPosition;
                     debris.XSpeed = Random.Range(-30f, 30f) / 10f;
@@ -200,14 +184,16 @@ public class Monitor : BaseObject
                 }
                 if (player.Action == 1)
                 {
+                    player.LandingSpeed = player.YSpeed;
                     player.Ground = false;
                     player.JumpVariable = true;
-                    player.YSpeed = player.OldYSpeed * -1.15f;
+                    player.YSpeed = player.LandingSpeed * -1.15f;
                 }
-                SoundManager.PlaySFX(Sound_Destroy);
+                AudioController.PlaySFX(Sound_Destroy);
                 YSpeed = 2f;
                 Ground = false;
                 Destroyed = true;
+                ColliderBody.enabled = false;
             }
         }
         else
@@ -218,7 +204,7 @@ public class Monitor : BaseObject
             if (IconLife < 32f)
             {
                 IconObject.transform.position += new Vector3(0f, 1f, 0f);
-                StageController.CreateStageObject("Monitor Trail", IconObject.transform.position.x, IconObject.transform.position.y);
+                SceneController.CreateStageObject("Monitor Trail", IconObject.transform.position.x, IconObject.transform.position.y);
             }
             else if (IconLife >= 64f)
             {
@@ -227,24 +213,24 @@ public class Monitor : BaseObject
                     switch (MonitorReward)
                     {
                         case Monitor_Rewards.Rings:
-                            StageController.CurrentStage.Rings += 10;
-                            SoundManager.PlaySFX(Sound_Ring);
+                            LevelController.CurrentLevel.Rings += 10;
+                            AudioController.PlaySFX(Sound_Ring);
                             break;
                         case Monitor_Rewards.Shield:
                             player.Shield = 1;
-                            SoundManager.PlaySFX(Sound_BlueShieldGet);
+                            AudioController.PlaySFX(Sound_BlueShieldGet);
                             break;
                         case Monitor_Rewards.FlameShield:
                             player.Shield = 2;
-                            SoundManager.PlaySFX(Sound_FlameShieldGet);
+                            AudioController.PlaySFX(Sound_FlameShieldGet);
                             break;
                         case Monitor_Rewards.MagneticShield:
                             player.Shield = 3;
-                            SoundManager.PlaySFX(Sound_MagneticShieldGet);
+                            AudioController.PlaySFX(Sound_MagneticShieldGet);
                             break;
                         case Monitor_Rewards.AquaticShield:
                             player.Shield = 4;
-                            SoundManager.PlaySFX(Sound_AquaticShieldGet);
+                            AudioController.PlaySFX(Sound_AquaticShieldGet);
                             break;
                         case Monitor_Rewards.Invincibility:
                             if (!player.SuperForm)
@@ -270,7 +256,7 @@ public class Monitor : BaseObject
                             MusicController.ToPlay = "1-UP";
                             break;
                         case Monitor_Rewards.SuperForm:
-                            StageController.CurrentStage.Rings += 50;
+                            LevelController.CurrentLevel.Rings += 50;
                             if (!player.SuperForm)
                             {
                                 player.SuperForm = true;
