@@ -7,7 +7,6 @@ public class LevelController : SceneController
     public static LevelController CurrentLevel;
 
     public static float LevelTimer;
-
     public static float GlobalTimer;
 
     public static bool AllowTime;
@@ -15,6 +14,7 @@ public class LevelController : SceneController
     public static bool PauseTrigger;
     public static bool Paused;
     public static bool Boss;
+    public static bool StageClear;
 
     public static bool CheckPoint;
     public static float CheckPointX;
@@ -24,7 +24,8 @@ public class LevelController : SceneController
 
     public bool Water;
     public float WaterLevel;
-    
+    public float WaterLevelApparent;
+
     public float GameTimer;
     public int Milliseconds;
     public int Seconds;
@@ -39,6 +40,8 @@ public class LevelController : SceneController
 
     private new void Awake()
     {
+        StageClear = false;
+
         Paused = false;
         AllowTime = AllowPause = true;
 
@@ -91,12 +94,14 @@ public class LevelController : SceneController
             {
                 foreach (BaseObject objRef in ObjectList)
                 {
-                    objRef.enabled = true;
+                    if (!objRef.enabled) objRef.enabled = true;
+                    else continue;
                 }
 
                 foreach (Animator animator in FindObjectsOfType<Animator>())
                 {
-                    animator.enabled = true;
+                    if (!animator.enabled) animator.enabled = true;
+                    else continue;
                 }
 
                 /*foreach (Attacher attacher in FindObjectsOfType<Attacher>())
@@ -111,16 +116,19 @@ public class LevelController : SceneController
             }
         }
 
-        if (AllowTime && !Paused)
+        if (!Paused)
         {
             LevelTimer += 1f;
             GlobalTimer += 1f;
 
-            GameTimer += 1000f / 60f;
+            if (AllowTime)
+            {
+                GameTimer += 1000f / 60f;
 
-            Milliseconds = Mathf.FloorToInt(GameTimer / 10) % 100;
-            Seconds = Mathf.FloorToInt(GameTimer / 1000) % 60;
-            Minutes = Mathf.FloorToInt(GameTimer / 60000);
+                Milliseconds = Mathf.FloorToInt(GameTimer / 10) % 100;
+                Seconds = Mathf.FloorToInt(GameTimer / 1000) % 60;
+                Minutes = Mathf.FloorToInt(GameTimer / 60000);
+            }
         }
     }
 

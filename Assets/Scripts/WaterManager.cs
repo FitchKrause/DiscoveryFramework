@@ -29,6 +29,7 @@ public class WaterManager : MonoBehaviour
         if (!Water) return;
 
         WaterLevelApparent = WaterLevel + 3f * Mathf.Cos((LevelController.LevelTimer * 1.5f) * Mathf.Deg2Rad);
+        LevelController.CurrentLevel.WaterLevelApparent = WaterLevelApparent;
     }
 
     private void LateUpdate()

@@ -48,8 +48,9 @@ public class MusicController : AudioController
 
     private void FixedUpdate()
     {
-        if (!player.SuperForm && player.Invincibility == 0 && !player.SpeedSneakers && !LevelController.Boss && player.Action != 9 &&
-            Playing != "Stage" && Playing != "1-UP")
+        if (!player.SuperForm && player.Invincibility == 0 && !player.SpeedSneakers && player.Action != 9 && player.Action != 10 &&
+            !LevelController.Boss && !LevelController.StageClear &&
+            Playing != "Stage" && Playing != "1-UP" && Playing != "Drowning")
         {
             ToPlay = "Stage";
         }

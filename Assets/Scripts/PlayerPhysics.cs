@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerPhysics : BaseObject
@@ -35,6 +36,7 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public bool SpeedSneakers;
     [HideInInspector] public int SpeedSneakersTimer;
     [HideInInspector] public bool Underwater;
+    [HideInInspector] public int Air;
     [HideInInspector] public int Hurt;
     [HideInInspector] public int Direction;
     [HideInInspector] public float Animation;
@@ -48,6 +50,7 @@ public class PlayerPhysics : BaseObject
     public AudioClip Sound_Rolling;
     public AudioClip Sound_Release;
     public AudioClip Sound_Hurt;
+    public AudioClip Sound_Drown;
     public AudioClip Sound_LoseRings;
     public AudioClip Sound_FireDash;
     public AudioClip Sound_LightingJump;
@@ -84,7 +87,6 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public Collider2D ColliderCeiling;
     [HideInInspector] public Collider2D ColliderWallLeft;
     [HideInInspector] public Collider2D ColliderWallRight;
-    private InputManager input;
     private AudioSource audioSource;
     private Shield[] Shields;
     #endregion
@@ -92,8 +94,6 @@ public class PlayerPhysics : BaseObject
     #region Player Initialization
     private new void Start()
     {
-        input = InputManager.instance;
-
         Direction = 1;
 
         audioSource = GetComponent<AudioSource>();
@@ -135,6 +135,11 @@ public class PlayerPhysics : BaseObject
             SuperSkins[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
         }
 
+        if (YPosition < GameObject.Find("Water Mark").transform.position.y)
+        {
+            Underwater = true;
+        }
+
         AllowInput = AllowX = AllowY = AllowLanding = AllowFalling = AllowDirection = true;
     }
     #endregion
@@ -142,7 +147,7 @@ public class PlayerPhysics : BaseObject
     private void FixedUpdate()
     {
         #region Player Input
-        int inpDir = (input.KeyRight ? 1 : 0) - (input.KeyLeft ? 1 : 0);
+        int inpDir = (PlayerInput.KeyRight ? 1 : 0) - (PlayerInput.KeyLeft ? 1 : 0);
         #endregion
         #region Player Physics
         Acceleration = 0.046875f;
@@ -197,7 +202,7 @@ public class PlayerPhysics : BaseObject
         #endregion
         #region Player Control (Pre)
         #region Control (Pre)
-        if (Action != 9)
+        if (Action != 9 && Action != 10)
         {
             #region Slope Factor
             if (AllowInput && Ground && Action != 6)
@@ -294,11 +299,11 @@ public class PlayerPhysics : BaseObject
                 XPosition = CameraController.CameraMinimumX + 16f;
             }
 
-            if ((Ground ? GroundSpeed : XSpeed) > 0f && XPosition >= CameraController.CameraMaximumX - 16f)
+            if ((Ground ? GroundSpeed : XSpeed) > 0f && XPosition >= CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f))
             {
                 if (Ground) GroundSpeed = 0f;
                 else XSpeed = 0f;
-                XPosition = CameraController.CameraMaximumX - 16f;
+                XPosition = CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f);
             }
             #endregion
             #region Control Lock
@@ -681,6 +686,10 @@ public class PlayerPhysics : BaseObject
             AllowInput = false;
             CurrentAction = Action06_Rolling;
         }
+        if (Action == 7)
+        {
+            CurrentAction = Action07_Breathe;
+        }
         if (Action == 8)
         {
             AllowDirection = false;
@@ -693,10 +702,16 @@ public class PlayerPhysics : BaseObject
             AllowInput = false;
             CurrentAction = Action09_Die;
         }
+        if (Action == 10)
+        {
+            AllowDirection = false;
+            AllowInput = false;
+            CurrentAction = Action10_Drown;
+        }
         #endregion
         #endregion
         #region Invincibility and Speed Sneakers
-        if (Action != 9)
+        if (Action != 9 && Action != 10)
         {
             if (SuperForm)
             {
@@ -743,7 +758,7 @@ public class PlayerPhysics : BaseObject
         }
         #endregion
         #region Check for Being Hurt
-        if (Action != 9)
+        if (Action != 9 && Action != 10)
         {
             if (Hurt == 1)
             {
@@ -815,6 +830,31 @@ public class PlayerPhysics : BaseObject
                 CollisionLayer = 0;
                 CurrentAction = Action09_Die;
                 AudioController.PlaySFX(Sound_Hurt);
+            }
+            if (Hurt == 3)
+            {
+                LevelController.AllowTime = LevelController.AllowPause = false;
+                foreach (BaseObject objRef in LevelController.CurrentLevel.ObjectList)
+                {
+                    if (objRef == this) continue;
+
+                    objRef.enabled = false;
+                }
+
+                foreach (Animator animator in FindObjectsOfType<Animator>())
+                {
+                    if (animator == this.animator) continue;
+                    animator.enabled = false;
+                }
+                CameraController.CameraMode = 3;
+                Ground = false;
+                XSpeed = 0f;
+                YSpeed = 0f;
+                Action = 10;
+                Hurt = 0;
+                CollisionLayer = 0;
+                CurrentAction = Action09_Die;
+                AudioController.PlaySFX(Sound_Drown);
             }
         }
         #endregion
@@ -891,7 +931,7 @@ public class PlayerPhysics : BaseObject
         }
         if (Animation == 4)
         {
-            if (input.KeyUp)
+            if (PlayerInput.KeyUp)
             {
                 animator.Play("Stand Up");
             }
@@ -902,7 +942,7 @@ public class PlayerPhysics : BaseObject
         }
         if (Animation == 5)
         {
-            if (input.KeyDown)
+            if (PlayerInput.KeyDown)
             {
                 animator.Play("Crouch Down");
             }
@@ -1061,7 +1101,7 @@ public class PlayerPhysics : BaseObject
         #endregion
         #endregion
         #region Water
-        if (!Underwater && Action != 9 && LevelController.CurrentLevel.Water && YPosition <= LevelController.CurrentLevel.WaterLevel)
+        if (!Underwater && Action != 9 && Action != 10 && LevelController.CurrentLevel.Water && YPosition <= LevelController.CurrentLevel.WaterLevel)
         {
             Underwater = true;
             if (!Ground)
@@ -1074,7 +1114,7 @@ public class PlayerPhysics : BaseObject
             waterSplash.XPosition = XPosition;
             waterSplash.render.sortingLayerName = render.sortingLayerName;
         }
-        if (Underwater && Action != 9 && LevelController.CurrentLevel.Water && YPosition >= LevelController.CurrentLevel.WaterLevel)
+        if (Underwater && Action != 9 && Action != 10 && LevelController.CurrentLevel.Water && YPosition >= LevelController.CurrentLevel.WaterLevel)
         {
             Underwater = false;
             if (!Ground)
@@ -1087,9 +1127,42 @@ public class PlayerPhysics : BaseObject
             waterSplash.render.sortingLayerName = render.sortingLayerName;
         }
 
-        if (Action == 9)
+        if (Action == 9 || Action == 10)
         {
+            Air = 0;
             Underwater = false;
+        }
+
+        if (Underwater)
+        {
+            if (Shield != 4)
+            {
+                if (LevelController.GlobalTimer % 60f == 0f)
+                {
+                    Air++;
+                }
+            }
+            else
+            {
+                Air = 0;
+            }
+
+            if (Air == 20 && MusicController.Playing != "Drowning")
+            {
+                MusicController.ToPlay = "Drowning";
+            }
+            if (Air < 20 && MusicController.Playing == "Drowning")
+            {
+                MusicController.ToPlay = MusicController.QueuedMusic;
+            }
+            if (Air == 32)
+            {
+                Hurt = 3;
+            }
+        }
+        else
+        {
+            Air = 0;
         }
         #endregion
         #region Effects
@@ -1119,7 +1192,7 @@ public class PlayerPhysics : BaseObject
         #region Flame Shield
         if (Shield == 2)
         {
-            if (input.KeyActionAPressed && ShieldStatus == 1 && JumpVariable)
+            if (PlayerInput.KeyActionAPressed && ShieldStatus == 1 && JumpVariable)
             {
                 AudioController.PlaySFX(Sound_FireDash);
                 YSpeed = -1f;
@@ -1157,7 +1230,7 @@ public class PlayerPhysics : BaseObject
         #region Magnetic Shield
         if (Shield == 3)
         {
-            if (input.KeyActionAPressed && ShieldStatus == 1 && JumpVariable)
+            if (PlayerInput.KeyActionAPressed && ShieldStatus == 1 && JumpVariable)
             {
                 ShieldStatus = 2;
                 AudioController.PlaySFX(Sound_LightingJump);
@@ -1176,7 +1249,7 @@ public class PlayerPhysics : BaseObject
         #region Aquatic Shield
         if (Shield == 4)
         {
-            if (input.KeyActionAPressed && !Ground && ShieldStatus == 1)
+            if (PlayerInput.KeyActionAPressed && !Ground && ShieldStatus == 1)
             {
                 ShieldStatus = 2;
                 XSpeed *= 0.1f / GameController.DeltaTime;
@@ -1190,7 +1263,7 @@ public class PlayerPhysics : BaseObject
                     shield.GetComponent<Animator>().Play("Walking");
                 }
             }
-            if (input.KeyActionAPressed && JumpVariable && !Ground && ShieldStatus == 0 || ShieldStatus == 2 && !Ground && YSpeed > 0f)
+            if (PlayerInput.KeyActionAPressed && JumpVariable && !Ground && ShieldStatus == 0 || ShieldStatus == 2 && !Ground && YSpeed > 0f)
             {
                 ShieldStatus = 1;
             }
@@ -1304,14 +1377,14 @@ public class PlayerPhysics : BaseObject
             Animation = 1.25f;
         }
 
-        if (Ground && Mathf.Abs(GroundSpeed) == 0f && !(input.KeyLeft || input.KeyRight))
+        if (Ground && Mathf.Abs(GroundSpeed) == 0f && !(PlayerInput.KeyLeft || PlayerInput.KeyRight))
         {
-            if (input.KeyUp)
+            if (PlayerInput.KeyUp)
             {
                 Action = 2;
                 CurrentAction = Action02_StandUp;
             }
-            if (input.KeyDown)
+            if (PlayerInput.KeyDown)
             {
                 Action = 3;
                 CurrentAction = Action03_CrouchDown;
@@ -1320,7 +1393,7 @@ public class PlayerPhysics : BaseObject
 
         if (Quadrant == 0 && Ground && ControlLock == 0)
         {
-            if (GroundSpeed >= 4f && input.KeyLeft)
+            if (GroundSpeed >= 4f && PlayerInput.KeyLeft)
             {
                 SkidTimer = 20;
                 Action = 4;
@@ -1330,7 +1403,7 @@ public class PlayerPhysics : BaseObject
                 AudioController.PlaySFX(Sound_Skidding);
                 CurrentAction = Action04_Skidding;
             }
-            if (GroundSpeed <= -4f && input.KeyRight)
+            if (GroundSpeed <= -4f && PlayerInput.KeyRight)
             {
                 SkidTimer = 20;
                 Action = 4;
@@ -1342,7 +1415,7 @@ public class PlayerPhysics : BaseObject
             }
         }
 
-        if (Ground && Mathf.Abs(GroundSpeed) >= 0.2f && input.KeyDown && !(input.KeyLeft || input.KeyRight))
+        if (Ground && Mathf.Abs(GroundSpeed) >= 0.2f && PlayerInput.KeyDown && !(PlayerInput.KeyLeft || PlayerInput.KeyRight))
         {
             Action = 6;
             AllowInput = false;
@@ -1351,7 +1424,7 @@ public class PlayerPhysics : BaseObject
             CurrentAction = Action06_Rolling;
         }
 
-        if (Ground && input.KeyActionAPressed)
+        if (Ground && PlayerInput.KeyActionAPressed)
         {
             XSpeed = (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * -JumpForce) + (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
             YSpeed = (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * JumpForce) + (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
@@ -1370,7 +1443,7 @@ public class PlayerPhysics : BaseObject
     {
         Animation = 3;
 
-        if (!input.KeyActionA && YSpeed > JumpReleaseForce && JumpVariable)
+        if (!PlayerInput.KeyActionA && YSpeed > JumpReleaseForce && JumpVariable)
         {
             YSpeed = JumpReleaseForce;
         }
@@ -1388,7 +1461,7 @@ public class PlayerPhysics : BaseObject
     {
         Animation = 4;
 
-        if (!Ground || GroundSpeed != 0f || !input.KeyUp &&
+        if (!Ground || GroundSpeed != 0f || !PlayerInput.KeyUp &&
             animator.GetCurrentAnimatorStateInfo(0).IsName("Stand Up (Reverse)") &&
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
@@ -1402,7 +1475,7 @@ public class PlayerPhysics : BaseObject
     {
         Animation = 5;
 
-        if (!Ground || GroundSpeed != 0f || !input.KeyDown &&
+        if (!Ground || GroundSpeed != 0f || !PlayerInput.KeyDown &&
             animator.GetCurrentAnimatorStateInfo(0).IsName("Crouch Down (Reverse)") &&
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
@@ -1410,7 +1483,7 @@ public class PlayerPhysics : BaseObject
             CurrentAction = Action00_Common;
         }
 
-        if (input.KeyActionAPressed)
+        if (PlayerInput.KeyActionAPressed)
         {
             Action = 5;
             audioSource.Play();
@@ -1426,8 +1499,8 @@ public class PlayerPhysics : BaseObject
             SkidTimer--;
         }
 
-        if (SkidTimer == 0 && (Mathf.Abs(GroundSpeed) >= 0f && !(input.KeyLeft || input.KeyRight) ||
-            Animation == 6 && Mathf.Abs(GroundSpeed) > 1.5f && (input.KeyLeft && GroundSpeed <= 0f || input.KeyRight && GroundSpeed >= 0f)) ||
+        if (SkidTimer == 0 && (Mathf.Abs(GroundSpeed) >= 0f && !(PlayerInput.KeyLeft || PlayerInput.KeyRight) ||
+            Animation == 6 && Mathf.Abs(GroundSpeed) > 1.5f && (PlayerInput.KeyLeft && GroundSpeed <= 0f || PlayerInput.KeyRight && GroundSpeed >= 0f)) ||
             !Ground)
         {
             Action = 0;
@@ -1435,7 +1508,7 @@ public class PlayerPhysics : BaseObject
             AllowInput = true;
         }
 
-        if (Animation == 6 && (input.KeyLeft || input.KeyRight) && Ground && Mathf.Abs(GroundSpeed) <= 1.5f)
+        if (Animation == 6 && (PlayerInput.KeyLeft || PlayerInput.KeyRight) && Ground && Mathf.Abs(GroundSpeed) <= 1.5f)
         {
             Direction *= -1;
             Animation = 6.5f;
@@ -1450,7 +1523,7 @@ public class PlayerPhysics : BaseObject
             CurrentAction = Action00_Common;
         }
 
-        if (Ground && Mathf.Abs(GroundSpeed) >= 0.2f && input.KeyDown && !(input.KeyLeft || input.KeyRight))
+        if (Ground && Mathf.Abs(GroundSpeed) >= 0.2f && PlayerInput.KeyDown && !(PlayerInput.KeyLeft || PlayerInput.KeyRight))
         {
             Action = 6;
             AllowInput = false;
@@ -1459,7 +1532,7 @@ public class PlayerPhysics : BaseObject
             CurrentAction = Action06_Rolling;
         }
 
-        if (Ground && input.KeyActionAPressed)
+        if (Ground && PlayerInput.KeyActionAPressed)
         {
             XSpeed = (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * -JumpForce) + (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
             YSpeed = (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * JumpForce) + (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
@@ -1485,7 +1558,7 @@ public class PlayerPhysics : BaseObject
             SpindashRev = 0f;
         }
 
-        if (input.KeyActionAPressed)
+        if (PlayerInput.KeyActionAPressed)
         {
             animator.Play("Spindash", -1, 0f);
             SpindashRev += 2f;
@@ -1493,7 +1566,7 @@ public class PlayerPhysics : BaseObject
             audioSource.Play();
         }
 
-        if (!input.KeyDown)
+        if (!PlayerInput.KeyDown)
         {
             Action = 6;
             GroundSpeed += (8f + Mathf.Floor(SpindashRev / 2f)) * Direction;
@@ -1514,8 +1587,8 @@ public class PlayerPhysics : BaseObject
 
         GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollFriction * GameController.DeltaTime), 0f) * Mathf.Sign(GroundSpeed);
 
-        if (GroundSpeed < 0f && input.KeyRight ||
-            GroundSpeed > 0f && input.KeyLeft)
+        if (GroundSpeed < 0f && PlayerInput.KeyRight ||
+            GroundSpeed > 0f && PlayerInput.KeyLeft)
         {
             GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollDeceleration * GameController.DeltaTime), 0f) * Mathf.Sign(GroundSpeed);
         }
@@ -1540,7 +1613,7 @@ public class PlayerPhysics : BaseObject
             CurrentAction = Action01_Jump;
         }
 
-        if (Ground && input.KeyActionAPressed)
+        if (Ground && PlayerInput.KeyActionAPressed)
         {
             XSpeed = (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * -JumpForce) + (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
             YSpeed = (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * JumpForce) + (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
@@ -1563,6 +1636,20 @@ public class PlayerPhysics : BaseObject
         }
     }
     #endregion
+    #region Actions - [07] Breathe
+    public void Action07_Breathe()
+    {
+        Animation = 12;
+
+        if (Animation == 12 &&
+            animator.GetCurrentAnimatorStateInfo(0).IsName("Breathe") &&
+            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && Ground)
+        {
+            Action = 0;
+            AllowInput = true;
+        }
+    }
+    #endregion
     #region Actions - [08] Hurt
     public void Action08_Hurt()
     {
@@ -1581,6 +1668,18 @@ public class PlayerPhysics : BaseObject
     public void Action09_Die()
     {
         Animation = 10;
+
+        if (YPosition < SceneController.YBottomFrame - 48f)
+        {
+            GameController.Lives--;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+    #endregion
+    #region Actions - [10] Drown
+    public void Action10_Drown()
+    {
+        Animation = 11;
 
         if (YPosition < SceneController.YBottomFrame - 48f)
         {

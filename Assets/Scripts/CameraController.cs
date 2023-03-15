@@ -22,6 +22,7 @@ public class CameraController : MonoBehaviour
     public float CrouchDownTimer;
 
     private PlayerPhysics player;
+    private GoalSign GoalPost;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<PlayerPhysics>();
+        GoalPost = FindObjectOfType<GoalSign>();
 
         CameraMaximumX = LevelController.CurrentLevel.Width;
         CameraMaximumY = LevelController.CurrentLevel.Height;
@@ -49,6 +51,11 @@ public class CameraController : MonoBehaviour
             CameraMinimumY = 0f;
             CameraMaximumX = LevelController.CurrentLevel.Width;
             CameraMaximumY = LevelController.CurrentLevel.Height;
+        }
+        if (CameraAction == 2)
+        {
+            CameraMinimumX = GoalPost.XPosition - SceneController.WindowMidWidth;
+            CameraMaximumX = GoalPost.XPosition + SceneController.WindowMidWidth;
         }
         if (CameraAction == 3)
         {

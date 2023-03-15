@@ -17,7 +17,7 @@ PlayerSettings:
   m_SplashScreenStyle: 0
   m_ShowUnitySplashScreen: 1
   m_VirtualRealitySplashScreen: {fileID: 0}
-  defaultScreenWidth: 426
+  defaultScreenWidth: 424
   defaultScreenHeight: 240
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600

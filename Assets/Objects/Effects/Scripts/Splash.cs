@@ -11,9 +11,11 @@ public class Splash : BaseObject
 
     private void FixedUpdate()
     {
+        YPosition = LevelController.CurrentLevel.WaterLevelApparent;
+
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            LevelController.DestroyStageObject(this);
+            SceneController.DestroyStageObject(this);
         }
     }
 }

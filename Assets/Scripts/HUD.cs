@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class HUD : MonoBehaviour
@@ -8,6 +9,10 @@ public class HUD : MonoBehaviour
     public Digit[] GUI_Rings = new Digit[3];
     public Digit[] GUI_Lives = new Digit[2];
     public Digit[] GUI_FPS = new Digit[4];
+
+    public Digit[] RingBonus = new Digit[5];
+    public Digit[] TimeBonus = new Digit[5];
+    public Digit[] TotalBonus = new Digit[6];
 
     public GameObject GUI_Pause;
     public GameObject GUI_PauseCursor;
@@ -85,6 +90,44 @@ public class HUD : MonoBehaviour
         GUI_FPS[1].GetComponent<SpriteRenderer>().enabled = FPS >= 10;
         GUI_FPS[0].GetComponent<SpriteRenderer>().enabled = true;
 
+        RingBonus[4].SetValue(GoalSign.RingBonus / 10000);
+        RingBonus[3].SetValue(GoalSign.RingBonus / 1000 % 10);
+        RingBonus[2].SetValue(GoalSign.RingBonus / 100 % 10);
+        RingBonus[1].SetValue(GoalSign.RingBonus / 10 % 10);
+        RingBonus[0].SetValue(GoalSign.RingBonus % 10);
+
+        RingBonus[4].GetComponent<SpriteRenderer>().enabled = GoalSign.RingBonus >= 10000;
+        RingBonus[3].GetComponent<SpriteRenderer>().enabled = GoalSign.RingBonus >= 1000;
+        RingBonus[2].GetComponent<SpriteRenderer>().enabled = GoalSign.RingBonus >= 100;
+        RingBonus[1].GetComponent<SpriteRenderer>().enabled = GoalSign.RingBonus >= 10;
+        RingBonus[0].GetComponent<SpriteRenderer>().enabled = true;
+
+        TimeBonus[4].SetValue(GoalSign.TimeBonus / 10000);
+        TimeBonus[3].SetValue(GoalSign.TimeBonus / 1000 % 10);
+        TimeBonus[2].SetValue(GoalSign.TimeBonus / 100 % 10);
+        TimeBonus[1].SetValue(GoalSign.TimeBonus / 10 % 10);
+        TimeBonus[0].SetValue(GoalSign.TimeBonus % 10);
+
+        TimeBonus[4].GetComponent<SpriteRenderer>().enabled = GoalSign.TimeBonus >= 10000;
+        TimeBonus[3].GetComponent<SpriteRenderer>().enabled = GoalSign.TimeBonus >= 1000;
+        TimeBonus[2].GetComponent<SpriteRenderer>().enabled = GoalSign.TimeBonus >= 100;
+        TimeBonus[1].GetComponent<SpriteRenderer>().enabled = GoalSign.TimeBonus >= 10;
+        TimeBonus[0].GetComponent<SpriteRenderer>().enabled = true;
+
+        TotalBonus[5].SetValue(GoalSign.TotalBonus / 100000);
+        TotalBonus[4].SetValue(GoalSign.TotalBonus / 10000 % 10);
+        TotalBonus[3].SetValue(GoalSign.TotalBonus / 1000 % 10);
+        TotalBonus[2].SetValue(GoalSign.TotalBonus / 100 % 10);
+        TotalBonus[1].SetValue(GoalSign.TotalBonus / 10 % 10);
+        TotalBonus[0].SetValue(GoalSign.TotalBonus % 10);
+
+        TotalBonus[5].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 100000;
+        TotalBonus[4].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 10000;
+        TotalBonus[3].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 1000;
+        TotalBonus[2].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 100;
+        TotalBonus[1].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 10;
+        TotalBonus[0].GetComponent<SpriteRenderer>().enabled = true;
+
         if (LevelController.Paused ? input.KeyActionBPressed : input.KeyStartPressed)
         {
             PauseOption = 0;
@@ -118,7 +161,7 @@ public class HUD : MonoBehaviour
                 }
                 if (PauseOption == 1 && !GameController.Preload)
                 {
-                    GameController.instance.LoadLevel(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }
                 if (PauseOption == 2)
                 {
