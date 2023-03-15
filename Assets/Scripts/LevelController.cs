@@ -14,7 +14,7 @@ public class LevelController : SceneController
     public static bool PauseTrigger;
     public static bool Paused;
     public static bool Boss;
-    public static bool StageClear;
+    public static bool Clear;
 
     public static bool CheckPoint;
     public static float CheckPointX;
@@ -33,15 +33,12 @@ public class LevelController : SceneController
 
     public int Rings;
 
-    private static int RingsInThisRow;
     private static float CreationStrength;
     private static int CreationDirection = 1;
     private static float CreationAngle = 101.25f;
 
     private new void Awake()
     {
-        StageClear = false;
-
         Paused = false;
         AllowTime = AllowPause = true;
 

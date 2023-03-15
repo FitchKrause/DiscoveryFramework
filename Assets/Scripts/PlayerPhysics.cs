@@ -207,11 +207,11 @@ public class PlayerPhysics : BaseObject
             #region Slope Factor
             if (AllowInput && Ground && Action != 6)
             {
-                GroundSpeed -= (SlopeFactor * GameController.DeltaTime) * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                GroundSpeed -= SlopeFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GameController.DeltaTime;
             }
             #endregion
             #region X Control
-            if (AllowInput && !(Ground && ControlLock > 0) && Action != 6)
+            if (AllowInput && !(Ground && ControlLock > 0 || Action == 6))
             {
                 if (inpDir < 0)
                 {
@@ -283,27 +283,13 @@ public class PlayerPhysics : BaseObject
                 
                 if (Ground && inpDir == 0)
                 {
-                    GroundSpeed -= Mathf.Min(Mathf.Abs(GroundSpeed), (Friction * GameController.DeltaTime)) * Mathf.Sign(GroundSpeed);
+                    GroundSpeed -= Mathf.Min(Mathf.Abs(GroundSpeed), Friction * GameController.DeltaTime) * Mathf.Sign(GroundSpeed);
                     
                     if (Mathf.Abs(GroundSpeed) < Deceleration)
                     {
                         GroundSpeed = 0f;
                     }
                 }
-            }
-            
-            if ((Ground ? GroundSpeed : XSpeed) < 0f && XPosition <= CameraController.CameraMinimumX + 16f)
-            {
-                if (Ground) GroundSpeed = 0f;
-                else XSpeed = 0f;
-                XPosition = CameraController.CameraMinimumX + 16f;
-            }
-
-            if ((Ground ? GroundSpeed : XSpeed) > 0f && XPosition >= CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f))
-            {
-                if (Ground) GroundSpeed = 0f;
-                else XSpeed = 0f;
-                XPosition = CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f);
             }
             #endregion
             #region Control Lock
@@ -323,7 +309,7 @@ public class PlayerPhysics : BaseObject
                             SmoothAngle = 0f;
                             Ground = false;
                         }
-                        else
+                        else if (AllowFalling)
                         {
                             if (GroundAngle < 180f)
                             {
@@ -632,26 +618,37 @@ public class PlayerPhysics : BaseObject
             }
         }
         #endregion
+        #region X Control (Post)
+        if ((Ground ? GroundSpeed : XSpeed) <= 0f && XPosition <= CameraController.CameraMinimumX + 16f)
+        {
+            if (Ground) GroundSpeed = 0f;
+            else XSpeed = 0f;
+            XPosition = CameraController.CameraMinimumX + 16f;
+        }
+
+        if ((Ground ? GroundSpeed : XSpeed) >= 0f && XPosition >= CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f))
+        {
+            if (Ground) GroundSpeed = 0f;
+            else XSpeed = 0f;
+            XPosition = CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f);
+        }
+        #endregion
         #endregion
         #region Actions
-        #region Manage Actions
         if (CurrentAction != null)
         {
             Attacking = false;
             CurrentAction();
         }
 
+        #region Manage Actions
         if (Action == 0)
         {
-            AllowDirection = true;
-            AllowInput = true;
             CurrentAction = Action00_Common;
         }
         if (Action == 1)
         {
             Attacking = true;
-            AllowDirection = true;
-            AllowInput = true;
             CurrentAction = Action01_Jump;
         }
         if (Action == 2)
@@ -669,7 +666,6 @@ public class PlayerPhysics : BaseObject
         if (Action == 4)
         {
             AllowDirection = false;
-            AllowInput = true;
             CurrentAction = Action04_Skidding;
         }
         if (Action == 5)
@@ -682,7 +678,6 @@ public class PlayerPhysics : BaseObject
         if (Action == 6)
         {
             Attacking = true;
-            AllowDirection = true;
             AllowInput = false;
             CurrentAction = Action06_Rolling;
         }
@@ -1398,6 +1393,7 @@ public class PlayerPhysics : BaseObject
                 SkidTimer = 20;
                 Action = 4;
                 AllowDirection = false;
+                AllowInput = true;
                 Direction = 1;
                 Animation = 6;
                 AudioController.PlaySFX(Sound_Skidding);
@@ -1408,6 +1404,7 @@ public class PlayerPhysics : BaseObject
                 SkidTimer = 20;
                 Action = 4;
                 AllowDirection = false;
+                AllowInput = true;
                 Direction = -1;
                 Animation = 6;
                 AudioController.PlaySFX(Sound_Skidding);
@@ -1451,6 +1448,7 @@ public class PlayerPhysics : BaseObject
         if (Ground)
         {
             Action = 0;
+            AllowDirection = true;
             AllowInput = true;
             CurrentAction = Action00_Common;
         }
@@ -1466,6 +1464,8 @@ public class PlayerPhysics : BaseObject
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             Action = 0;
+            AllowDirection = true;
+            AllowInput = true;
             CurrentAction = Action00_Common;
         }
     }
@@ -1480,6 +1480,8 @@ public class PlayerPhysics : BaseObject
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             Action = 0;
+            AllowDirection = true;
+            AllowInput = true;
             CurrentAction = Action00_Common;
         }
 
@@ -1505,6 +1507,7 @@ public class PlayerPhysics : BaseObject
         {
             Action = 0;
             Animation = 1;
+            AllowDirection = true;
             AllowInput = true;
         }
 
@@ -1519,6 +1522,7 @@ public class PlayerPhysics : BaseObject
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             Action = 0;
+            AllowDirection = true;
             AllowInput = true;
             CurrentAction = Action00_Common;
         }
@@ -1526,6 +1530,7 @@ public class PlayerPhysics : BaseObject
         if (Ground && Mathf.Abs(GroundSpeed) >= 0.2f && PlayerInput.KeyDown && !(PlayerInput.KeyLeft || PlayerInput.KeyRight))
         {
             Action = 6;
+            AllowDirection = false;
             AllowInput = false;
             Animation = 8;
             AudioController.PlaySFX(Sound_Rolling);
@@ -1570,6 +1575,7 @@ public class PlayerPhysics : BaseObject
         {
             Action = 6;
             GroundSpeed += (8f + Mathf.Floor(SpindashRev / 2f)) * Direction;
+            AllowDirection = false;
             AllowInput = false;
             Animation = 8;
             CameraController.LagTimer = 16f;
@@ -1597,11 +1603,11 @@ public class PlayerPhysics : BaseObject
         {
             if (Mathf.Sign(GroundSpeed) == Mathf.Sign(Mathf.Sin(GroundAngle * Mathf.Deg2Rad)))
             {
-                GroundSpeed -= (SlopeRollUpFactor * GameController.DeltaTime) * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                GroundSpeed -= SlopeRollUpFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GameController.DeltaTime;
             }
             else
             {
-                GroundSpeed -= (SlopeRollDownFactor * GameController.DeltaTime) * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                GroundSpeed -= SlopeRollDownFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GameController.DeltaTime;
             }
         }
 
@@ -1609,6 +1615,7 @@ public class PlayerPhysics : BaseObject
         {
             Action = 1;
             AllowInput = true;
+            AllowDirection = true;
             JumpVariable = false;
             CurrentAction = Action01_Jump;
         }
@@ -1620,7 +1627,8 @@ public class PlayerPhysics : BaseObject
             Ground = false;
             GroundAngle = 0f;
             Action = 1;
-            AllowInput = false;
+            AllowInput = true;
+            AllowDirection = true;
             ControlLock = 0;
             JumpVariable = true;
             Animation = 3;
@@ -1632,6 +1640,7 @@ public class PlayerPhysics : BaseObject
         {
             Action = 0;
             AllowInput = true;
+            AllowDirection = true;
             CurrentAction = Action00_Common;
         }
     }
@@ -1647,6 +1656,7 @@ public class PlayerPhysics : BaseObject
         {
             Action = 0;
             AllowInput = true;
+            AllowDirection = true;
         }
     }
     #endregion
@@ -1660,6 +1670,7 @@ public class PlayerPhysics : BaseObject
             GroundSpeed = 0f;
             Action = 0;
             AllowInput = true;
+            AllowDirection = true;
             CurrentAction = Action00_Common;
         }
     }

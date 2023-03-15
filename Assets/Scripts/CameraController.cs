@@ -55,7 +55,9 @@ public class CameraController : MonoBehaviour
         if (CameraAction == 2)
         {
             CameraMinimumX = GoalPost.XPosition - SceneController.WindowMidWidth;
+            CameraMinimumY = -GoalPost.YPosition - 160;
             CameraMaximumX = GoalPost.XPosition + SceneController.WindowMidWidth;
+            CameraMaximumY = -GoalPost.YPosition + 80;
         }
         if (CameraAction == 3)
         {

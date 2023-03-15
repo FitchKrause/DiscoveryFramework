@@ -20,15 +20,30 @@ public class PlayerInput : MonoBehaviour
     public static bool KeyActionCPressed;
 
     public static bool IgnoreInput;
+    public static bool OverrideInput;
+    public static bool ClearInput;
 
     private void Awake()
     {
-        IgnoreInput = false;
+        IgnoreInput = OverrideInput = ClearInput = false;
     }
 
     private void FixedUpdate()
     {
-        if (!IgnoreInput)
+        if (ClearInput)
+        {
+            KeyUpPressed = KeyUp = false;
+            KeyDownPressed = KeyDown = false;
+            KeyLeftPressed = KeyLeft = false;
+            KeyRightPressed = KeyRight = false;
+            KeyActionAPressed = KeyActionA = false;
+            KeyActionBPressed = KeyActionB = false;
+            KeyActionCPressed = KeyActionC = false;
+
+            ClearInput = false;
+        }
+
+        if (!IgnoreInput && !OverrideInput)
         {
             KeyUpPressed = Input.GetKey(KeyCode.UpArrow) && !KeyUp;
             KeyUp = Input.GetKey(KeyCode.UpArrow);
@@ -50,16 +65,6 @@ public class PlayerInput : MonoBehaviour
 
             KeyActionCPressed = Input.GetKey(KeyCode.C) && !KeyActionC;
             KeyActionC = Input.GetKey(KeyCode.C);
-        }
-        else
-        {
-            KeyUpPressed = KeyUp = false;
-            KeyDownPressed = KeyDown = false;
-            KeyLeftPressed = KeyLeft = false;
-            KeyRightPressed = KeyRight = false;
-            KeyActionAPressed = KeyActionA = false;
-            KeyActionBPressed = KeyActionB = false;
-            KeyActionCPressed = KeyActionC = false;
         }
     }
 }

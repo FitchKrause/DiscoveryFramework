@@ -44,8 +44,8 @@ public class SceneController : MonoBehaviour
             filterMode = FilterMode.Point
         };
 
-        WindowMidHeight = RenderTarget.height / 2f;
-        WindowMidWidth = RenderTarget.width / 2f;
+        WindowMidWidth = GameController.instance.Width / 2f;
+        WindowMidHeight = GameController.instance.Height / 2f;
 
         Vector3[] vertices = new Vector3[4];
         Vector2[] uv = new Vector2[4];
@@ -142,6 +142,11 @@ public class SceneController : MonoBehaviour
             y = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.y), -LevelController.CurrentLevel.Height + WindowMidHeight, -WindowMidHeight),
             z = -10f
         };
+
+        XLeftFrame = Camera.main.transform.position.x - WindowMidWidth;
+        XRightFrame = Camera.main.transform.position.x + WindowMidWidth;
+        YTopFrame = Camera.main.transform.position.y + WindowMidHeight;
+        YBottomFrame = Camera.main.transform.position.y - WindowMidHeight;
     }
 
     public static BaseObject CreateStageObject(string objName, float PosX, float PosY)

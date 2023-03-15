@@ -33,12 +33,20 @@ public class GoalSign : BaseObject
     private int MaxAddTimeBonus;
 
     private int animFrame;
+    private string charName;
+
+    private void Awake()
+    {
+        RingBonus = TimeBonus = TotalBonus = EventTimer = 0;
+        CameraController.CameraAction = 0;
+        CameraController.CameraMinimumX = 0f;
+        CameraController.CameraMinimumY = 0f;
+        CameraController.CameraMaximumX = LevelController.CurrentLevel.Width;
+        CameraController.CameraMaximumY = LevelController.CurrentLevel.Height;
+    }
 
     private new void Start()
     {
-        RingBonus = TimeBonus = TotalBonus = 0;
-        EventTimer = 0;
-
         player = FindObjectOfType<PlayerPhysics>();
 
         base.Start();
@@ -46,7 +54,19 @@ public class GoalSign : BaseObject
 
     private void FixedUpdate()
     {
-        if (CameraController.CameraAction < 2 && player.XPosition >= XPosition && !Flag0)
+        LevelController.Clear = Flag1;
+
+        switch (player.Character)
+        {
+            case 0:
+                charName = "Sonic";
+                break;
+            default:
+                charName = "Sonic";
+                break;
+        }
+
+        if (CameraController.CameraAction != 2 && player.XPosition >= XPosition && !Flag0)
         {
             Flag0 = true;
             animator.SetInteger("Character", player.Character);
@@ -64,29 +84,28 @@ public class GoalSign : BaseObject
             {
                 Trigger++;
             }
-            animFrame = (int)(24f * animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 24;
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName(charName))
+            {
+                animFrame = (int)(24f * animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 24;
+            }
             LevelController.AllowTime = LevelController.AllowPause = false;
         }
 
-        if (Trigger >= 250 && animFrame == 11)
+        if (Trigger >= 250 && animFrame == 11 && !Flag1)
         {
             if (player.Character == 0)
             {
                 animator.Play("Sonic (Static)");
+                animator.SetBool("Spin!", false);
             }
             PlayerInput.IgnoreInput = true;
-            player.AllowInput = player.AllowDirection = false;
-            player.Direction = 1;
-            if (player.Ground) player.GroundSpeed += 0.1f;
-            else player.XSpeed += 0.1f;
-
+            PlayerInput.OverrideInput = true;
+            PlayerInput.ClearInput = true;
+            PlayerInput.KeyRight = true;
             if (player.XPosition >= SceneController.XRightFrame + 16f)
             {
-                if (!Flag1)
-                {
-                    LevelController.StageClear = Flag1 = true;
-                    MusicController.ToPlay = "Clear";
-                }
+                Flag1 = true;
+                MusicController.ToPlay = "Clear";
             }
         }
 
