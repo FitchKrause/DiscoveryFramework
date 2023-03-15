@@ -83,38 +83,35 @@ public class BaseObject : MonoBehaviour
 
         Debug.DrawRay(new Vector2(XPosition, YPosition) + pos, dir * distance);
 
-        if (Physics2D.RaycastNonAlloc(new Vector2(XPosition, YPosition) + pos, dir, results, distance, 1 << CollisionLayer) > 0)
+        int num = -1;
+        float num2 = distance + 32f;
+
+        for (int i = 0; i < Physics2D.RaycastNonAlloc(new Vector2(XPosition, YPosition) + pos, dir, results, distance, 1 << CollisionLayer); i++)
         {
-            int num = -1;
-            float num2 = distance + 32f;
+            if (results[i].collider == ColliderBody) continue;
 
-            for (int i = 0; i < results.Length; i++)
+            if (results[i].collider.tag == "Solid" ||
+                results[i].collider.tag == "Platform" && platforms && YSpeed <= 0f && (YPosition - HeightRadius) > (results[i].collider.transform.position.y - 4f))
             {
-                if (results[i].collider == ColliderBody || results[i].collider == null) continue;
-
-                if (results[i].collider.tag == "Solid" ||
-                    results[i].collider.tag == "Platform" && platforms && YSpeed <= 0f && (YPosition - HeightRadius) > (results[i].collider.transform.position.y - 4f))
+                if (results[i].distance < num2)
                 {
-                    if (results[i].distance < num2)
-                    {
-                        num = i;
-                        num2 = results[i].distance;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    num = i;
+                    num2 = results[i].distance;
                 }
                 else
                 {
-                    continue;
+                    break;
                 }
             }
-
-            if (num > -1)
+            else
             {
-                return results[num];
+                continue;
             }
+        }
+
+        if (num > -1)
+        {
+            return results[num];
         }
 
         return default(RaycastHit2D);
@@ -137,30 +134,27 @@ public class BaseObject : MonoBehaviour
         Debug.DrawLine(pos2 + vector3, pos2 + vector4);
         Debug.DrawLine(pos2 + vector4, pos2 + vector);
 
-        if (Physics2D.OverlapBoxNonAlloc(new Vector2(XPosition, YPosition) + pos, size, GroundAngle, results, 1 << CollisionLayer) > 0)
+        int num = -1;
+
+        for (int i = 0; i < Physics2D.OverlapBoxNonAlloc(new Vector2(XPosition, YPosition) + pos, size, GroundAngle, results, 1 << CollisionLayer); i++)
         {
-            int num = -1;
+            if (results[i] == ColliderBody) continue;
 
-            for (int i = 0; i < results.Length; i++)
+            if (results[i].tag == "Solid" ||
+                results[i].tag == "Platform" && platforms && YSpeed <= 0f && (YPosition - HeightRadius) > (results[i].transform.position.y - 4f))
             {
-                if (results[i] == ColliderBody || results[i] == null) continue;
-
-                if (results[i].tag == "Solid" ||
-                    results[i].tag == "Platform" && platforms && YSpeed <= 0f && (YPosition - HeightRadius) > (results[i].transform.position.y - 4f))
-                {
-                    num = i;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
+                num = i;
+                break;
             }
-
-            if (num > -1)
+            else
             {
-                return results[num];
+                continue;
             }
+        }
+
+        if (num > -1)
+        {
+            return results[num];
         }
 
         return null;
