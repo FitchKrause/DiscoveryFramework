@@ -84,7 +84,7 @@ public class BaseObject : MonoBehaviour
         Debug.DrawRay(new Vector2(XPosition, YPosition) + pos, dir * distance);
 
         int num = -1;
-        float num2 = distance + 32f;
+        float num2 = float.MaxValue;
 
         for (int i = 0; i < Physics2D.RaycastNonAlloc(new Vector2(XPosition, YPosition) + pos, dir, results, distance, 1 << CollisionLayer); i++)
         {
@@ -117,12 +117,12 @@ public class BaseObject : MonoBehaviour
         return default(RaycastHit2D);
     }
 
-    public Collider2D BoxCast(Vector2 offset, Vector2 size, bool platforms = true)
+    public Collider2D OverlapBox(Vector2 offset, Vector2 size, bool platforms = true)
     {
         Collider2D[] results = new Collider2D[RESULT_COUNT];
 
         Vector2 pos = Quaternion.Euler(0f, 0f, GroundAngle) * offset;
-        Vector2 pos2 = new Vector2(XPosition, YPosition) + pos;
+        Vector2 pos2 = new Vector2(XPosition + XSpeed, YPosition + YSpeed) + pos;
 
         Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(-size.x, size.y) / 2f);
         Vector2 vector2 = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(size.x, size.y) / 2f);
@@ -136,7 +136,7 @@ public class BaseObject : MonoBehaviour
 
         int num = -1;
 
-        for (int i = 0; i < Physics2D.OverlapBoxNonAlloc(new Vector2(XPosition, YPosition) + pos, size, GroundAngle, results, 1 << CollisionLayer); i++)
+        for (int i = 0; i < Physics2D.OverlapBoxNonAlloc(pos2, size, GroundAngle, results, 1 << CollisionLayer); i++)
         {
             if (results[i] == ColliderBody) continue;
 

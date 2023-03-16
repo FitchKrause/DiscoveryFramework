@@ -380,8 +380,8 @@ public class PlayerPhysics : BaseObject
             #region Horizontal Collisions
             if (AllowX)
             {
-                RaycastHit2D wallLeftHit = SensorCast(new Vector2(0f, WallShift), Vector2.left, WidthRadius);
-                RaycastHit2D wallRightHit = SensorCast(new Vector2(0f, WallShift), Vector2.right, WidthRadius);
+                RaycastHit2D wallLeftHit = SensorCast(new Vector2(0f, WallShift), Vector2.left, WidthRadius, false);
+                RaycastHit2D wallRightHit = SensorCast(new Vector2(0f, WallShift), Vector2.right, WidthRadius, false);
                 
                 if (wallLeftHit)
                 {
@@ -410,8 +410,8 @@ public class PlayerPhysics : BaseObject
                 RaycastHit2D floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius);
                 RaycastHit2D floorHit = default(RaycastHit2D);
 
-                RaycastHit2D ceilingLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.up, HeightRadius);
-                RaycastHit2D ceilingRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.up, HeightRadius);
+                RaycastHit2D ceilingLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.up, HeightRadius, false);
+                RaycastHit2D ceilingRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.up, HeightRadius, false);
                 RaycastHit2D ceilingHit = default(RaycastHit2D);
 
                 #region Ceiling Collisions
@@ -598,10 +598,10 @@ public class PlayerPhysics : BaseObject
             Rect.WidthRadius = WidthRadius;
             Rect.HeightRadius = HeightRadius;
 
-            ColliderFloor = BoxCast(new Vector2(0f, -HeightRadius + Mathf.Min(Ground ? 0f : YSpeed, 0f)), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
-            ColliderCeiling = BoxCast(new Vector2(0f, HeightRadius + Mathf.Max(Ground ? 0f : YSpeed, 0f)), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
-            ColliderWallLeft = BoxCast(new Vector2(-WidthRadius + Mathf.Min(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
-            ColliderWallRight = BoxCast(new Vector2(WidthRadius + Mathf.Max(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f));
+            ColliderFloor = OverlapBox(new Vector2(0f, -HeightRadius), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
+            ColliderCeiling = OverlapBox(new Vector2(0f, HeightRadius), new Vector2((WidthRadius - 2f) * 2f, WidthRadius), false);
+            ColliderWallLeft = OverlapBox(new Vector2(-WidthRadius, WallShift), new Vector2(WidthRadius, WidthRadius / 2f), false);
+            ColliderWallRight = OverlapBox(new Vector2(WidthRadius, WallShift), new Vector2(WidthRadius, WidthRadius / 2f), false);
         }
         #endregion
         #endregion
