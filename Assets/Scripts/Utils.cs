@@ -24,42 +24,4 @@ public static class Utils
 
         return true;
     }
-
-    public static bool CircleCast(BaseObject objRef, Vector2 position, float radius)
-    {
-        bool flag = false;
-
-        foreach (Collider2D col in Physics2D.OverlapCircleAll(position, radius, 1 << objRef.CollisionLayer))
-        {
-            if (col == objRef.ColliderBody) continue;
-
-            if (col.tag == "Solid" ||
-                col.tag == "Platform" && objRef.YSpeed <= 0f && (objRef.YPosition - objRef.HeightRadius) >= (col.transform.position.y - 4f))
-            {
-                flag = true;
-                break;
-            }
-        }
-
-        return flag;
-    }
-
-    public static bool PointCast(BaseObject objRef, Vector2 position)
-    {
-        bool flag = false;
-
-        foreach (Collider2D col in Physics2D.OverlapPointAll(position, 1 << objRef.CollisionLayer))
-        {
-            if (col == objRef.ColliderBody) continue;
-
-            if (col.tag == "Solid" ||
-                col.tag == "Platform" && objRef.YSpeed <= 0f && (objRef.YPosition - objRef.HeightRadius) >= (col.transform.position.y - 4f))
-            {
-                flag = true;
-                break;
-            }
-        }
-
-        return flag;
-    }
 }

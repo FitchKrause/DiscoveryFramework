@@ -122,7 +122,7 @@ public class BaseObject : MonoBehaviour
         Collider2D[] results = new Collider2D[RESULT_COUNT];
 
         Vector2 pos = Quaternion.Euler(0f, 0f, GroundAngle) * offset;
-        Vector2 pos2 = new Vector2(XPosition + XSpeed, YPosition + YSpeed) + pos;
+        Vector2 pos2 = new Vector2(XPosition, YPosition) + pos;
 
         Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(-size.x, size.y) / 2f);
         Vector2 vector2 = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(size.x, size.y) / 2f);
@@ -137,6 +137,39 @@ public class BaseObject : MonoBehaviour
         int num = -1;
 
         for (int i = 0; i < Physics2D.OverlapBoxNonAlloc(pos2, size, GroundAngle, results, 1 << CollisionLayer); i++)
+        {
+            if (results[i] == ColliderBody) continue;
+
+            if (results[i].tag == "Solid" ||
+                results[i].tag == "Platform" && platforms && YSpeed <= 0f && (YPosition - HeightRadius) > (results[i].transform.position.y - 4f))
+            {
+                num = i;
+                break;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        if (num > -1)
+        {
+            return results[num];
+        }
+
+        return null;
+    }
+
+    public Collider2D OverlapPoint(Vector2 offset, bool platforms = true)
+    {
+        Collider2D[] results = new Collider2D[RESULT_COUNT];
+
+        Vector2 pos = Quaternion.Euler(0f, 0f, GroundAngle) * offset;
+        Vector2 pos2 = new Vector2(XPosition, YPosition) + pos;
+
+        int num = -1;
+
+        for (int i = 0; i < Physics2D.OverlapPointNonAlloc(pos2, results, 1 << CollisionLayer); i++)
         {
             if (results[i] == ColliderBody) continue;
 

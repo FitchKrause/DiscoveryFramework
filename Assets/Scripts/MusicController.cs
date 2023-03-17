@@ -146,11 +146,15 @@ public class MusicController : AudioController
         }
         if (ToPlay == "Clear")
         {
+            QueuedMusic = string.Empty;
+            QueuedTime = 0f;
+
             Playing = ToPlay;
             bgmSource.clip = Music_Clear;
             LoopStart = 0f;
             LoopEnd = 0f;
             bgmSource.loop = false;
+            bgmSource.time = 0f;
             bgmSource.Play();
             ToPlay = string.Empty;
         }

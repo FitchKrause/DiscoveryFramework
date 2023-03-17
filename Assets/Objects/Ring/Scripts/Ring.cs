@@ -94,26 +94,26 @@ public class Ring : BaseObject
             YSpeed -= 0.09375f * GameController.DeltaTime;
             for (int i = 0; i < ObjectLoops; i++)
             {
-                Vector2 top = new Vector2(XPosition, YPosition + Mathf.Max(YSpeed + 8f, 8f));
-                Vector2 bottom = new Vector2(XPosition, YPosition + Mathf.Min(YSpeed - 8f, -8f));
-                Vector2 left = new Vector2(XPosition + Mathf.Min(XSpeed - 8f, -8f), YPosition);
-                Vector2 right = new Vector2(XPosition + Mathf.Max(XSpeed + 8f, 8f), YPosition);
+                Vector2 top = new Vector2(0f, Mathf.Max(8f, YSpeed + 8f));
+                Vector2 bottom = new Vector2(0f, Mathf.Min(-8f, YSpeed - 8f));
+                Vector2 left = new Vector2(Mathf.Min(-8f, XSpeed - 8f), 0f);
+                Vector2 right = new Vector2(Mathf.Max(8f, XSpeed + 8f), 0f);
 
-                if (XSpeed >= 0f && Utils.PointCast(this, right))
+                if (XSpeed >= 0f && OverlapPoint(right))
                 {
                     XSpeed = Mathf.Min(-XSpeed, -2f);
                 }
-                if (XSpeed <= 0f && Utils.PointCast(this, left))
+                if (XSpeed <= 0f && OverlapPoint(left))
                 {
                     XSpeed = Mathf.Max(-XSpeed, 2f);
                 }
 
-                if (YSpeed <= 0f && Utils.PointCast(this, bottom))
+                if (YSpeed <= 0f && OverlapPoint(bottom))
                 {
                     YSpeed = Mathf.Max(-YSpeed, 2f);
                     Ground = true;
                 }
-                if (!Ground && YSpeed >= 0f && Utils.PointCast(this, top))
+                if (!Ground && YSpeed >= 0f && OverlapPoint(top))
                 {
                     YSpeed = Mathf.Min(-YSpeed, -2f);
                 }

@@ -306,7 +306,6 @@ public class PlayerPhysics : BaseObject
                             XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
                             YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
                             GroundAngle = 0f;
-                            SmoothAngle = 0f;
                             Ground = false;
                         }
                         else if (AllowFalling)
@@ -579,7 +578,6 @@ public class PlayerPhysics : BaseObject
                     XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
                     YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
                     GroundAngle = 0f;
-                    SmoothAngle = 0f;
                     Ground = false;
                 }
                 #endregion
@@ -598,10 +596,10 @@ public class PlayerPhysics : BaseObject
             Rect.WidthRadius = WidthRadius;
             Rect.HeightRadius = HeightRadius;
 
-            ColliderFloor = OverlapBox(new Vector2(0f, -HeightRadius), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
-            ColliderCeiling = OverlapBox(new Vector2(0f, HeightRadius), new Vector2((WidthRadius - 2f) * 2f, WidthRadius), false);
-            ColliderWallLeft = OverlapBox(new Vector2(-WidthRadius, WallShift), new Vector2(WidthRadius, WidthRadius / 2f), false);
-            ColliderWallRight = OverlapBox(new Vector2(WidthRadius, WallShift), new Vector2(WidthRadius, WidthRadius / 2f), false);
+            ColliderFloor = OverlapBox(new Vector2(0f, -HeightRadius + (Ground ? 0f : Mathf.Min(YSpeed, 0f))), new Vector2((WidthRadius - 2f) * 2f, WidthRadius));
+            ColliderCeiling = OverlapBox(new Vector2(0f, HeightRadius + (Ground ? 0f : Mathf.Max(YSpeed, 0f))), new Vector2((WidthRadius - 2f) * 2f, WidthRadius), false);
+            ColliderWallLeft = OverlapBox(new Vector2(-WidthRadius + Mathf.Min(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f), false);
+            ColliderWallRight = OverlapBox(new Vector2(WidthRadius + Mathf.Max(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(WidthRadius, WidthRadius / 2f), false);
         }
         #endregion
         #endregion
