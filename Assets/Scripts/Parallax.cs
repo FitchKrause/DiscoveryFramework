@@ -43,8 +43,8 @@ public class Parallax : MonoBehaviour
     {
         if (!LevelController.Paused)
         {
-            AddX += XSpeed;
-            AddY += YSpeed;
+            AddX += XSpeed * Time.timeScale;
+            AddY += YSpeed * Time.timeScale;
         }
 
         if (RepeatX)

@@ -7,11 +7,11 @@ public class Debris : BaseObject
     {
         ProcessMovement();
 
-        YSpeed -= 0.4f;
+        YSpeed -= 0.4f * Time.timeScale;
 
         if (YPosition < SceneController.YBottomFrame - 16f)
         {
-            LevelController.DestroyStageObject(this);
+            SceneController.DestroyStageObject(this);
         }
     }
 }

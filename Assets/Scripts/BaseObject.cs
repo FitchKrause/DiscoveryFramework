@@ -53,8 +53,8 @@ public class BaseObject : MonoBehaviour
             YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
         }
 
-        float AddX = XSpeed * GameController.DeltaTime;
-        float AddY = YSpeed * GameController.DeltaTime;
+        float AddX = XSpeed * Time.timeScale;
+        float AddY = YSpeed * Time.timeScale;
 
         ObjectLoops = (int)(Mathf.Sqrt((XSpeed * XSpeed) + (YSpeed * YSpeed)) + 1f);
 

@@ -3,7 +3,7 @@
 public class Bubble : BaseObject
 {
     [Header("Bubble Values")]
-    public int AlterableValueB;
+    public float AlterableValueB;
     public AudioClip Sound_Breathe;
 
     public enum Bubble_Sizes
@@ -29,9 +29,9 @@ public class Bubble : BaseObject
 
     private void FixedUpdate()
     {
-        XPosition += Mathf.Cos(AlterableValueB * Mathf.Deg2Rad) / 3f;
-        AlterableValueB += 3;
-        YSpeed = 1f;
+        XPosition += Mathf.Cos(AlterableValueB * Mathf.Deg2Rad) / 3f * Time.timeScale;
+        AlterableValueB += 3 * Time.timeScale;
+        YSpeed = 1f * Time.timeScale;
 
         ProcessMovement();
 

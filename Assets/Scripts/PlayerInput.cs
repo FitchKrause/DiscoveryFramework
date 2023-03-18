@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     public static bool KeyActionA;
     public static bool KeyActionB;
     public static bool KeyActionC;
+    public static bool KeyStart;
 
     public static bool KeyUpPressed;
     public static bool KeyDownPressed;
@@ -18,6 +19,7 @@ public class PlayerInput : MonoBehaviour
     public static bool KeyActionAPressed;
     public static bool KeyActionBPressed;
     public static bool KeyActionCPressed;
+    public static bool KeyStartPressed;
 
     public static bool IgnoreInput;
     public static bool OverrideInput;
@@ -39,32 +41,36 @@ public class PlayerInput : MonoBehaviour
             KeyActionAPressed = KeyActionA = false;
             KeyActionBPressed = KeyActionB = false;
             KeyActionCPressed = KeyActionC = false;
+            KeyStartPressed = KeyStart = false;
 
             ClearInput = false;
         }
 
-        if (!IgnoreInput && !OverrideInput)
+        if (!(IgnoreInput || OverrideInput))
         {
-            KeyUpPressed = Input.GetKey(KeyCode.UpArrow) && !KeyUp;
-            KeyUp = Input.GetKey(KeyCode.UpArrow);
+            KeyUpPressed = InputManager.KeyUpPressed;
+            KeyUp = InputManager.KeyUp;
 
-            KeyDownPressed = Input.GetKey(KeyCode.DownArrow) && !KeyDown;
-            KeyDown = Input.GetKey(KeyCode.DownArrow);
+            KeyDownPressed = InputManager.KeyDownPressed;
+            KeyDown = InputManager.KeyDown;
 
-            KeyLeftPressed = Input.GetKey(KeyCode.LeftArrow) && !KeyLeft;
-            KeyLeft = Input.GetKey(KeyCode.LeftArrow);
+            KeyLeftPressed = InputManager.KeyLeftPressed;
+            KeyLeft = InputManager.KeyLeft;
 
-            KeyRightPressed = Input.GetKey(KeyCode.RightArrow) && !KeyRight;
-            KeyRight = Input.GetKey(KeyCode.RightArrow);
+            KeyRightPressed = InputManager.KeyRightPressed;
+            KeyRight = InputManager.KeyRight;
 
-            KeyActionAPressed = Input.GetKey(KeyCode.Z) && !KeyActionA;
-            KeyActionA = Input.GetKey(KeyCode.Z);
+            KeyActionAPressed = InputManager.KeyActionAPressed;
+            KeyActionA = InputManager.KeyActionA;
 
-            KeyActionBPressed = Input.GetKey(KeyCode.X) && !KeyActionB;
-            KeyActionB = Input.GetKey(KeyCode.X);
+            KeyActionBPressed = InputManager.KeyActionBPressed;
+            KeyActionB = InputManager.KeyActionB;
 
-            KeyActionCPressed = Input.GetKey(KeyCode.C) && !KeyActionC;
-            KeyActionC = Input.GetKey(KeyCode.C);
+            KeyActionCPressed = InputManager.KeyActionCPressed;
+            KeyActionC = InputManager.KeyActionC;
+
+            KeyStartPressed = InputManager.KeyStartPressed;
+            KeyStart = InputManager.KeyStart;
         }
     }
 }

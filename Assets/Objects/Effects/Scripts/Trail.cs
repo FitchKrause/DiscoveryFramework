@@ -13,7 +13,7 @@ public class Trail : BaseObject
     {
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            LevelController.DestroyStageObject(this);
+            SceneController.DestroyStageObject(this);
         }
     }
 }

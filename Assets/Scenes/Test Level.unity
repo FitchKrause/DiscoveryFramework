@@ -13608,22 +13608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd22ccb7a330b9b47ac2f01032ae00af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KeyUp: 0
-  KeyDown: 0
-  KeyLeft: 0
-  KeyRight: 0
-  KeyActionA: 0
-  KeyActionB: 0
-  KeyActionC: 0
-  KeyStart: 0
-  KeyUpPressed: 0
-  KeyDownPressed: 0
-  KeyLeftPressed: 0
-  KeyRightPressed: 0
-  KeyActionAPressed: 0
-  KeyActionBPressed: 0
-  KeyActionCPressed: 0
-  KeyStartPressed: 0
 --- !u!1 &2123874274
 GameObject:
   m_ObjectHideFlags: 0

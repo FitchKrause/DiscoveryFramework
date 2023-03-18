@@ -59,20 +59,20 @@ public class Ring : BaseObject
         {
             if (YPosition < player.YPosition && YSpeed < TopSpeed)
             {
-                YSpeed += Acceleration * GameController.DeltaTime;
+                YSpeed += Acceleration * Time.timeScale;
             }
             else if (YPosition > player.YPosition && YSpeed > -TopSpeed)
             {
-                YSpeed -= Acceleration * GameController.DeltaTime;
+                YSpeed -= Acceleration * Time.timeScale;
             }
 
             if (XPosition > player.XPosition && XSpeed > -TopSpeed)
             {
-                XSpeed -= Acceleration * GameController.DeltaTime;
+                XSpeed -= Acceleration * Time.timeScale;
             }
             else if (XPosition < player.XPosition && XSpeed < TopSpeed)
             {
-                XSpeed += Acceleration * GameController.DeltaTime;
+                XSpeed += Acceleration * Time.timeScale;
             }
         }
 
@@ -83,15 +83,15 @@ public class Ring : BaseObject
 
         if (Flag1 && YSpeed > -TopSpeed * 2f)
         {
-            XSpeed *= 0.95f / GameController.DeltaTime;
-            YSpeed -= Acceleration * GameController.DeltaTime;
+            XSpeed *= 0.95f / Time.timeScale;
+            YSpeed -= Acceleration * Time.timeScale;
         }
 
         ProcessMovement();
 
         if (MovementActivated)
         {
-            YSpeed -= 0.09375f * GameController.DeltaTime;
+            YSpeed -= 0.09375f * Time.timeScale;
             for (int i = 0; i < ObjectLoops; i++)
             {
                 Vector2 top = new Vector2(0f, Mathf.Max(8f, YSpeed + 8f));
@@ -121,7 +121,7 @@ public class Ring : BaseObject
                 Ground = false;
             }
 
-            Life += GameController.DeltaTime;
+            Life += Time.timeScale;
 
             if (Life >= 312f)
             {

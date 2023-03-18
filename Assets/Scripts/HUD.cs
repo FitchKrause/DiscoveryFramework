@@ -21,13 +21,6 @@ public class HUD : MonoBehaviour
     private int FPS;
     private int FPS_Timer;
 
-    private InputManager input;
-
-    private void Start()
-    {
-        input = InputManager.instance;
-    }
-
     private void Update()
     {
         if (FPS_Timer >= 60)
@@ -128,7 +121,7 @@ public class HUD : MonoBehaviour
         TotalBonus[1].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 10;
         TotalBonus[0].GetComponent<SpriteRenderer>().enabled = true;
 
-        if (LevelController.Paused ? input.KeyActionBPressed : input.KeyStartPressed)
+        if (LevelController.Paused ? InputManager.KeyActionBPressed : InputManager.KeyStartPressed)
         {
             PauseOption = 0;
             LevelController.PauseTrigger = true;
@@ -136,7 +129,7 @@ public class HUD : MonoBehaviour
 
         if (LevelController.Paused)
         {
-            if (input.KeyDownPressed)
+            if (InputManager.KeyDownPressed)
             {
                 PauseOption++;
                 if (PauseOption > 2)
@@ -144,7 +137,7 @@ public class HUD : MonoBehaviour
                     PauseOption = 0;
                 }
             }
-            if (input.KeyUpPressed)
+            if (InputManager.KeyUpPressed)
             {
                 PauseOption--;
                 if (PauseOption < 0)
@@ -153,13 +146,13 @@ public class HUD : MonoBehaviour
                 }
             }
 
-            if (input.KeyStartPressed || input.KeyActionAPressed)
+            if (InputManager.KeyActionAPressed || InputManager.KeyStartPressed)
             {
                 if (PauseOption == 0)
                 {
                     LevelController.PauseTrigger = true;
                 }
-                if (PauseOption == 1 && !GameController.Preload)
+                if (PauseOption == 1)
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 }

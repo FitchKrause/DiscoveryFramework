@@ -143,7 +143,7 @@ public class Monitor : BaseObject
                 #endregion
                 #endregion
             }
-            YSpeed = Mathf.Max(YSpeed - (0.2f * GameController.DeltaTime), -10f);
+            YSpeed = Mathf.Max(YSpeed - (0.2f * Time.timeScale), -10f);
         }
 
         if (!Destroyed)
@@ -199,11 +199,11 @@ public class Monitor : BaseObject
         else
         {
             StaticObject.gameObject.SetActive(false);
-            IconLife += 1f;
+            IconLife += Time.timeScale;
 
             if (IconLife < 32f)
             {
-                IconObject.transform.position += new Vector3(0f, 1f, 0f);
+                IconObject.transform.position += new Vector3(0f, Time.timeScale, 0f);
                 SceneController.CreateStageObject("Monitor Trail", IconObject.transform.position.x, IconObject.transform.position.y);
             }
             else if (IconLife >= 64f)

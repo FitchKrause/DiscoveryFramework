@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections;
+﻿using UnityEngine;
 using System.IO;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using System;
 
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
 
-    public static float DeltaTime = 1f;
-
     public int Width = 426;
     public int Height = 240;
-
-    public static bool Preload;
 
     public static int CurrentSlot = 1;
     public static int GameCharacter = 0;
@@ -34,8 +28,7 @@ public class GameController : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        Time.timeScale = 1f;
-        Time.fixedDeltaTime = (1f / 60f) * Time.timeScale;
+        SetGameSpeed(1f);
     }
 
     private void Start()
@@ -96,19 +89,9 @@ public class GameController : MonoBehaviour
         Lives = Mathf.Clamp(Lives, 0, 99);
     }
 
-    public void LoadLevel(string name)
+    public static void SetGameSpeed(float speed)
     {
-        Preload = true;
-        StartCoroutine(LoadScene(name));
-    }
-
-    IEnumerator LoadScene(string name)
-    {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(name);
-        while (!operation.isDone)
-        {
-            yield return null;
-        }
-        Preload = !operation.isDone;
+        Time.timeScale = speed;
+        Time.fixedDeltaTime = 1f / 60f * Time.timeScale;
     }
 }

@@ -39,11 +39,11 @@ public class EndCard : MonoBehaviour
         {
             if (Direction > 0)
             {
-                transform.position = new Vector3(Mathf.Max(transform.position.x - XSpeed, TargetX + ((SceneController.XRightFrame + SceneController.XLeftFrame) / 2f) - ((SceneController.XRightFrame - SceneController.XLeftFrame) / 2f)), transform.position.y);
+                transform.position = new Vector3(Mathf.Max(transform.position.x - (XSpeed * Time.timeScale), TargetX + ((SceneController.XRightFrame + SceneController.XLeftFrame) / 2f) - ((SceneController.XRightFrame - SceneController.XLeftFrame) / 2f)), transform.position.y);
             }
             else
             {
-                transform.position = new Vector3(Mathf.Min(transform.position.x + XSpeed, TargetX + ((SceneController.XRightFrame + SceneController.XLeftFrame) / 2f) - ((SceneController.XRightFrame - SceneController.XLeftFrame) / 2f)), transform.position.y);
+                transform.position = new Vector3(Mathf.Min(transform.position.x + (XSpeed * Time.timeScale), TargetX + ((SceneController.XRightFrame + SceneController.XLeftFrame) / 2f) - ((SceneController.XRightFrame - SceneController.XLeftFrame) / 2f)), transform.position.y);
             }
         }
     }

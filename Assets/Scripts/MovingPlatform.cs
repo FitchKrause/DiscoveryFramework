@@ -50,8 +50,8 @@ public class MovingPlatform : BaseObject
         DifferenceX = Mathf.Floor(XPosition);
         DifferenceY = Mathf.Floor(YPosition);
 
-        AngleX += PlatformXSpeed * GameController.DeltaTime;
-        AngleY += PlatformYSpeed * GameController.DeltaTime;
+        AngleX += PlatformXSpeed * Time.timeScale;
+        AngleY += PlatformYSpeed * Time.timeScale;
 
         XPosition = InitialX + (Mathf.Cos(AngleX * Mathf.Deg2Rad) * DistanceX);
         YPosition = InitialY + ((Mathf.Sin(AngleY * Mathf.Deg2Rad) * DistanceY) + (Mathf.Sin(SinkCount * Mathf.Deg2Rad) * -10f));

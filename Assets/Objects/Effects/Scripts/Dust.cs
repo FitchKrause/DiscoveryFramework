@@ -13,12 +13,12 @@ public class Dust : BaseObject
     {
         if (LevelController.GlobalTimer % 2 == 0)
         {
-            YPosition += 1f;
+            YPosition += Time.timeScale;
         }
 
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            LevelController.DestroyStageObject(this);
+            SceneController.DestroyStageObject(this);
         }
     }
 }

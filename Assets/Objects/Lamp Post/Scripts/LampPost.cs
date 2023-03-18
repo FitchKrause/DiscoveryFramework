@@ -73,8 +73,8 @@ public class LampPost : BaseObject
         {
             if (Age < 49f)
             {
-                Delta += 15f;
-                Age += 1f;
+                Delta += 15f * Time.timeScale;
+                Age += Time.timeScale;
             }
             else if (Age == 49f)
             {

@@ -3,27 +3,27 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour
 {
-    public bool KeyUp;
-    public bool KeyDown;
-    public bool KeyLeft;
-    public bool KeyRight;
-    public bool KeyActionA;
-    public bool KeyActionB;
-    public bool KeyActionC;
-    public bool KeyStart;
+    public static bool KeyUp;
+    public static bool KeyDown;
+    public static bool KeyLeft;
+    public static bool KeyRight;
+    public static bool KeyActionA;
+    public static bool KeyActionB;
+    public static bool KeyActionC;
+    public static bool KeyStart;
 
-    public bool KeyUpPressed;
-    public bool KeyDownPressed;
-    public bool KeyLeftPressed;
-    public bool KeyRightPressed;
-    public bool KeyActionAPressed;
-    public bool KeyActionBPressed;
-    public bool KeyActionCPressed;
-    public bool KeyStartPressed;
+    public static bool KeyUpPressed;
+    public static bool KeyDownPressed;
+    public static bool KeyLeftPressed;
+    public static bool KeyRightPressed;
+    public static bool KeyActionAPressed;
+    public static bool KeyActionBPressed;
+    public static bool KeyActionCPressed;
+    public static bool KeyStartPressed;
 
-    public static InputManager instance;
+    private static InputManager instance;
 
-    private void Awake()
+    public void Awake()
     {
         if (instance != null && instance != this)
         {
@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         KeyUpPressed = Input.GetKey(KeyCode.UpArrow) && !KeyUp;
         KeyUp = Input.GetKey(KeyCode.UpArrow);

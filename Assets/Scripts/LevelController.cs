@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelController : SceneController
 {
     public static LevelController CurrentLevel;
+    private float prevTimeScale;
 
     public static float LevelTimer;
     public static float GlobalTimer;
@@ -115,12 +116,18 @@ public class LevelController : SceneController
 
         if (!Paused)
         {
-            LevelTimer += 1f;
-            GlobalTimer += 1f;
+            if (prevTimeScale != Time.timeScale)
+            {
+                LevelTimer = Mathf.Round(LevelTimer);
+                GlobalTimer = Mathf.Round(GlobalTimer);
+                prevTimeScale = Time.timeScale;
+            }
+            LevelTimer += Time.timeScale;
+            GlobalTimer += Time.timeScale;
 
             if (AllowTime)
             {
-                GameTimer += 1000f / 60f;
+                GameTimer += 1000f / 60f * Time.timeScale;
 
                 Milliseconds = Mathf.FloorToInt(GameTimer / 10) % 100;
                 Seconds = Mathf.FloorToInt(GameTimer / 1000) % 60;

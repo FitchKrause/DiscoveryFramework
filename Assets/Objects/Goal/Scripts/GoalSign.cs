@@ -13,13 +13,13 @@ public class GoalSign : BaseObject
     private bool Flag0;
     private bool Flag1;
     private bool LimitFlag1;
-    private int Trigger;
+    private float Trigger;
     private PlayerPhysics player;
 
     private int CountAction;
-    private int CountInternalTimer;
-    public static int EventTimer;
-    private int EventTimer2;
+    private float CountInternalTimer;
+    public static float EventTimer;
+    private float EventTimer2;
 
     public static int RingBonus;
     public static int TimeBonus;
@@ -37,7 +37,8 @@ public class GoalSign : BaseObject
 
     private void Awake()
     {
-        RingBonus = TimeBonus = TotalBonus = EventTimer = 0;
+        RingBonus = TimeBonus = TotalBonus = 0;
+        EventTimer = 0f;
         CameraController.CameraAction = 0;
         CameraController.CameraMinimumX = 0f;
         CameraController.CameraMinimumY = 0f;
@@ -80,9 +81,9 @@ public class GoalSign : BaseObject
             player.SuperForm = false;
             player.InvincibilityTimer = 0;
             player.SpeedSneakersTimer = 0;
-            if (Trigger < 250)
+            if (Trigger < 250f)
             {
-                Trigger++;
+                Trigger += Time.timeScale;
             }
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(charName))
             {
@@ -117,7 +118,7 @@ public class GoalSign : BaseObject
 
         if (Flag1)
         {
-            EventTimer++;
+            EventTimer += Time.timeScale;
             if (EventTimer == 200)
             {
                 CountAction = 1;
@@ -184,7 +185,7 @@ public class GoalSign : BaseObject
 
                 if (CountInternalTimer >= 60)
                 {
-                    if (InputManager.instance.KeyActionAPressed)
+                    if (InputManager.KeyActionAPressed)
                     {
                         GameController.Score += RingBonus + TimeBonus;
                         TotalBonus += RingBonus + TimeBonus;
@@ -216,7 +217,7 @@ public class GoalSign : BaseObject
                     TotalBonus = AddRingBonus + AddTimeBonus;
                 }
 
-                CountInternalTimer++;
+                CountInternalTimer += Time.timeScale;
 
                 if (RingBonus == 0 && TimeBonus == 0)
                 {
@@ -226,7 +227,7 @@ public class GoalSign : BaseObject
             }
             if (CountAction == 2)
             {
-                EventTimer2++;
+                EventTimer2 += Time.timeScale;
 
                 if (EventTimer2 >= 250)
                 {

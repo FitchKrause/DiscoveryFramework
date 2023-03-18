@@ -8,7 +8,7 @@ public class PlayerPhysics : BaseObject
     #region Player movement values
     [HideInInspector] public int Quadrant;
     [HideInInspector] public int Action;
-    [HideInInspector] public int ControlLock;
+    [HideInInspector] public float ControlLock;
     [HideInInspector] public bool Landed;
     [HideInInspector] public float LandingSpeed;
     [HideInInspector] public int LandFrame;
@@ -24,7 +24,7 @@ public class PlayerPhysics : BaseObject
     #region Player action values
     [HideInInspector] public bool JumpVariable;
     [HideInInspector] public float SpindashRev;
-    [HideInInspector] public int SkidTimer;
+    [HideInInspector] public float SkidTimer;
     #endregion
     #region Player miscellaneous values
     [HideInInspector] public int Character;
@@ -32,9 +32,9 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public int Shield;
     [HideInInspector] public int ShieldStatus;
     [HideInInspector] public int Invincibility;
-    [HideInInspector] public int InvincibilityTimer;
+    [HideInInspector] public float InvincibilityTimer;
     [HideInInspector] public bool SpeedSneakers;
-    [HideInInspector] public int SpeedSneakersTimer;
+    [HideInInspector] public float SpeedSneakersTimer;
     [HideInInspector] public bool Underwater;
     [HideInInspector] public int Air;
     [HideInInspector] public int Hurt;
@@ -207,11 +207,11 @@ public class PlayerPhysics : BaseObject
             #region Slope Factor
             if (AllowInput && Ground && Action != 6)
             {
-                GroundSpeed -= SlopeFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GameController.DeltaTime;
+                GroundSpeed -= SlopeFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * Time.timeScale;
             }
             #endregion
             #region X Control
-            if (AllowInput && !(Ground && ControlLock > 0 || Action == 6))
+            if (AllowInput && !(Ground && ControlLock > 0f || Action == 6))
             {
                 if (inpDir < 0)
                 {
@@ -219,7 +219,7 @@ public class PlayerPhysics : BaseObject
                     {
                         if (GroundSpeed > 0f)
                         {
-                            GroundSpeed -= Deceleration * GameController.DeltaTime;
+                            GroundSpeed -= Deceleration * Time.timeScale;
 
                             if (GroundSpeed <= 0f)
                             {
@@ -228,7 +228,7 @@ public class PlayerPhysics : BaseObject
                         }
                         else if (GroundSpeed > -TopSpeed)
                         {
-                            GroundSpeed -= Acceleration * GameController.DeltaTime;
+                            GroundSpeed -= Acceleration * Time.timeScale;
 
                             if (GroundSpeed <= -TopSpeed)
                             {
@@ -238,7 +238,7 @@ public class PlayerPhysics : BaseObject
                     }
                     else if (XSpeed > -TopSpeed)
                     {
-                        XSpeed -= AirAcceleration * GameController.DeltaTime;
+                        XSpeed -= AirAcceleration * Time.timeScale;
 
                         if (XSpeed <= -TopSpeed)
                         {
@@ -253,7 +253,7 @@ public class PlayerPhysics : BaseObject
                     {
                         if (GroundSpeed < 0f)
                         {
-                            GroundSpeed += Deceleration * GameController.DeltaTime;
+                            GroundSpeed += Deceleration * Time.timeScale;
 
                             if (GroundSpeed >= 0f)
                             {
@@ -262,7 +262,7 @@ public class PlayerPhysics : BaseObject
                         }
                         else if (GroundSpeed < TopSpeed)
                         {
-                            GroundSpeed += Acceleration * GameController.DeltaTime;
+                            GroundSpeed += Acceleration * Time.timeScale;
 
                             if (GroundSpeed >= TopSpeed)
                             {
@@ -272,7 +272,7 @@ public class PlayerPhysics : BaseObject
                     }
                     else if (XSpeed < TopSpeed)
                     {
-                        XSpeed += AirAcceleration * GameController.DeltaTime;
+                        XSpeed += AirAcceleration * Time.timeScale;
 
                         if (XSpeed >= TopSpeed)
                         {
@@ -283,7 +283,7 @@ public class PlayerPhysics : BaseObject
                 
                 if (Ground && inpDir == 0)
                 {
-                    GroundSpeed -= Mathf.Min(Mathf.Abs(GroundSpeed), Friction * GameController.DeltaTime) * Mathf.Sign(GroundSpeed);
+                    GroundSpeed -= Mathf.Min(Mathf.Abs(GroundSpeed), Friction) * Mathf.Sign(GroundSpeed) * Time.timeScale;
                     
                     if (Mathf.Abs(GroundSpeed) < Deceleration)
                     {
@@ -295,11 +295,11 @@ public class PlayerPhysics : BaseObject
             #region Control Lock
             if (Ground)
             {
-                if (ControlLock == 0)
+                if (ControlLock == 0f)
                 {
                     if (Mathf.Abs(GroundSpeed) < 2.5f && GroundAngle > 35f && GroundAngle < 325f)
                     {
-                        ControlLock = 30;
+                        ControlLock = 30f;
                         if (AllowFalling && GroundAngle >= 75f && GroundAngle <= 285f)
                         {
                             CeilingLand = -1;
@@ -312,18 +312,18 @@ public class PlayerPhysics : BaseObject
                         {
                             if (GroundAngle < 180f)
                             {
-                                GroundSpeed -= 0.5f * GameController.DeltaTime;
+                                GroundSpeed -= 0.5f * Time.timeScale;
                             }
                             else
                             {
-                                GroundSpeed += 0.5f * GameController.DeltaTime;
+                                GroundSpeed += 0.5f * Time.timeScale;
                             }
                         }
                     }
                 }
                 else
                 {
-                    ControlLock--;
+                    ControlLock -= Time.timeScale;
                 }
             }
             #endregion
@@ -357,13 +357,13 @@ public class PlayerPhysics : BaseObject
             XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
             YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
 
-            AddX = XSpeed * GameController.DeltaTime;
-            AddY = YSpeed * GameController.DeltaTime;
+            AddX = XSpeed * Time.timeScale;
+            AddY = YSpeed * Time.timeScale;
         }
         else if (!Ground)
         {
-            if (AllowX) AddX = XSpeed * GameController.DeltaTime;
-            if (AllowY) AddY = YSpeed * GameController.DeltaTime;
+            if (AllowX) AddX = XSpeed * Time.timeScale;
+            if (AllowY) AddY = YSpeed * Time.timeScale;
         }
 
         ObjectLoops = (int)(Mathf.Sqrt((XSpeed * XSpeed) + (YSpeed * YSpeed)) + 1f);
@@ -608,11 +608,11 @@ public class PlayerPhysics : BaseObject
         #region Y Control
         if (!Ground)
         {
-            YSpeed -= GravityForce * GameController.DeltaTime;
+            YSpeed -= GravityForce * Time.timeScale;
             
             if (YSpeed > 0f && YSpeed < 4f && Mathf.Abs(XSpeed) >= 0.125f)
             {
-                XSpeed *= AirDrag / GameController.DeltaTime;
+                XSpeed -= (XSpeed - (XSpeed * AirDrag)) * Time.timeScale;
             }
         }
         #endregion
@@ -642,11 +642,15 @@ public class PlayerPhysics : BaseObject
         #region Manage Actions
         if (Action == 0)
         {
+            AllowDirection = true;
+            AllowInput = true;
             CurrentAction = Action00_Common;
         }
         if (Action == 1)
         {
             Attacking = true;
+            AllowDirection = true;
+            AllowInput = true;
             CurrentAction = Action01_Jump;
         }
         if (Action == 2)
@@ -664,6 +668,7 @@ public class PlayerPhysics : BaseObject
         if (Action == 4)
         {
             AllowDirection = false;
+            AllowInput = true;
             CurrentAction = Action04_Skidding;
         }
         if (Action == 5)
@@ -676,11 +681,14 @@ public class PlayerPhysics : BaseObject
         if (Action == 6)
         {
             Attacking = true;
+            AllowDirection = true;
             AllowInput = false;
             CurrentAction = Action06_Rolling;
         }
         if (Action == 7)
         {
+            AllowDirection = true;
+            AllowInput = true;
             CurrentAction = Action07_Breathe;
         }
         if (Action == 8)
@@ -701,6 +709,12 @@ public class PlayerPhysics : BaseObject
             AllowInput = false;
             CurrentAction = Action10_Drown;
         }
+        if (Action == 40)
+        {
+            AllowDirection = true;
+            AllowInput = true;
+            CurrentAction = Action40_Springs;
+        }
         #endregion
         #endregion
         #region Invincibility and Speed Sneakers
@@ -710,7 +724,7 @@ public class PlayerPhysics : BaseObject
             {
                 Invincibility = 1;
                 SpeedSneakers = true;
-                if (LevelController.LevelTimer % 60 == 0 && LevelController.CurrentLevel.Rings > 0)
+                if (LevelController.LevelTimer % 60f == 0f && LevelController.CurrentLevel.Rings > 0)
                 {
                     LevelController.CurrentLevel.Rings--;
                 }
@@ -723,28 +737,28 @@ public class PlayerPhysics : BaseObject
             }
             else
             {
-                if (Invincibility > 0 && InvincibilityTimer > 0)
+                if (Invincibility > 0 && InvincibilityTimer > 0f)
                 {
-                    InvincibilityTimer--;
+                    InvincibilityTimer -= Time.timeScale;
                 }
-                if (Invincibility > 0 && InvincibilityTimer <= 0)
+                if (Invincibility > 0 && InvincibilityTimer <= 0f)
                 {
                     if (Invincibility == 1)
                     {
                         MusicController.ToPlay = MusicController.StageMusic;
                     }
-                    InvincibilityTimer = 0;
+                    InvincibilityTimer = 0f;
                     Invincibility = 0;
                 }
 
-                if (SpeedSneakers && SpeedSneakersTimer > 0)
+                if (SpeedSneakers && SpeedSneakersTimer > 0f)
                 {
-                    SpeedSneakersTimer--;
+                    SpeedSneakersTimer -= Time.timeScale;
                 }
-                if (SpeedSneakers && SpeedSneakersTimer <= 0)
+                if (SpeedSneakers && SpeedSneakersTimer <= 0f)
                 {
                     MusicController.ToPlay = MusicController.StageMusic;
-                    SpeedSneakersTimer = 0;
+                    SpeedSneakersTimer = 0f;
                     SpeedSneakers = false;
                 }
             }
@@ -1048,11 +1062,11 @@ public class PlayerPhysics : BaseObject
         {
             if (Mathf.Abs(((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) < 60f && Mathf.Abs(((0f - GroundAngle + 540f) % 360f) - 180f) >= 40f)
             {
-                SmoothAngle = ((720f + SmoothAngle) % 360f) + (((((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) * Mathf.Max(0.165f, Mathf.Abs(XSpeed) / MaxXSpeed * 0.8f)) * GameController.DeltaTime);
+                SmoothAngle = ((720f + SmoothAngle) % 360f) + ((((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) * Mathf.Max(0.165f, Mathf.Abs(XSpeed) / MaxXSpeed * 0.8f) * Time.timeScale);
             }
             else if (Mathf.Abs(((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) < 60f && Mathf.Abs(((0f - GroundAngle + 540f) % 360f) - 180f) < 40f)
             {
-                SmoothAngle = ((720f + SmoothAngle) % 360f) + (((((0f - SmoothAngle + 540f) % 360f) - 180f) * Mathf.Max(0.165f, Mathf.Abs(XSpeed) / MaxXSpeed * 0.8f)) * GameController.DeltaTime);
+                SmoothAngle = ((720f + SmoothAngle) % 360f) + ((((0f - SmoothAngle + 540f) % 360f) - 180f) * Mathf.Max(0.165f, Mathf.Abs(XSpeed) / MaxXSpeed * 0.8f) * Time.timeScale);
             }
             else if (Mathf.Abs(((GroundAngle - SmoothAngle + 540f) % 360f) - 180f) >= 60f)
             {
@@ -1072,11 +1086,11 @@ public class PlayerPhysics : BaseObject
 
             if (AnimationAngle < 180f)
             {
-                AnimationAngle = Mathf.Max(AnimationAngle - (4f * GameController.DeltaTime), 0f);
+                AnimationAngle = Mathf.Max(AnimationAngle - 4f, 0f);
             }
             else
             {
-                AnimationAngle = Mathf.Min(AnimationAngle + (4f * GameController.DeltaTime), 360f) % 360f;
+                AnimationAngle = Mathf.Min(AnimationAngle + 4f, 360f) % 360f;
             }
         }
 
@@ -1099,8 +1113,8 @@ public class PlayerPhysics : BaseObject
             Underwater = true;
             if (!Ground)
             {
-                YSpeed *= 0.2f / GameController.DeltaTime;
-                XSpeed *= 0.5f / GameController.DeltaTime;
+                YSpeed -= (XSpeed - (XSpeed * 0.2f)) * Time.timeScale;
+                XSpeed -= (YSpeed - (YSpeed * 0.5f)) * Time.timeScale;
             }
             AudioController.PlaySFX(Sound_Splash);
             Splash waterSplash = SceneController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
@@ -1112,7 +1126,7 @@ public class PlayerPhysics : BaseObject
             Underwater = false;
             if (!Ground)
             {
-                YSpeed *= 1.3f / GameController.DeltaTime;
+                YSpeed *= (YSpeed - (YSpeed * 1.3f)) * Time.timeScale;
             }
             AudioController.PlaySFX(Sound_Splash);
             Splash waterSplash = SceneController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
@@ -1245,7 +1259,7 @@ public class PlayerPhysics : BaseObject
             if (PlayerInput.KeyActionAPressed && !Ground && ShieldStatus == 1)
             {
                 ShieldStatus = 2;
-                XSpeed *= 0.1f / GameController.DeltaTime;
+                XSpeed *= (YSpeed - (YSpeed * 0.1f)) * Time.timeScale;
                 YSpeed = Mathf.Min(YSpeed, -8f);
                 foreach (Shield shield in Shields)
                 {
@@ -1384,14 +1398,13 @@ public class PlayerPhysics : BaseObject
             }
         }
 
-        if (Quadrant == 0 && Ground && ControlLock == 0)
+        if (Quadrant == 0 && Ground && ControlLock == 0f)
         {
             if (GroundSpeed >= 4f && PlayerInput.KeyLeft)
             {
-                SkidTimer = 20;
+                SkidTimer = 20f;
                 Action = 4;
                 AllowDirection = false;
-                AllowInput = true;
                 Direction = 1;
                 Animation = 6;
                 AudioController.PlaySFX(Sound_Skidding);
@@ -1399,10 +1412,9 @@ public class PlayerPhysics : BaseObject
             }
             if (GroundSpeed <= -4f && PlayerInput.KeyRight)
             {
-                SkidTimer = 20;
+                SkidTimer = 20f;
                 Action = 4;
                 AllowDirection = false;
-                AllowInput = true;
                 Direction = -1;
                 Animation = 6;
                 AudioController.PlaySFX(Sound_Skidding);
@@ -1426,7 +1438,7 @@ public class PlayerPhysics : BaseObject
             Ground = false;
             GroundAngle = 0f;
             Action = 1;
-            ControlLock = 0;
+            ControlLock = 0f;
             JumpVariable = true;
             AudioController.PlaySFX(Sound_Jump);
             CurrentAction = Action01_Jump;
@@ -1446,7 +1458,6 @@ public class PlayerPhysics : BaseObject
         if (Ground)
         {
             Action = 0;
-            AllowDirection = true;
             AllowInput = true;
             CurrentAction = Action00_Common;
         }
@@ -1462,7 +1473,6 @@ public class PlayerPhysics : BaseObject
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             Action = 0;
-            AllowDirection = true;
             AllowInput = true;
             CurrentAction = Action00_Common;
         }
@@ -1478,7 +1488,6 @@ public class PlayerPhysics : BaseObject
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             Action = 0;
-            AllowDirection = true;
             AllowInput = true;
             CurrentAction = Action00_Common;
         }
@@ -1496,10 +1505,14 @@ public class PlayerPhysics : BaseObject
     {
         if (SkidTimer > 0)
         {
-            SkidTimer--;
+            SkidTimer -= Time.timeScale;
+        }
+        else
+        {
+            SkidTimer = 0f;
         }
 
-        if (SkidTimer == 0 && (Mathf.Abs(GroundSpeed) >= 0f && !(PlayerInput.KeyLeft || PlayerInput.KeyRight) ||
+        if (SkidTimer == 0f && (Mathf.Abs(GroundSpeed) >= 0f && !(PlayerInput.KeyLeft || PlayerInput.KeyRight) ||
             Animation == 6 && Mathf.Abs(GroundSpeed) > 1.5f && (PlayerInput.KeyLeft && GroundSpeed <= 0f || PlayerInput.KeyRight && GroundSpeed >= 0f)) ||
             !Ground)
         {
@@ -1520,7 +1533,6 @@ public class PlayerPhysics : BaseObject
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             Action = 0;
-            AllowDirection = true;
             AllowInput = true;
             CurrentAction = Action00_Common;
         }
@@ -1542,7 +1554,7 @@ public class PlayerPhysics : BaseObject
             Ground = false;
             GroundAngle = 0f;
             Action = 1;
-            ControlLock = 0;
+            ControlLock = 0f;
             AllowInput = true;
             JumpVariable = true;
             AudioController.PlaySFX(Sound_Jump);
@@ -1554,7 +1566,7 @@ public class PlayerPhysics : BaseObject
     public void Action05_Spindash()
     {
         Animation = 7;
-        SpindashRev -= ((SpindashRev / 0.125f) / 512f) * GameController.DeltaTime;
+        SpindashRev -= ((SpindashRev / 0.125f) / 512f) * Time.timeScale;
 
         if (SpindashRev <= 0.1f)
         {
@@ -1589,23 +1601,23 @@ public class PlayerPhysics : BaseObject
 
         Animation = 8;
 
-        GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollFriction * GameController.DeltaTime), 0f) * Mathf.Sign(GroundSpeed);
+        GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollFriction * Time.timeScale), 0f) * Mathf.Sign(GroundSpeed);
 
         if (GroundSpeed < 0f && PlayerInput.KeyRight ||
             GroundSpeed > 0f && PlayerInput.KeyLeft)
         {
-            GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollDeceleration * GameController.DeltaTime), 0f) * Mathf.Sign(GroundSpeed);
+            GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollDeceleration * Time.timeScale), 0f) * Mathf.Sign(GroundSpeed);
         }
 
         if (Ground)
         {
             if (Mathf.Sign(GroundSpeed) == Mathf.Sign(Mathf.Sin(GroundAngle * Mathf.Deg2Rad)))
             {
-                GroundSpeed -= SlopeRollUpFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GameController.DeltaTime;
+                GroundSpeed -= SlopeRollUpFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * Time.timeScale;
             }
             else
             {
-                GroundSpeed -= SlopeRollDownFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GameController.DeltaTime;
+                GroundSpeed -= SlopeRollDownFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * Time.timeScale;
             }
         }
 
@@ -1613,7 +1625,6 @@ public class PlayerPhysics : BaseObject
         {
             Action = 1;
             AllowInput = true;
-            AllowDirection = true;
             JumpVariable = false;
             CurrentAction = Action01_Jump;
         }
@@ -1626,8 +1637,7 @@ public class PlayerPhysics : BaseObject
             GroundAngle = 0f;
             Action = 1;
             AllowInput = true;
-            AllowDirection = true;
-            ControlLock = 0;
+            ControlLock = 0f;
             JumpVariable = true;
             Animation = 3;
             AudioController.PlaySFX(Sound_Jump);
@@ -1638,7 +1648,6 @@ public class PlayerPhysics : BaseObject
         {
             Action = 0;
             AllowInput = true;
-            AllowDirection = true;
             CurrentAction = Action00_Common;
         }
     }
@@ -1654,7 +1663,7 @@ public class PlayerPhysics : BaseObject
         {
             Action = 0;
             AllowInput = true;
-            AllowDirection = true;
+            CurrentAction = Action00_Common;
         }
     }
     #endregion
@@ -1692,11 +1701,8 @@ public class PlayerPhysics : BaseObject
 
         if (YPosition < SceneController.YBottomFrame - 48f)
         {
-            if (!GameController.Preload)
-            {
-                GameController.Lives--;
-                GameController.instance.LoadLevel(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-            }
+            GameController.Lives--;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     #endregion
