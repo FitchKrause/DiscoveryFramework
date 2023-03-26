@@ -43,8 +43,6 @@ public class MovingPlatform : BaseObject
 
     private void FixedUpdate()
     {
-        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
-
         DifferenceX = XPosition;
         DifferenceY = YPosition;
 
@@ -62,13 +60,14 @@ public class MovingPlatform : BaseObject
             SinkCount = Mathf.Max(0, SinkCount - (6f * Time.timeScale));
         }
 
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+
         if (player.Ground && player.ColliderFloor == ColliderBody)
         {
             player.XPosition -= DifferenceX;
             player.YPosition -= DifferenceY;
             CameraController.CameraX -= DifferenceX;
             CameraController.CameraY -= DifferenceY;
-            player.ProcessMovement();
             if (Sinkable) SinkCount = Mathf.Min(90f, SinkCount + (9f * Time.timeScale));
         }
     }

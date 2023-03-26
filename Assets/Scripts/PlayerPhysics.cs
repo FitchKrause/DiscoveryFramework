@@ -622,51 +622,87 @@ public class PlayerPhysics : BaseObject
         render.flipX = Direction < 0;
         #endregion
         #region Change Animation Speed
-        if (!(AnimationName == "Walking" ||
-              AnimationName == "Air Walking" ||
-              AnimationName == "Jog" ||
-              AnimationName == "Running" ||
-              AnimationName == "Dash" ||
-              AnimationName == "Jumping" ||
-              AnimationName == "Spindash"))
+        if (AnimationName == "Stopped" ||
+            AnimationName == "Die" ||
+            AnimationName == "Drown")
         {
-            animator.speed = 1f;
+            AnimationRate = 5;
         }
-        else
+        else if (AnimationName == "Breathe" ||
+                 AnimationName == "Hurt")
+        {
+            AnimationRate = 15;
+        }
+        else if (AnimationName == "Walking" ||
+                 AnimationName == "Air Walking" ||
+                 AnimationName == "Jog" ||
+                 AnimationName == "Jumping" ||
+                 AnimationName == "Skid Turn" ||
+                 AnimationName == "Springs")
+        {
+            AnimationRate = 20;
+        }
+        else if (AnimationName == "Running" ||
+                 AnimationName == "Skidding" ||
+                 AnimationName == "Stand Up" ||
+                 AnimationName == "Crouch Down" ||
+                 AnimationName == "Spindash")
+        {
+            AnimationRate = 30;
+        }
+        else if (AnimationName == "Dash")
+        {
+            AnimationRate = 40;
+        }
+
+        this.animator.speed = 1f;
+
+        if (AnimationName == "Walking" ||
+            AnimationName == "Air Walking" ||
+            AnimationName == "Jog" ||
+            AnimationName == "Running" ||
+            AnimationName == "Dash" ||
+            AnimationName == "Jumping" ||
+            AnimationName == "Spindash")
         {
             if (Ground)
             {
                 if (AnimationName == "Walking" ||
                     AnimationName == "Jog")
                 {
-                    animator.speed = (20f + (Mathf.Abs(GroundSpeed) * 3f)) / 20;
+                    animator.speed = 20f + (Mathf.Abs(GroundSpeed) * 3f);
                 }
                 else if (AnimationName == "Running")
                 {
-                    animator.speed = (20f + (Mathf.Abs(GroundSpeed) * 4f)) / 30;
+                    animator.speed = 20f + (Mathf.Abs(GroundSpeed) * 4f);
                 }
                 else if (AnimationName == "Dash")
                 {
-                    animator.speed = (30f + (Mathf.Abs(GroundSpeed) * 4f)) / 40;
+                    animator.speed = 30f + (Mathf.Abs(GroundSpeed) * 4f);
                 }
             }
-            else if (AnimationName == "Air Walking")
+            else if (AnimationName == "Air Walking" ||
+                     AnimationName == "Running" ||
+                     AnimationName == "Dash")
             {
-                animator.speed = (20f + (Mathf.Abs((Action != 40) ? GroundSpeed : XSpeed) * 3f)) / 20;
+                animator.speed = 20f + (Mathf.Abs(GroundSpeed) * 3f);
+                //animator.speed = 20f + (Mathf.Abs((Action != 40) ? GroundSpeed : XSpeed) * 3f);
             }
 
             if (Action == 1 && AnimationName == "Jumping")
             {
-                animator.speed = (25f + (Mathf.Abs(GroundSpeed) * 10f)) / 20;
+                animator.speed = 25f + (Mathf.Abs(GroundSpeed) * 10f);
             }
             if (Action == 5 && AnimationName == "Spindash")
             {
-                animator.speed = (20f + (Mathf.Abs(SpindashRev) * 10f)) / 30;
+                animator.speed = 20f + (Mathf.Abs(SpindashRev) * 10f);
             }
             if (Action == 6 && AnimationName == "Jumping")
             {
-                animator.speed = (25f + (Mathf.Abs(GroundSpeed) * 10f)) / 20;
+                animator.speed = 25f + (Mathf.Abs(GroundSpeed) * 10f);
             }
+
+            animator.speed /= AnimationRate;
         }
         #endregion
         #region Change Angle
@@ -955,8 +991,12 @@ public class PlayerPhysics : BaseObject
         {
             if (Mathf.Abs(GroundSpeed) == 0f)
             {
-                animator.Play("Stopped");
-                AnimationName = "Stopped";
+                if (!(animator.GetCurrentAnimatorStateInfo(0).IsName("Stopped") ||
+                      animator.GetCurrentAnimatorStateInfo(0).IsName("Bored")))
+                {
+                    animator.Play("Stopped");
+                    AnimationName = "Stopped";
+                }
             }
             else if (Mathf.Abs(GroundSpeed) > 0f && Mathf.Abs(GroundSpeed) < 4f)
             {
@@ -973,8 +1013,8 @@ public class PlayerPhysics : BaseObject
                 animator.Play("Running");
                 AnimationName = "Running";
             }
-            else if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") &&
-                     !animator.GetCurrentAnimatorStateInfo(0).IsName("Dash (Loop)"))
+            else if (!(animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") ||
+                       animator.GetCurrentAnimatorStateInfo(0).IsName("Dash (Loop)")))
             {
                 animator.Play("Dash");
                 AnimationName = "Dash";
@@ -1207,6 +1247,7 @@ public class PlayerPhysics : BaseObject
 
         animator.Play("Spindash");
         AnimationName = "Spindash";
+
         SpindashRev -= ((SpindashRev / 0.125f) / 256f) * Time.timeScale;
 
         if (SpindashRev <= 0.1f)
@@ -1372,6 +1413,7 @@ public class PlayerPhysics : BaseObject
     {
         Action = 40;
         animator.Play((YSpeed > 0f) ? "Springs" : "Air Walking");
+        AnimationName = (YSpeed > 0f) ? "Springs" : "Air Walking";
         AllowInput = true;
         AllowDirection = true;
         if (Ground)

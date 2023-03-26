@@ -33,8 +33,8 @@ public class Shield : MonoBehaviour
 
     private void LateUpdate()
     {
-        float PosX = Mathf.Floor(player.XPosition) - (Mathf.Sin(player.Angle * Mathf.Deg2Rad) * 6f);
-        float PosY = Mathf.Floor(player.YPosition) + (Mathf.Cos(player.Angle * Mathf.Deg2Rad) * 6f);
+        float PosX = player.XPosition - (Mathf.Sin(player.Angle * Mathf.Deg2Rad) * 6f);
+        float PosY = player.YPosition + (Mathf.Cos(player.Angle * Mathf.Deg2Rad) * 6f);
         transform.position = new Vector3(PosX, PosY);
     }
 }

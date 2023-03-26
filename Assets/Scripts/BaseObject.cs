@@ -50,6 +50,7 @@ public class BaseObject : MonoBehaviour
     [HideInInspector] public int LandFrame;
     [HideInInspector] public bool Fell;
     [HideInInspector] public string AnimationName;
+    [HideInInspector] public int AnimationRate;
 
     [Header("Object Transform Values")]
     [HideInInspector] public Directions Direction;

@@ -97,10 +97,12 @@ public class Monitor : BaseObject
                 Ground = false;
             }
 
-            if ((player.Action == 6 &&
-                (player.GroundSpeed >= 0f && player.ColliderWallRight == ColliderBody ||
-                 player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
-                 player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody)
+            ColliderBody.enabled = !(player.Attacking && player.YSpeed <= 0f);
+
+            if (Utils.AABB(Rect, player.Rect) && player.Attacking || ((player.Action == 6 &&
+               (player.GroundSpeed >= 0f && player.ColliderWallRight == ColliderBody ||
+                player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
+                player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody))
             {
                 ColliderBody.enabled = false;
                 if (attacher != null)

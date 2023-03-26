@@ -1162,6 +1162,7 @@ MonoBehaviour:
   LandFrame: 0
   Fell: 0
   AnimationName: 
+  AnimationRate: 0
   Direction: 0
   Angle: 0
   ColliderBody: {fileID: 0}
@@ -6758,6 +6759,7 @@ MonoBehaviour:
   LandFrame: 0
   Fell: 0
   AnimationName: 
+  AnimationRate: 0
   Direction: 0
   Angle: 0
   ColliderBody: {fileID: 0}
