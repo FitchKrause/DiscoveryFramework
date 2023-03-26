@@ -195,7 +195,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        Camera.main.transform.position = new Vector3(Mathf.Floor(CameraX), -Mathf.Floor(CameraY), -10f);
+        Camera.main.transform.position = new Vector3(CameraX, -CameraY, -10f);
 
         XLeftFrame = Camera.main.transform.position.x - SceneController.WindowMidWidth;
         XRightFrame = Camera.main.transform.position.x + SceneController.WindowMidWidth;

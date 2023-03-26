@@ -86,8 +86,6 @@ public class Monitor : BaseObject
 
         if (!Destroyed)
         {
-            ColliderBody.enabled = !(player.Attacking && player.YSpeed <= 0f);
-
             if (player.ColliderCeiling == ColliderBody)
             {
                 if (attacher != null)
@@ -99,10 +97,10 @@ public class Monitor : BaseObject
                 Ground = false;
             }
 
-            if (Utils.AABB(Rect, player.Rect) && player.Attacking || ((player.Action == 6 &&
-               (player.GroundSpeed >= 0f && player.ColliderWallRight == ColliderBody ||
-                player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
-                player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody))
+            if ((player.Action == 6 &&
+                (player.GroundSpeed >= 0f && player.ColliderWallRight == ColliderBody ||
+                 player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
+                 player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody)
             {
                 ColliderBody.enabled = false;
                 if (attacher != null)

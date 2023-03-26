@@ -6767,7 +6767,7 @@ MonoBehaviour:
   ColliderWallRight: {fileID: 0}
   animator: {fileID: 0}
   render: {fileID: 0}
-  RotationMethod: 2
+  RotationMethod: 1
   RotationSnap: 22.5
   Action: 0
   Hurt: 0

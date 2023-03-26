@@ -45,8 +45,8 @@ public class MovingPlatform : BaseObject
     {
         PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
 
-        DifferenceX = Mathf.Floor(XPosition);
-        DifferenceY = Mathf.Floor(YPosition);
+        DifferenceX = XPosition;
+        DifferenceY = YPosition;
 
         AngleX += PlatformXSpeed * Time.timeScale;
         AngleY += PlatformYSpeed * Time.timeScale;
@@ -54,8 +54,8 @@ public class MovingPlatform : BaseObject
         XPosition = InitialX + (Mathf.Cos(AngleX * Mathf.Deg2Rad) * DistanceX);
         YPosition = InitialY + ((Mathf.Sin(AngleY * Mathf.Deg2Rad) * DistanceY) + (Mathf.Sin(SinkCount * Mathf.Deg2Rad) * -10f));
 
-        DifferenceX -= Mathf.Floor(XPosition);
-        DifferenceY -= Mathf.Floor(YPosition);
+        DifferenceX -= XPosition;
+        DifferenceY -= YPosition;
 
         if (Sinkable && SinkCount > 0f)
         {
@@ -68,6 +68,7 @@ public class MovingPlatform : BaseObject
             player.YPosition -= DifferenceY;
             CameraController.CameraX -= DifferenceX;
             CameraController.CameraY -= DifferenceY;
+            player.ProcessMovement();
             if (Sinkable) SinkCount = Mathf.Min(90f, SinkCount + (9f * Time.timeScale));
         }
     }

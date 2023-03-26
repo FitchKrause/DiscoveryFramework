@@ -336,7 +336,6 @@ public class PlayerPhysics : BaseObject
         #endregion
         #endregion
         #region Player Movement
-        #region Start Movement
         GroundSpeed = Mathf.Clamp(GroundSpeed, -MaxXSpeed, MaxXSpeed);
         XSpeed = Mathf.Clamp(XSpeed, -MaxXSpeed, MaxXSpeed);
         YSpeed = Mathf.Clamp(YSpeed, -MaxYSpeed, MaxYSpeed);
@@ -398,7 +397,6 @@ public class PlayerPhysics : BaseObject
             GroundAngle = 0f;
             SmoothAngle = 0f;
         }
-        #endregion
         #endregion
         #region Player Control
         #region Control

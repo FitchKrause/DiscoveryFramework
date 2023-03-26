@@ -138,8 +138,8 @@ public class SceneController : MonoBehaviour
     {
         Camera.main.transform.position = new Vector3()
         {
-            x = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.x), WindowMidWidth, Width - WindowMidWidth),
-            y = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.y), -Height + WindowMidHeight, -WindowMidHeight),
+            x = Mathf.Clamp(Camera.main.transform.position.x, WindowMidWidth, Width - WindowMidWidth),
+            y = Mathf.Clamp(Camera.main.transform.position.y, -Height + WindowMidHeight, -WindowMidHeight),
             z = -10f
         };
 

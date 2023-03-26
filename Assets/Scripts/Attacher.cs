@@ -31,6 +31,8 @@ public class Attacher : MonoBehaviour
 
                 CameraController.CameraX -= LinkedPlatform.DifferenceX;
                 CameraController.CameraY -= LinkedPlatform.DifferenceY;
+
+                player.ProcessMovement();
             }
         }
     }

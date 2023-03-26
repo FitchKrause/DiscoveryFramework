@@ -100,9 +100,9 @@ public class BaseObject : MonoBehaviour
     protected void LateUpdate()
     {
 #if UNITY_5_6_OR_NEWER
-        transform.SetPositionAndRotation(new Vector3(Mathf.Floor(XPosition), Mathf.Floor(YPosition), transform.position.z), Quaternion.Euler(0f, 0f, Angle));
+        transform.SetPositionAndRotation(new Vector3(XPosition, YPosition, transform.position.z), Quaternion.Euler(0f, 0f, Angle));
 #else
-        transform.position = new Vector3(Mathf.Floor(XPosition), Mathf.Floor(YPosition), transform.position.z);
+        transform.position = new Vector3(XPosition, YPosition, transform.position.z);
         transform.rotation = Quaternion.Euler(0f, 0f, Angle);
 #endif
     }
