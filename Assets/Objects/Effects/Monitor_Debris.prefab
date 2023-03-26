@@ -70,6 +70,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f9c43dad67641479837c1cae0e075a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AllowPhysics: 0
+  AllowCollision: 0
+  WidthRadius: 0
+  HeightRadius: 0
+  PushRadius: 0
+  WallShift: 0
   ObjectName: 
   ObjectLoops: 0
   XPosition: 0
@@ -78,15 +84,24 @@ MonoBehaviour:
   YSpeed: 0
   GroundSpeed: 0
   GroundAngle: 0
-  Ground: 0
+  Quadrant: 0
   CollisionLayer: 0
-  AnimationAngle: 0
+  Ground: 0
+  Landed: 0
+  LandingSpeed: 0
+  LandFrame: 0
+  Fell: 0
+  AnimationName: 
+  AnimationRate: 0
+  Direction: 0
+  Angle: 0
   ColliderBody: {fileID: 0}
-  render: {fileID: 0}
+  ColliderFloor: {fileID: 0}
+  ColliderCeiling: {fileID: 0}
+  ColliderWallLeft: {fileID: 0}
+  ColliderWallRight: {fileID: 0}
   animator: {fileID: 0}
-  WidthRadius: 0
-  HeightRadius: 0
-  WallShift: 0
+  render: {fileID: 0}
 --- !u!212 &212000011079148232
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -114,7 +129,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2136474687
+  m_SortingLayerID: -1011714085
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: e92ff5d9bee9e60489a0fa3c162e37e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

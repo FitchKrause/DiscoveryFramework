@@ -31,7 +31,7 @@ public class Bubble : BaseObject
     {
         XPosition += (Mathf.Cos(AlterableValueB * Mathf.Deg2Rad) / 3f) * Time.timeScale;
         AlterableValueB += 3 * Time.timeScale;
-        YSpeed = 1f * Time.timeScale;
+        YSpeed = 1f;
 
         ProcessMovement();
 
@@ -79,7 +79,7 @@ public class Bubble : BaseObject
             AudioController.PlaySFX(Sound_Breathe);
             player.XSpeed = 0f;
             player.YSpeed = 0f;
-            player.Action = 7;
+            player.PlayerAction = player.Action07_Breathe;
             player.Air = 0;
             SceneController.DestroyStageObject(this);
         }

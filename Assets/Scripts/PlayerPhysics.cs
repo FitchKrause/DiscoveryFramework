@@ -770,8 +770,8 @@ public class PlayerPhysics : BaseObject
             Underwater = true;
             if (!Ground)
             {
-                YSpeed -= (XSpeed - (XSpeed * 0.2f)) * Time.timeScale;
-                XSpeed -= (YSpeed - (YSpeed * 0.5f)) * Time.timeScale;
+                XSpeed -= (XSpeed - (XSpeed * 0.2f)) * Time.timeScale;
+                YSpeed -= (YSpeed - (YSpeed * 0.5f)) * Time.timeScale;
             }
             AudioController.PlaySFX(Sound_Splash);
             Splash waterSplash = SceneController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;
@@ -783,7 +783,7 @@ public class PlayerPhysics : BaseObject
             Underwater = false;
             if (!Ground)
             {
-                YSpeed *= (YSpeed - (YSpeed * 1.3f)) * Time.timeScale;
+                YSpeed -= (YSpeed - (YSpeed * 1.3f)) * Time.timeScale;
             }
             AudioController.PlaySFX(Sound_Splash);
             Splash waterSplash = SceneController.CreateStageObject("Water Splash", XPosition, YPosition) as Splash;

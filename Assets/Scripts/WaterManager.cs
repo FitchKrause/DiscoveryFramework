@@ -36,8 +36,8 @@ public class WaterManager : MonoBehaviour
     {
         if (!Water) return;
 
-        Vector2 vector = new Vector2(SceneController.XLeftFrame - (SceneController.XLeftFrame % 64), WaterLevelApparent);
-        Vector2 vector2 = new Vector2(SceneController.XLeftFrame, Mathf.Min(SceneController.YTopFrame, WaterLevelApparent));
+        Vector2 vector = new Vector2(CameraController.XLeftFrame - (CameraController.XLeftFrame % 64), WaterLevelApparent);
+        Vector2 vector2 = new Vector2(CameraController.XLeftFrame, Mathf.Min(CameraController.YTopFrame, WaterLevelApparent));
 
         WaterHorizonObject.transform.position = vector;
         WaterObject.transform.position = vector2;
