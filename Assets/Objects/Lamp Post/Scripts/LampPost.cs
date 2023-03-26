@@ -15,12 +15,10 @@ public class LampPost : BaseObject
     public float Delta;
 
     private GameObject Sphere;
-    private PlayerPhysics player;
     private HitBox Rect;
 
     private new void Start()
     {
-        player = FindObjectOfType<PlayerPhysics>();
         Sphere = transform.GetChild(0).gameObject;
 
         base.Start();
@@ -46,6 +44,8 @@ public class LampPost : BaseObject
 
     private void FixedUpdate()
     {
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+
         if (!Flag1 && Utils.AABB(Rect, player.Rect))
         {
             Flag0 = true;

@@ -3,32 +3,48 @@ using System.Collections;
 
 public class Parallax : MonoBehaviour
 {
-    [HideInInspector] public float InitialX;
-    [HideInInspector] public float InitialY;
-
-    [Range(0f, 1f)]
-    public float XFactor, YFactor;
-
+    [Range(0f, 1f)] public float FactorX;
+    [Range(0f, 1f)] public float FactorY;
     public float XSpeed;
     public float YSpeed;
-    public float AddX;
-    public float AddY;
-
     public bool RepeatX;
     public bool RepeatY;
-
-    public int Width;
-    public int Height;
+    public float Width;
+    public float Height;
+    [HideInInspector] public float AddX;
+    [HideInInspector] public float AddY;
+    [HideInInspector] public float InitialX;
+    [HideInInspector] public float InitialY;
 
     private void Start()
     {
         InitialX = transform.position.x;
         InitialY = transform.position.y;
 
-        Width = (int)transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.rect.width;
-        Height = (int)transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.rect.height;
+        if (GetComponent<SpriteRenderer>() != null)
+        {
+            Width = (int)GetComponent<SpriteRenderer>().sprite.rect.width;
+            Height = (int)GetComponent<SpriteRenderer>().sprite.rect.height;
+        }
+        else
+        {
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).GetComponent<SpriteRenderer>() != null)
+                {
+                    Width = (int)transform.GetChild(i).GetComponent<SpriteRenderer>().sprite.rect.width;
+                    Height = (int)transform.GetChild(i).GetComponent<SpriteRenderer>().sprite.rect.height;
+                    break;
+                }
+            }
+        }
 
-        for (int x = 0; x < 3; x++)
+        if (Width <= 0 || Height <= 0)
+        {
+            Destroy(this);
+        }
+
+        /*for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
             {
@@ -36,17 +52,17 @@ public class Parallax : MonoBehaviour
                 Vector3 vector = new Vector3(Width * (x - 1), Height * (y - 1), transform.position.z);
                 Instantiate(transform.GetChild(0).gameObject, vector, Quaternion.identity, transform);
             }
-        }
+        }*/
+    }
+
+    private void FixedUpdate()
+    {
+        AddX += XSpeed * Time.timeScale;
+        AddY += YSpeed * Time.timeScale;
     }
 
     private void LateUpdate()
     {
-        if (!LevelController.Paused)
-        {
-            AddX += XSpeed * Time.timeScale;
-            AddY += YSpeed * Time.timeScale;
-        }
-
         if (RepeatX)
         {
             if (AddX < 0f)
@@ -70,12 +86,14 @@ public class Parallax : MonoBehaviour
             }
         }
 
-        float PosX = (((SceneController.XLeftFrame + SceneController.XRightFrame) / 2f) - ((SceneController.XRightFrame - SceneController.XLeftFrame) / 2f)) * (1f - XFactor);
-        float PosY = (((SceneController.YBottomFrame + SceneController.YTopFrame) / 2f) + ((SceneController.YTopFrame - SceneController.YBottomFrame) / 2f)) * (1f - YFactor);
+        float PosX = (((CameraController.XLeftFrame + CameraController.XRightFrame) / 2f) - SceneController.WindowMidWidth) * FactorX;
+        float PosY = (((CameraController.YBottomFrame + CameraController.YTopFrame) / 2f) + SceneController.WindowMidHeight) * -FactorY;
 
-        float XPosition = InitialX + SceneController.XLeftFrame - (RepeatX ? Mathf.Repeat(PosX + AddX, Width) : (PosX + AddX));
-        float YPosition = InitialY + SceneController.YTopFrame - (RepeatY ? Mathf.Repeat(PosY + AddY, Height) : (PosY + AddY));
+        float XPosition = SceneController.WindowMidWidth + (RepeatX ? Mathf.Repeat(PosX + AddX, Width) : (PosX + AddX));
+        float YPosition = -SceneController.WindowMidHeight - (RepeatY ? Mathf.Repeat(PosY + AddY, Height) : (PosY + AddY));
 
-        transform.position = new Vector3(XPosition, YPosition, transform.position.z);
+        transform.position = new Vector3(InitialX + (Camera.main.transform.position.x - Mathf.Floor(XPosition)),
+                                         InitialY + (Camera.main.transform.position.y - Mathf.Floor(YPosition)),
+                                         transform.position.z);
     }
 }

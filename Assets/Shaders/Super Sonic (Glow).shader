@@ -1,7 +1,7 @@
 // Shader created with Shader Forge v1.38 
 // Shader Forge (c) Freya Holmer - http://www.acegikmo.com/shaderforge/
 
-Shader "Custom Palettes/Super Sonic (Glow)" {
+Shader "Shader Forge/Super Sonic (Glow)" {
     Properties {
         [PerRendererData]_MainTex ("MainTex", 2D) = "white" {}
         _Color ("Color", Color) = (1,1,1,1)
@@ -170,5 +170,4 @@ Shader "Custom Palettes/Super Sonic (Glow)" {
         }
     }
     FallBack "Diffuse"
-    //CustomEditor "ShaderForgeMaterialInspector"
 }

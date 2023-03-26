@@ -12,7 +12,7 @@ public class BubblePatch : BaseObject
             YPosition > SceneController.YBottomFrame - 32f &&
             YPosition < SceneController.YTopFrame + 32f)
         {
-            if ((LevelController.GlobalTimer % Random.Range(30, 60)) == 0)
+            if ((LevelController.GlobalTimer % Random.Range(30, 60)) == 0 && GameController.Frame == 1)
             {
                 Bubble small = SceneController.CreateStageObject("Bubble", XPosition, YPosition) as Bubble;
                 small.BubbleSize = Bubble.Bubble_Sizes.Small;
@@ -20,7 +20,7 @@ public class BubblePatch : BaseObject
                 small.AlterableValueB = Random.Range(0, 200);
             }
 
-            if ((LevelController.GlobalTimer % Random.Range(90, 120)) == 0)
+            if ((LevelController.GlobalTimer % Random.Range(90, 120)) == 0 && GameController.Frame == 1)
             {
                 AlterableValueA = Random.Range(0, 3);
                 AlterableValueB = 1;

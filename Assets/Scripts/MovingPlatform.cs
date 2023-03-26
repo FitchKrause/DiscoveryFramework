@@ -20,12 +20,8 @@ public class MovingPlatform : BaseObject
     public float SinkCount;
     public bool Sinkable;
 
-    private PlayerPhysics player;
-
     private new void Start()
     {
-        player = FindObjectOfType<PlayerPhysics>();
-
         foreach (Attacher attacher in FindObjectsOfType<Attacher>())
         {
             if (Vector2.Distance(transform.position, attacher.transform.position) >= Radius)
@@ -47,6 +43,8 @@ public class MovingPlatform : BaseObject
 
     private void FixedUpdate()
     {
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+
         DifferenceX = Mathf.Floor(XPosition);
         DifferenceY = Mathf.Floor(YPosition);
 
@@ -61,21 +59,16 @@ public class MovingPlatform : BaseObject
 
         if (Sinkable && SinkCount > 0f)
         {
-            SinkCount = Mathf.Max(0, SinkCount - 6f);
+            SinkCount = Mathf.Max(0, SinkCount - (6f * Time.timeScale));
         }
 
         if (player.Ground && player.ColliderFloor == ColliderBody)
         {
-            if (Sinkable) SinkCount = Mathf.Min(90f, SinkCount + 9f);
             player.XPosition -= DifferenceX;
             player.YPosition -= DifferenceY;
             CameraController.CameraX -= DifferenceX;
             CameraController.CameraY -= DifferenceY;
+            if (Sinkable) SinkCount = Mathf.Min(90f, SinkCount + (9f * Time.timeScale));
         }
-    }
-
-    private new void LateUpdate()
-    {
-        transform.position = new Vector3(Mathf.Floor(XPosition), Mathf.Floor(YPosition), transform.position.z);
     }
 }

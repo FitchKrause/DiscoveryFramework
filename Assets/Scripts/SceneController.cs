@@ -9,9 +9,9 @@ public class SceneController : MonoBehaviour
     public int Width;
     public int Height;
 
-    public List<BaseObject> ObjectList;
-    public List<ObjectPool> ObjectPools;
-    public int ObjectCount;
+    [HideInInspector] public List<BaseObject> ObjectList;
+    [HideInInspector] public List<ObjectPool> ObjectPools;
+    [HideInInspector] public int ObjectCount;
 
     public LayerMask LayerMask;
 
@@ -81,7 +81,7 @@ public class SceneController : MonoBehaviour
         VirtualScreen.GetComponent<MeshRenderer>().material = Resources.Load("Unlit/Texture") as Material;
         VirtualScreen.GetComponent<MeshRenderer>().material.mainTexture = RenderTarget;
 
-        Camera VirtualCamera = new GameObject("Virtual Camera", typeof(Camera)).GetComponent<Camera>();
+        Camera VirtualCamera = new GameObject("Virtual Camera").AddComponent<Camera>();
 
         VirtualCamera.transform.position = new Vector3(-WindowMidWidth, WindowMidHeight, -10f);
         VirtualCamera.orthographic = true;
@@ -94,7 +94,7 @@ public class SceneController : MonoBehaviour
         VirtualCamera.clearFlags = CameraClearFlags.Color;
         VirtualCamera.backgroundColor = Color.black;
 
-        Camera MainCamera = new GameObject("Main Camera", typeof(Camera), typeof(AudioListener)) { tag = "MainCamera" }.GetComponent<Camera>();
+        Camera MainCamera = new GameObject("Main Camera", typeof(AudioListener)) { tag = "MainCamera" }.AddComponent<Camera>();
 
         MainCamera.transform.position = new Vector3(WindowMidWidth, -WindowMidHeight, -10f);
         MainCamera.orthographic = true;
@@ -138,8 +138,8 @@ public class SceneController : MonoBehaviour
     {
         Camera.main.transform.position = new Vector3()
         {
-            x = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.x), WindowMidWidth, LevelController.CurrentLevel.Width - WindowMidWidth),
-            y = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.y), -LevelController.CurrentLevel.Height + WindowMidHeight, -WindowMidHeight),
+            x = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.x), WindowMidWidth, Width - WindowMidWidth),
+            y = Mathf.Clamp(Mathf.Floor(Camera.main.transform.position.y), -Height + WindowMidHeight, -WindowMidHeight),
             z = -10f
         };
 
@@ -189,12 +189,27 @@ public class SceneController : MonoBehaviour
     {
         foreach (BaseObject objRef in CurrentScene.ObjectList)
         {
-            if (objRef.name == objName)
+            if (objRef.ObjectName == objName)
             {
                 return objRef;
             }
         }
 
         return null;
+    }
+
+    public static BaseObject[] FindStageObjects(string objName)
+    {
+        List<BaseObject> objsRef = new List<BaseObject>();
+
+        foreach (BaseObject objRef in CurrentScene.ObjectList)
+        {
+            if (objRef.ObjectName == objName)
+            {
+                objsRef.Add(objRef);
+            }
+        }
+
+        return objsRef.ToArray();
     }
 }

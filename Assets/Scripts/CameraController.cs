@@ -21,8 +21,10 @@ public class CameraController : MonoBehaviour
     public float LookUpTimer;
     public float CrouchDownTimer;
 
-    private PlayerPhysics player;
-    private GoalSign GoalPost;
+    public static float XLeftFrame;
+    public static float XRightFrame;
+    public static float YTopFrame;
+    public static float YBottomFrame;
 
     private void Awake()
     {
@@ -31,8 +33,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<PlayerPhysics>();
-        GoalPost = FindObjectOfType<GoalSign>();
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
 
         CameraMaximumX = LevelController.CurrentLevel.Width;
         CameraMaximumY = LevelController.CurrentLevel.Height;
@@ -45,6 +46,9 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+        GoalSign GoalPost = SceneController.FindStageObject("GoalSign") as GoalSign;
+
         if (CameraAction == 0)
         {
             CameraMinimumX = 0f;
@@ -70,11 +74,11 @@ public class CameraController : MonoBehaviour
         {
             if (CameraX < CameraMaximumX - SceneController.WindowMidWidth && player.XPosition > CameraX + 8f - CameraShiftX - CameraShiftXSpeed)
             {
-                CameraX += Mathf.Min(16f, player.XPosition - CameraX - 8f + CameraShiftXSpeed + CameraShiftX) * Time.timeScale;
+                CameraX += Mathf.Min(16f * Time.timeScale, player.XPosition - CameraX - 8f + CameraShiftXSpeed + CameraShiftX);
             }
             else if (CameraX > CameraMinimumX + SceneController.WindowMidWidth && player.XPosition < CameraX - 8f - CameraShiftX - CameraShiftXSpeed)
             {
-                CameraX += Mathf.Max(-16f, player.XPosition - CameraX + 8f + CameraShiftXSpeed + CameraShiftX) * Time.timeScale;
+                CameraX += Mathf.Max(-16f * Time.timeScale, player.XPosition - CameraX + 8f + CameraShiftXSpeed + CameraShiftX);
             }
         }
 
@@ -95,26 +99,26 @@ public class CameraController : MonoBehaviour
             {
                 if (CameraY > CameraMinimumY + SceneController.WindowMidHeight && -player.YPosition < CameraY - 48f + CameraShiftY + CameraShiftYSpeed)
                 {
-                    CameraY += Mathf.Max(-16f, -player.YPosition - CameraY + 48f - CameraShiftY - CameraShiftYSpeed) * Time.timeScale;
+                    CameraY += Mathf.Max(-16f * Time.timeScale, -player.YPosition - CameraY + 48f - CameraShiftY - CameraShiftYSpeed);
                 }
             }
             if ((player.Landed || !player.Ground && -player.YPosition > CameraY + CameraShiftY + CameraShiftYSpeed + 24f) && CameraY < CameraMaximumY - SceneController.WindowMidHeight)
             {
-                CameraY += Mathf.Max(0f, Mathf.Min(16f, -player.YPosition - CameraY - CameraShiftY - 24f) - CameraShiftYSpeed) * Time.timeScale;
+                CameraY += Mathf.Max(0f, Mathf.Min(16f * Time.timeScale, -player.YPosition - CameraY - CameraShiftY - 24f) - CameraShiftYSpeed);
             }
 
             if (player.Action == 2 && LookUpTimer < 110f)
             {
-                LookUpTimer += 1f;
+                LookUpTimer += Time.timeScale;
             }
 
             if (LookUpTimer == 0f && CameraShiftYSpeed >= 2f)
             {
-                CameraShiftYSpeed -= 2f;
+                CameraShiftYSpeed -= 2f * Time.timeScale;
             }
             if (LookUpTimer >= 110f)
             {
-                CameraShiftYSpeed = Mathf.Min(88f, CameraShiftYSpeed + 2f);
+                CameraShiftYSpeed = Mathf.Min(88f, CameraShiftYSpeed + (2f * Time.timeScale));
             }
 
             if (player.Action != 2)
@@ -124,16 +128,16 @@ public class CameraController : MonoBehaviour
 
             if (player.Action == 3 && CrouchDownTimer < 110f)
             {
-                CrouchDownTimer += 1f;
+                CrouchDownTimer += Time.timeScale;
             }
 
             if (CrouchDownTimer == 0f && CameraShiftYSpeed <= -2f)
             {
-                CameraShiftYSpeed += 2f;
+                CameraShiftYSpeed += 2f * Time.timeScale;
             }
             if (CrouchDownTimer >= 110f)
             {
-                CameraShiftYSpeed = Mathf.Max(-88f, CameraShiftYSpeed - 2f);
+                CameraShiftYSpeed = Mathf.Max(-88f, CameraShiftYSpeed - (2f * Time.timeScale));
             }
 
             if (player.Action != 3)
@@ -174,8 +178,6 @@ public class CameraController : MonoBehaviour
             CameraY = Mathf.Max(CameraY - (2f * Time.timeScale), CameraMaximumY - SceneController.WindowMidHeight);
         }
 
-        Camera.main.transform.position = new Vector3(CameraX, -CameraY, -10f);
-
         if (CameraAction == 0 && ShakeTimer > 0f)
         {
             CameraX += Random.Range(-4f, 4f);
@@ -193,9 +195,11 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        SceneController.XLeftFrame = Camera.main.transform.position.x - SceneController.WindowMidWidth;
-        SceneController.XRightFrame = Camera.main.transform.position.x + SceneController.WindowMidWidth;
-        SceneController.YTopFrame = Camera.main.transform.position.y + SceneController.WindowMidHeight;
-        SceneController.YBottomFrame = Camera.main.transform.position.y - SceneController.WindowMidHeight;
+        Camera.main.transform.position = new Vector3(Mathf.Floor(CameraX), -Mathf.Floor(CameraY), -10f);
+
+        XLeftFrame = Camera.main.transform.position.x - SceneController.WindowMidWidth;
+        XRightFrame = Camera.main.transform.position.x + SceneController.WindowMidWidth;
+        YTopFrame = Camera.main.transform.position.y + SceneController.WindowMidHeight;
+        YBottomFrame = Camera.main.transform.position.y - SceneController.WindowMidHeight;
     }
 }

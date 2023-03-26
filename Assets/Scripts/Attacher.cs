@@ -6,17 +6,17 @@ public class Attacher : MonoBehaviour
     public bool Attached;
     public MovingPlatform LinkedPlatform;
 
-    private PlayerPhysics player;
     private BaseObject objRef;
 
     private void Start()
     {
-        player = FindObjectOfType<PlayerPhysics>();
         objRef = GetComponent<BaseObject>();
     }
 
     private void FixedUpdate()
     {
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+
         if (!objRef.enabled) return;
 
         if (Attached && LinkedPlatform != null)

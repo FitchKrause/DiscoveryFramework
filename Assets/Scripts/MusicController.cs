@@ -50,7 +50,7 @@ public class MusicController : AudioController
     {
         if (!player.SuperForm && player.Invincibility == 0 && !player.SpeedSneakers && player.Action != 9 && player.Action != 10 &&
             !LevelController.Boss && !LevelController.Clear &&
-            Playing != "Stage" && Playing != "1-UP" && Playing != "Drowning")
+             Playing != "Stage" && Playing != "1-UP" && Playing != "Drowning")
         {
             ToPlay = "Stage";
         }

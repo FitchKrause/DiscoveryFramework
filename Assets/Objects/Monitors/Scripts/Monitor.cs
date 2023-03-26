@@ -31,7 +31,6 @@ public class Monitor : BaseObject
     private float IconLife = 0f;
     private bool Destroyed = false;
 
-    private PlayerPhysics player;
     private HitBox Rect;
 
     private SpriteRenderer IconObject;
@@ -43,8 +42,6 @@ public class Monitor : BaseObject
     {
         Destroyed = false;
         IconLife = 0f;
-
-        player = FindObjectOfType<PlayerPhysics>();
 
         StaticObject = transform.GetChild(0).GetComponent<SpriteRenderer>();
         IconObject = transform.GetChild(1).GetComponent<SpriteRenderer>();
@@ -64,91 +61,34 @@ public class Monitor : BaseObject
 
     private void FixedUpdate()
     {
-        ProcessMovement();
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+
+        AllowCollision = !Ground || (Ground && Landed);
+
+        if (AllowCollision)
+        {
+            ProcessMovement();
+        }
+
+        if (Landed && attacher != null && ColliderFloor != null)
+        {
+            attacher.LinkedPlatform = ColliderFloor.GetComponent<MovingPlatform>();
+            attacher.Attached = attacher.LinkedPlatform != null;
+        }
 
         Rect.XPosition = XPosition + (Ground ? GroundSpeed : XSpeed);
         Rect.YPosition = YPosition + (Ground ? 0f : YSpeed);
 
         if (!Ground)
         {
-            for (int i = 0; i < ObjectLoops; i++)
-            {
-                #region Floor and Ceiling Collisions
-                RaycastHit2D floorLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.down, HeightRadius);
-                RaycastHit2D floorRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.down, HeightRadius);
-                RaycastHit2D floorHit = default(RaycastHit2D);
-
-                RaycastHit2D ceilingLeftHit = SensorCast(new Vector2(-WidthRadius + 2f, 0f), Vector2.up, HeightRadius, false);
-                RaycastHit2D ceilingRightHit = SensorCast(new Vector2(WidthRadius - 2f, 0f), Vector2.up, HeightRadius, false);
-                RaycastHit2D ceilingHit = default(RaycastHit2D);
-
-                #region Ceiling Collisions
-                if (ceilingLeftHit && ceilingRightHit)
-                {
-                    if (ceilingLeftHit.distance < ceilingRightHit.distance)
-                    {
-                        ceilingHit = ceilingLeftHit;
-                    }
-                    else
-                    {
-                        ceilingHit = ceilingRightHit;
-                    }
-                }
-                else if (!ceilingLeftHit && ceilingRightHit)
-                {
-                    ceilingHit = ceilingRightHit;
-                }
-                else if (ceilingLeftHit && !ceilingRightHit)
-                {
-                    ceilingHit = ceilingLeftHit;
-                }
-
-                if (ceilingHit)
-                {
-                    YPosition += ceilingHit.distance - HeightRadius;
-                    YSpeed = 0f;
-                }
-                #endregion
-                #region Floor Collisions
-                if (floorLeftHit && floorRightHit)
-                {
-                    if (floorLeftHit.distance < floorRightHit.distance)
-                    {
-                        floorHit = floorLeftHit;
-                    }
-                    else
-                    {
-                        floorHit = floorRightHit;
-                    }
-                }
-                else if (!floorLeftHit && floorRightHit)
-                {
-                    floorHit = floorRightHit;
-                }
-                else if (floorLeftHit && !floorRightHit)
-                {
-                    floorHit = floorLeftHit;
-                }
-
-                if (floorHit)
-                {
-                    YPosition -= floorHit.distance - HeightRadius;
-                    if (attacher != null)
-                    {
-                        attacher.LinkedPlatform = floorHit.collider.GetComponent<MovingPlatform>();
-                        attacher.Attached = attacher.LinkedPlatform != null;
-                    }
-                    Ground = true;
-                }
-                #endregion
-                #endregion
-            }
             YSpeed = Mathf.Max(YSpeed - (0.2f * Time.timeScale), -10f);
         }
 
         if (!Destroyed)
         {
-            if (player.ColliderCeiling == ColliderBody && Utils.AABB(Rect, player.Rect))
+            ColliderBody.enabled = !(player.Attacking && player.YSpeed <= 0f);
+
+            if (player.ColliderCeiling == ColliderBody)
             {
                 if (attacher != null)
                 {
@@ -159,11 +99,12 @@ public class Monitor : BaseObject
                 Ground = false;
             }
 
-            if ((player.Action == 6 &&
-                (player.GroundSpeed >= 0f && player.ColliderWallRight == ColliderBody ||
-                 player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
-                 player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody)
+            if (Utils.AABB(Rect, player.Rect) && player.Attacking || ((player.Action == 6 &&
+               (player.GroundSpeed >= 0f && player.ColliderWallRight == ColliderBody ||
+                player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
+                player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody))
             {
+                ColliderBody.enabled = false;
                 if (attacher != null)
                 {
                     attacher.Attached = false;
@@ -193,7 +134,6 @@ public class Monitor : BaseObject
                 YSpeed = 2f;
                 Ground = false;
                 Destroyed = true;
-                ColliderBody.enabled = false;
             }
         }
         else
@@ -201,9 +141,9 @@ public class Monitor : BaseObject
             StaticObject.gameObject.SetActive(false);
             IconLife += Time.timeScale;
 
-            if (IconLife < 32f)
+            if (IconLife < 32f && GameController.Frame == 1)
             {
-                IconObject.transform.position += new Vector3(0f, Time.timeScale, 0f);
+                IconObject.transform.position += new Vector3(0f, 1f, 0f);
                 SceneController.CreateStageObject("Monitor Trail", IconObject.transform.position.x, IconObject.transform.position.y);
             }
             else if (IconLife >= 64f)

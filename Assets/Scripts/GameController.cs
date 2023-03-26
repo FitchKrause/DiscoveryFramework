@@ -6,6 +6,9 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance;
 
+    public static int Frame;
+    private float FrameTimer;
+
     public int Width = 426;
     public int Height = 240;
 
@@ -83,10 +86,35 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SetGameSpeed(1f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SetGameSpeed(0.25f);
+        }
+    }
+
     private void FixedUpdate()
     {
         Score = Mathf.Clamp(Score, 0, 9999999);
         Lives = Mathf.Clamp(Lives, 0, 99);
+
+        FrameTimer -= Time.timeScale;
+
+        if (FrameTimer > 0f)
+        {
+            Frame = 0;
+        }
+        else
+        {
+            Frame = 1;
+            FrameTimer = 1f;
+        }
     }
 
     public static void SetGameSpeed(float speed)

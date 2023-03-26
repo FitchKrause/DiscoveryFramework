@@ -29,7 +29,7 @@ public class Bubble : BaseObject
 
     private void FixedUpdate()
     {
-        XPosition += Mathf.Cos(AlterableValueB * Mathf.Deg2Rad) / 3f * Time.timeScale;
+        XPosition += (Mathf.Cos(AlterableValueB * Mathf.Deg2Rad) / 3f) * Time.timeScale;
         AlterableValueB += 3 * Time.timeScale;
         YSpeed = 1f * Time.timeScale;
 

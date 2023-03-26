@@ -52,7 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ec219b69f016146a2caff011ff99f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwitcherType: 3
+  SwitchToLayer: 512
+  SwitchPriorityTo: 1
   GroundedSwitcher: 0
 --- !u!212 &212000011426064960
 SpriteRenderer:

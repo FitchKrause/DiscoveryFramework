@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class LevelController : SceneController
 {
     public static LevelController CurrentLevel;
-    private float prevTimeScale;
 
     public static float LevelTimer;
     public static float GlobalTimer;
@@ -23,16 +21,16 @@ public class LevelController : SceneController
     public static float CheckPointLevelTime;
     public static float CheckPointGameTime;
 
-    public bool Water;
-    public float WaterLevel;
-    public float WaterLevelApparent;
+    [HideInInspector] public bool Water;
+    [HideInInspector] public float WaterLevel;
+    [HideInInspector] public float WaterLevelApparent;
 
-    public float GameTimer;
-    public int Milliseconds;
-    public int Seconds;
-    public int Minutes;
+    [HideInInspector] public float GameTimer;
+    [HideInInspector] public int Milliseconds;
+    [HideInInspector] public int Seconds;
+    [HideInInspector] public int Minutes;
 
-    public int Rings;
+    [HideInInspector] public int Rings;
 
     private static float CreationStrength;
     private static int CreationDirection = 1;
@@ -116,14 +114,8 @@ public class LevelController : SceneController
 
         if (!Paused)
         {
-            if (prevTimeScale != Time.timeScale)
-            {
-                LevelTimer = Mathf.Round(LevelTimer);
-                GlobalTimer = Mathf.Round(GlobalTimer);
-                prevTimeScale = Time.timeScale;
-            }
-            LevelTimer += Time.timeScale;
-            GlobalTimer += Time.timeScale;
+            LevelTimer += GameController.Frame;
+            GlobalTimer += GameController.Frame;
 
             if (AllowTime)
             {

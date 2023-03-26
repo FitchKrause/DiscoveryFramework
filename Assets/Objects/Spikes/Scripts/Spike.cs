@@ -14,17 +14,10 @@ public class Spike : BaseObject
     [Header("Spike Settings")]
     public Spike_Directions SpikeDirection;
 
-    private PlayerPhysics player;
-
-    private new void Start()
-    {
-        player = FindObjectOfType<PlayerPhysics>();
-
-        base.Start();
-    }
-
     private void FixedUpdate()
     {
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+
         if (player.InvincibilityTimer <= 0f)
         {
             switch (SpikeDirection)

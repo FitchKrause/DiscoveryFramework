@@ -16,7 +16,6 @@ public class Ring : BaseObject
 
     public AudioClip Sound_Ring;
 
-    private PlayerPhysics player;
     private Attacher attacher;
 
     public override void ObjectCreated()
@@ -27,7 +26,6 @@ public class Ring : BaseObject
 
     private new void Start()
     {
-        player = FindObjectOfType<PlayerPhysics>();
         attacher = GetComponent<Attacher>();
 
         Acceleration = 0.7f;
@@ -41,6 +39,8 @@ public class Ring : BaseObject
 
     public void FixedUpdate()
     {
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+
         if (player.Shield == 3 && !Flag0 &&
             player.XPosition > XPosition - 100f &&
             player.XPosition < XPosition + 100f &&
@@ -83,7 +83,7 @@ public class Ring : BaseObject
 
         if (Flag1 && YSpeed > -TopSpeed * 2f)
         {
-            XSpeed *= 0.95f / Time.timeScale;
+            XSpeed -= (XSpeed - (XSpeed * 0.95f)) * Time.timeScale;
             YSpeed -= Acceleration * Time.timeScale;
         }
 
@@ -108,7 +108,7 @@ public class Ring : BaseObject
                     XSpeed = Mathf.Max(-XSpeed, 2f);
                 }
 
-                if (YSpeed <= 0f && OverlapPoint(bottom))
+                if (YSpeed <= 0f && OverlapPoint(bottom, true))
                 {
                     YSpeed = Mathf.Max(-YSpeed, 2f);
                     Ground = true;

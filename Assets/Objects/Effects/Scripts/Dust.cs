@@ -11,9 +11,9 @@ public class Dust : BaseObject
 
     private void FixedUpdate()
     {
-        if (LevelController.GlobalTimer % 2 == 0)
+        if (LevelController.GlobalTimer % 2 == 0 && GameController.Frame == 1)
         {
-            YPosition += Time.timeScale;
+            YPosition += 1f;
         }
 
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)

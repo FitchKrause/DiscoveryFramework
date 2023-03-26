@@ -13,13 +13,12 @@ public class GoalSign : BaseObject
     private bool Flag0;
     private bool Flag1;
     private bool LimitFlag1;
-    private float Trigger;
-    private PlayerPhysics player;
+    private int Trigger;
 
     private int CountAction;
-    private float CountInternalTimer;
-    public static float EventTimer;
-    private float EventTimer2;
+    private int CountInternalTimer;
+    public static int EventTimer;
+    private int EventTimer2;
 
     public static int RingBonus;
     public static int TimeBonus;
@@ -38,7 +37,7 @@ public class GoalSign : BaseObject
     private void Awake()
     {
         RingBonus = TimeBonus = TotalBonus = 0;
-        EventTimer = 0f;
+        EventTimer = 0;
         CameraController.CameraAction = 0;
         CameraController.CameraMinimumX = 0f;
         CameraController.CameraMinimumY = 0f;
@@ -46,15 +45,10 @@ public class GoalSign : BaseObject
         CameraController.CameraMaximumY = LevelController.CurrentLevel.Height;
     }
 
-    private new void Start()
-    {
-        player = FindObjectOfType<PlayerPhysics>();
-
-        base.Start();
-    }
-
     private void FixedUpdate()
     {
+        PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
+
         LevelController.Clear = Flag1;
 
         switch (player.Character)
@@ -74,6 +68,7 @@ public class GoalSign : BaseObject
             animator.SetBool("Spin!", true);
             AudioController.PlaySFX(Sound_GoalPost);
             CameraController.CameraAction = 2;
+            GameController.SetGameSpeed(1f);
         }
 
         if (Flag0)
@@ -81,9 +76,9 @@ public class GoalSign : BaseObject
             player.SuperForm = false;
             player.InvincibilityTimer = 0;
             player.SpeedSneakersTimer = 0;
-            if (Trigger < 250f)
+            if (Trigger < 250)
             {
-                Trigger += Time.timeScale;
+                Trigger += GameController.Frame;
             }
             if (animator.GetCurrentAnimatorStateInfo(0).IsName(charName))
             {
@@ -118,7 +113,7 @@ public class GoalSign : BaseObject
 
         if (Flag1)
         {
-            EventTimer += Time.timeScale;
+            EventTimer += GameController.Frame;
             if (EventTimer == 200)
             {
                 CountAction = 1;
@@ -193,12 +188,12 @@ public class GoalSign : BaseObject
                         TimeBonus = 0;
                     }
 
-                    if (LevelController.LevelTimer % 3f == 0f)
+                    if (LevelController.LevelTimer % 3f == 0f && GameController.Frame == 1)
                     {
                         AudioController.PlaySFX(Sound_MenuBip);
                     }
 
-                    if (LevelController.LevelTimer % 1f == 0f)
+                    if (LevelController.LevelTimer % 1f == 0f && GameController.Frame == 1)
                     {
                         if (TimeBonus > 0)
                         {
@@ -217,7 +212,7 @@ public class GoalSign : BaseObject
                     TotalBonus = AddRingBonus + AddTimeBonus;
                 }
 
-                CountInternalTimer += Time.timeScale;
+                CountInternalTimer += GameController.Frame;
 
                 if (RingBonus == 0 && TimeBonus == 0)
                 {
@@ -227,7 +222,7 @@ public class GoalSign : BaseObject
             }
             if (CountAction == 2)
             {
-                EventTimer2 += Time.timeScale;
+                EventTimer2 += GameController.Frame;
 
                 if (EventTimer2 >= 250)
                 {

@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum Shield_Types
+{
+    Normal = 1,
+    Flame = 2,
+    Magnetic = 3,
+    Aquatic = 4
+}
+
 public class Shield : MonoBehaviour
 {
-    public enum Shield_Types
-    {
-        Normal = 1,
-        Flame = 2,
-        Magnetic = 3,
-        Aquatic = 4
-    }
     public Shield_Types ShieldType;
 
     private PlayerPhysics player;
@@ -32,8 +33,8 @@ public class Shield : MonoBehaviour
 
     private void LateUpdate()
     {
-        float PosX = Mathf.Floor(player.XPosition) - (Mathf.Sin(player.AnimationAngle * Mathf.Deg2Rad) * 6f);
-        float PosY = Mathf.Floor(player.YPosition) + (Mathf.Cos(player.AnimationAngle * Mathf.Deg2Rad) * 6f);
+        float PosX = Mathf.Floor(player.XPosition) - (Mathf.Sin(player.Angle * Mathf.Deg2Rad) * 6f);
+        float PosY = Mathf.Floor(player.YPosition) + (Mathf.Cos(player.Angle * Mathf.Deg2Rad) * 6f);
         transform.position = new Vector3(PosX, PosY);
     }
 }
