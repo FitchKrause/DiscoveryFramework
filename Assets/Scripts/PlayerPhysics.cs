@@ -295,6 +295,20 @@ public class PlayerPhysics : BaseObject
                     }
                 }
             }
+
+            if ((Ground ? GroundSpeed : XSpeed) <= 0f && XPosition <= CameraController.CameraMinimumX + 16f)
+            {
+                if (Ground) GroundSpeed = 0f;
+                else XSpeed = 0f;
+                XPosition = CameraController.CameraMinimumX + 16f;
+            }
+
+            if ((Ground ? GroundSpeed : XSpeed) >= 0f && XPosition >= CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f))
+            {
+                if (Ground) GroundSpeed = 0f;
+                else XSpeed = 0f;
+                XPosition = CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f);
+            }
             #endregion
             #region Control Lock
             if (Ground)
@@ -409,21 +423,6 @@ public class PlayerPhysics : BaseObject
             {
                 XSpeed -= (XSpeed - (XSpeed * AirDrag)) * Time.timeScale;
             }
-        }
-        #endregion
-        #region X Control (Post)
-        if ((Ground ? GroundSpeed : XSpeed) <= 0f && XPosition <= CameraController.CameraMinimumX + 16f)
-        {
-            if (Ground) GroundSpeed = 0f;
-            else XSpeed = 0f;
-            XPosition = CameraController.CameraMinimumX + 16f;
-        }
-
-        if ((Ground ? GroundSpeed : XSpeed) >= 0f && XPosition >= CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f))
-        {
-            if (Ground) GroundSpeed = 0f;
-            else XSpeed = 0f;
-            XPosition = CameraController.CameraMaximumX + (CameraController.CameraAction != 2 ? -16f : 32f);
         }
         #endregion
         #endregion

@@ -34,4 +34,9 @@ public class Attacher : MonoBehaviour
             }
         }
     }
+
+    private void LateUpdate()
+    {
+        objRef.transform.position = new Vector3(Mathf.Floor(objRef.XPosition), Mathf.Floor(objRef.YPosition), objRef.transform.position.z);
+    }
 }

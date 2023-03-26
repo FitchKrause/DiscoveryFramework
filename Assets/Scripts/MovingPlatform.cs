@@ -43,8 +43,8 @@ public class MovingPlatform : BaseObject
 
     private void FixedUpdate()
     {
-        DifferenceX = XPosition;
-        DifferenceY = YPosition;
+        DifferenceX = Mathf.Floor(XPosition);
+        DifferenceY = Mathf.Floor(YPosition);
 
         AngleX += PlatformXSpeed * Time.timeScale;
         AngleY += PlatformYSpeed * Time.timeScale;
@@ -52,8 +52,8 @@ public class MovingPlatform : BaseObject
         XPosition = InitialX + (Mathf.Cos(AngleX * Mathf.Deg2Rad) * DistanceX);
         YPosition = InitialY + ((Mathf.Sin(AngleY * Mathf.Deg2Rad) * DistanceY) + (Mathf.Sin(SinkCount * Mathf.Deg2Rad) * -10f));
 
-        DifferenceX -= XPosition;
-        DifferenceY -= YPosition;
+        DifferenceX -= Mathf.Floor(XPosition);
+        DifferenceY -= Mathf.Floor(YPosition);
 
         if (Sinkable && SinkCount > 0f)
         {
@@ -70,5 +70,10 @@ public class MovingPlatform : BaseObject
             CameraController.CameraY -= DifferenceY;
             if (Sinkable) SinkCount = Mathf.Min(90f, SinkCount + (9f * Time.timeScale));
         }
+    }
+
+    private new void LateUpdate()
+    {
+        transform.position = new Vector3(Mathf.Floor(XPosition), Mathf.Floor(YPosition), transform.position.z);
     }
 }
