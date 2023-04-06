@@ -21,12 +21,12 @@ public class PlayerInput : MonoBehaviour
     public static bool KeyActionCPressed;
     public static bool KeyStartPressed;
 
-    public static bool IgnoreInput;
+    public static bool OverrideInput;
     public static bool ClearInput;
 
     private void Awake()
     {
-        IgnoreInput = ClearInput = false;
+        OverrideInput = ClearInput = false;
     }
 
     private void FixedUpdate()
@@ -45,7 +45,7 @@ public class PlayerInput : MonoBehaviour
             ClearInput = false;
         }
 
-        if (!IgnoreInput)
+        if (!OverrideInput)
         {
             KeyUpPressed = InputManager.KeyUpPressed;
             KeyUp = InputManager.KeyUp;

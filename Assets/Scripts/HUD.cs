@@ -171,6 +171,6 @@ public class HUD : MonoBehaviour
 
     private void LateUpdate()
     {
-        transform.position = new Vector3(CameraController.XLeftFrame, CameraController.YTopFrame, 0f);
+        transform.position = new Vector3(GameController.XLeftFrame, GameController.YTopFrame, 0f);
     }
 }

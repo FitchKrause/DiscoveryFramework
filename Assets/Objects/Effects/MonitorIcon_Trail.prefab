@@ -70,6 +70,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f156e3a12ac41041a7bd41da70f913a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AllowMovement: 0
+  AllowCollision: 0
+  DisableFloorCollision: 0
+  DisableCeilingCollision: 0
+  DisableWallCollision: 0
+  WidthRadius: 0
+  HeightRadius: 0
+  PushRadius: 0
+  WallShift: 0
   ObjectName: 
   ObjectLoops: 0
   XPosition: 0
@@ -79,15 +88,21 @@ MonoBehaviour:
   GroundSpeed: 0
   GroundAngle: 0
   Quadrant: 0
-  Ground: 0
   CollisionLayer: 0
-  AnimationAngle: 0
+  Ground: 0
+  Landed: 0
+  CeilingLand: 0
+  LandingSpeed: 0
+  LandFrame: 0
+  CurrentAnimation: 
+  Angle: 0
   ColliderBody: {fileID: 0}
-  render: {fileID: 0}
+  ColliderFloor: {fileID: 0}
+  ColliderCeiling: {fileID: 0}
+  ColliderWallLeft: {fileID: 0}
+  ColliderWallRight: {fileID: 0}
   animator: {fileID: 0}
-  WidthRadius: 0
-  HeightRadius: 0
-  WallShift: 0
+  render: {fileID: 0}
 --- !u!212 &212000013061989366
 SpriteRenderer:
   m_ObjectHideFlags: 1

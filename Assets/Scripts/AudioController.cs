@@ -3,8 +3,7 @@ using System.Collections;
 
 public class AudioController : MonoBehaviour
 {
-    protected static AudioSource sfxSource;
-    protected static AudioSource bgmSource;
+    public static AudioSource[] audioSources;
 
     [Range(0, 100)]
     public int MasterVolume, SFXVolume, BGMVolume;
@@ -16,36 +15,38 @@ public class AudioController : MonoBehaviour
 
     private void Awake()
     {
-        MASTER_VOLUME = MasterVolume;
-        SFX_VOLUME = SFXVolume;
-        BGM_VOLUME = BGMVolume;
+        MASTER_VOLUME = MasterVolume / 100f;
+        SFX_VOLUME = SFXVolume / 100f;
+        BGM_VOLUME = BGMVolume / 100f;
 
-        if (GameObject.Find("SFX Source"))
+        audioSources = new AudioSource[5];
+
+        for (int i = 0; i < audioSources.Length; i++)
         {
-            sfxSource = GameObject.Find("SFX Source").GetComponent<AudioSource>();
-        }
-        else
-        {
-            sfxSource = new GameObject("SFX Source").AddComponent<AudioSource>();
-            bgmSource = new GameObject("BGM Source").AddComponent<AudioSource>();
+            if (GameObject.Find(string.Format("AudioSource {0}", i)))
+            {
+                audioSources[i] = GameObject.Find(string.Format("AudioSource {0}", i)).GetComponent<AudioSource>();
+            }
+            else
+            {
+                audioSources[i] = new GameObject(string.Format("AudioSource {0}", i)).AddComponent<AudioSource>();
 
-            sfxSource.volume = (SFX_VOLUME * (MASTER_VOLUME / 100f)) / 100f;
-            bgmSource.volume = (BGM_VOLUME * (MASTER_VOLUME / 100f)) / 100f;
+                audioSources[i].volume = SFX_VOLUME * MASTER_VOLUME;
 
-            DontDestroyOnLoad(sfxSource.gameObject);
-            DontDestroyOnLoad(bgmSource.gameObject);
+                DontDestroyOnLoad(audioSources[i].gameObject);
+            }
         }
+
+        audioSources[4].volume = BGM_VOLUME * MASTER_VOLUME;
     }
 
     public static void PlaySFX(AudioClip sfx)
     {
-        sfxSource.PlayOneShot(sfx);
+        audioSources[0].PlayOneShot(sfx);
     }
 
     public static void Pause()
     {
-        sfxSource.Pause();
-        bgmSource.Pause();
         foreach (AudioSource source in FindObjectsOfType<AudioSource>())
         {
             source.Pause();
@@ -54,8 +55,6 @@ public class AudioController : MonoBehaviour
 
     public static void Resume()
     {
-        sfxSource.UnPause();
-        bgmSource.UnPause();
         foreach (AudioSource source in FindObjectsOfType<AudioSource>())
         {
             source.UnPause();

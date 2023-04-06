@@ -33,8 +33,8 @@ public class Ring : BaseObject
 
         base.Start();
 
-        Rect.WidthRadius = 8f;
-        Rect.HeightRadius = 8f;
+        Rect.WidthRadius = WidthRadius = PushRadius = 8f;
+        Rect.HeightRadius = HeightRadius = 8f;
     }
 
     public void FixedUpdate()
@@ -87,33 +87,30 @@ public class Ring : BaseObject
             YSpeed -= Acceleration * Time.timeScale;
         }
 
+        AllowCollision = MovementActivated;
+
         ProcessMovement();
 
         if (MovementActivated)
         {
             YSpeed -= 0.09375f * Time.timeScale;
+
             for (int i = 0; i < ObjectLoops; i++)
             {
-                Vector2 top = new Vector2(0f, Mathf.Max(8f, YSpeed + 8f));
-                Vector2 bottom = new Vector2(0f, Mathf.Min(-8f, YSpeed - 8f));
-                Vector2 left = new Vector2(Mathf.Min(-8f, XSpeed - 8f), 0f);
-                Vector2 right = new Vector2(Mathf.Max(8f, XSpeed + 8f), 0f);
-
-                if (XSpeed >= 0f && OverlapPoint(right))
+                if (XSpeed >= 0f && ColliderWallRight)
                 {
                     XSpeed = Mathf.Min(-XSpeed, -2f);
                 }
-                if (XSpeed <= 0f && OverlapPoint(left))
+                if (XSpeed <= 0f && ColliderWallLeft)
                 {
                     XSpeed = Mathf.Max(-XSpeed, 2f);
                 }
 
-                if (YSpeed <= 0f && OverlapPoint(bottom, true))
+                if (YSpeed <= 0f && ColliderFloor)
                 {
                     YSpeed = Mathf.Max(-YSpeed, 2f);
-                    Ground = true;
                 }
-                if (!Ground && YSpeed >= 0f && OverlapPoint(top))
+                if (YSpeed >= 0f && ColliderCeiling)
                 {
                     YSpeed = Mathf.Min(-YSpeed, -2f);
                 }
@@ -133,7 +130,7 @@ public class Ring : BaseObject
         Rect.XPosition = XPosition;
         Rect.YPosition = YPosition;
 
-        if (player.Action != 8 && player.Action != 9 && Utils.AABB(Rect, player.Rect))
+        if (!(player.PlayerAction == new ObjectState(player.Action08_Hurt) || player.PlayerAction == new ObjectState(player.Action09_Die) || player.PlayerAction == new ObjectState(player.Action10_Drown)) && HitBox.AABB(Rect, player.Rect))
         {
             GameController.Score += 10;
             AudioController.PlaySFX(Sound_Ring);

@@ -7,27 +7,16 @@ using UnityEngine;
 using System.Collections;
 #endif
 
+public delegate void ObjectState();
+
 public class BaseObject : MonoBehaviour
 {
-    public enum Directions
-    {
-        Left = -1,
-        Right = 1
-    }
-
-    public struct SensorHit
-    {
-        public bool Collision;
-        public float AddX;
-        public float AddY;
-        public RaycastHit2D Result;
-    }
-
-    public delegate void ObjectState();
-
     [Header("Object Values")]
-    public bool AllowPhysics;
+    public bool AllowMovement;
     public bool AllowCollision;
+    public bool DisableFloorCollision;
+    public bool DisableCeilingCollision;
+    public bool DisableWallCollision;
     public float WidthRadius;
     public float HeightRadius;
     public float PushRadius;
@@ -46,14 +35,12 @@ public class BaseObject : MonoBehaviour
     [HideInInspector] public int CollisionLayer;
     [HideInInspector] public bool Ground;
     [HideInInspector] public bool Landed;
+    [HideInInspector] public int CeilingLand;
     [HideInInspector] public float LandingSpeed;
     [HideInInspector] public int LandFrame;
-    [HideInInspector] public bool Fell;
-    [HideInInspector] public string AnimationName;
-    [HideInInspector] public int AnimationRate;
+    [HideInInspector] public string CurrentAnimation;
 
     [Header("Object Transform Values")]
-    [HideInInspector] public Directions Direction;
     [HideInInspector] public float Angle;
 
     [Header("Object Components")]
@@ -94,8 +81,6 @@ public class BaseObject : MonoBehaviour
 
         XPosition = transform.position.x;
         YPosition = transform.position.y;
-
-        Direction = Directions.Right;
     }
 
     protected void LateUpdate()
@@ -110,252 +95,401 @@ public class BaseObject : MonoBehaviour
 
     public void ProcessMovement()
     {
-        if (Landed)
+        if (!AllowMovement)
         {
-            LandFrame++;
-            if (LandFrame > 1)
-            {
-                Landed = false;
-            }
+            return;
         }
         else
         {
-            LandFrame = 0;
-        }
+            if (Landed)
+            {
+                LandFrame++;
+                if (LandFrame > 1)
+                {
+                    Landed = false;
+                }
+            }
+            else
+            {
+                LandFrame = 0;
+            }
 
 #if UNITY_2019_1_OR_NEWER
-        if (filter.layerMask != CollisionLayer)
-        {
-            filter.SetLayerMask(CollisionLayer);
-        }
+            if (filter.layerMask != CollisionLayer)
+            {
+                filter.SetLayerMask(CollisionLayer);
+            }
 #endif
 
-        if (AllowPhysics && Ground)
-        {
-            XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
-            YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
-        }
-
-        float AddX = XSpeed * Time.timeScale;
-        float AddY = YSpeed * Time.timeScale;
-
-        ObjectLoops = (int)(Mathf.Sqrt((XSpeed * XSpeed) + (YSpeed * YSpeed)) + 1f);
-
-        AddX /= ObjectLoops;
-        AddY /= ObjectLoops;
-
-        for (int i = 0; i < ObjectLoops; i++)
-        {
-            XPosition += AddX;
-            YPosition += AddY;
-
-            if (!AllowCollision) continue;
-
-            if ((Ground ? GroundSpeed : XSpeed) >= 0f)
+            if (Ground)
             {
-                SensorHit wallRight = SensorCast(new Vector2(0f, WallShift), Vector2.right, PushRadius);
-
-                if (wallRight.Collision)
-                {
-                    XPosition += wallRight.AddX;
-                    if (Ground)
-                    {
-                        YPosition += wallRight.AddY;
-                        GroundSpeed = 0f;
-                    }
-                    else
-                    {
-                        XSpeed = 0f;
-                    }
-                }
+                XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
+                YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
             }
 
-            if ((Ground ? GroundSpeed : XSpeed) <= 0f)
+            float AddX = XSpeed * Time.timeScale;
+            float AddY = YSpeed * Time.timeScale;
+
+            ObjectLoops = (int)(Mathf.Sqrt((XSpeed * XSpeed) + (YSpeed * YSpeed)) + 1f);
+
+            AddX /= ObjectLoops;
+            AddY /= ObjectLoops;
+
+            ColliderFloor = ColliderCeiling = ColliderWallLeft = ColliderWallRight = null;
+
+            for (int i = 0; i < ObjectLoops; i++)
             {
-                SensorHit wallLeft = SensorCast(new Vector2(0f, WallShift), Vector2.left, PushRadius);
+                XPosition += AddX;
+                YPosition += AddY;
 
-                if (wallLeft.Collision)
+                if (AllowCollision)
                 {
-                    XPosition += wallLeft.AddX;
-                    if (Ground)
+                    if (!DisableWallCollision)
                     {
-                        YPosition += wallLeft.AddY;
-                        GroundSpeed = 0f;
-                    }
-                    else
-                    {
-                        XSpeed = 0f;
-                    }
-                }
-            }
-
-            if (!Ground)
-            {
-                if (YSpeed > 0f)
-                {
-                    SensorHit ceilingLeft = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.up, HeightRadius);
-                    SensorHit ceilingRight = SensorCast(new Vector2(WidthRadius, 0f), Vector2.up, HeightRadius);
-                    SensorHit ceilingHit = SensorWithShortestDistance(ceilingLeft, ceilingRight);
-
-                    if (ceilingHit.Collision)
-                    {
-                        YPosition += ceilingHit.AddY;
-                        YSpeed = 0f;
-                    }
-                }
-                else
-                {
-                    SensorHit floorLeft = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius, true);
-                    SensorHit floorRight = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius, true);
-                    SensorHit floorHit = SensorWithShortestDistance(floorLeft, floorRight);
-
-                    if (floorHit.Collision)
-                    {
-                        YPosition += floorHit.AddY;
-
-                        DetectAngle(true);
-
-                        if (GroundAngle >= 45f && GroundAngle < 315f)
+                        if ((Ground ? GroundSpeed : XSpeed) >= 0f)
                         {
-                            XSpeed += YSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
-                        }
-                        else if (GroundAngle >= 22.5f && GroundAngle < 337.5f)
-                        {
-                            XSpeed += YSpeed * 0.5f * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                            RaycastHit2D rightWall = SensorCast(new Vector2(0f, WallShift), Vector2.right, PushRadius);
+
+                            if (rightWall)
+                            {
+                                Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(PushRadius, WallShift);
+                                vector.x += XPosition;
+                                vector.y += YPosition;
+
+                                XPosition += (rightWall.point - vector).x;
+                                if (Ground)
+                                {
+                                    YPosition += (rightWall.point - vector).y;
+                                    GroundSpeed = 0f;
+                                }
+                                else
+                                {
+                                    XSpeed = 0f;
+                                }
+                            }
+
+                            ColliderWallRight = SensorCast(new Vector2(0f, WallShift), Vector2.right, PushRadius, false, Mathf.Abs(Ground ? GroundSpeed : XSpeed)).collider;
                         }
 
-                        GroundSpeed = XSpeed;
-                        LandingSpeed = YSpeed;
-                        Ground = true;
-                        Landed = true;
-                        Fell = false;
+
+                        if ((Ground ? GroundSpeed : XSpeed) <= 0f)
+                        {
+                            RaycastHit2D leftWall = SensorCast(new Vector2(0f, WallShift), Vector2.left, PushRadius);
+
+                            if (leftWall)
+                            {
+                                Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(-PushRadius, WallShift);
+                                vector.x += XPosition;
+                                vector.y += YPosition;
+
+                                XPosition += (leftWall.point - vector).x;
+                                if (Ground)
+                                {
+                                    YPosition += (leftWall.point - vector).y;
+                                    GroundSpeed = 0f;
+                                }
+                                else
+                                {
+                                    XSpeed = 0f;
+                                }
+                            }
+
+                            ColliderWallLeft = SensorCast(new Vector2(0f, WallShift), Vector2.left, PushRadius, false, Mathf.Abs(Ground ? GroundSpeed : XSpeed)).collider;
+                        }
+                    }
+
+                    if (!(DisableFloorCollision || !Ground && YSpeed > 0f))
+                    {
+                        RaycastHit2D leftFloor = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius, true);
+                        RaycastHit2D rightFloor = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius, true);
+
+                        RaycastHit2D leftAngle = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius + 24f, true);
+                        RaycastHit2D rightAngle = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius + 24f, true);
+
+                        if (!Ground && YSpeed <= 0f && (leftFloor || rightFloor))
+                        {
+                            if (leftAngle && rightAngle)
+                            {
+                                float angleX = (rightAngle.point - leftAngle.point).x;
+                                float angleY = (rightAngle.point - leftAngle.point).y;
+                                GroundAngle = Utils.AngleCalculator(angleX, angleY);
+                            }
+                            else
+                            {
+                                if (rightAngle)
+                                {
+                                    float angleX = rightAngle.normal.x;
+                                    float angleY = rightAngle.normal.y;
+                                    GroundAngle = Utils.AngleCalculator(angleX, angleY, true);
+                                }
+                                else if (leftAngle)
+                                {
+                                    float angleX = leftAngle.normal.x;
+                                    float angleY = leftAngle.normal.y;
+                                    GroundAngle = Utils.AngleCalculator(angleX, angleY, true);
+                                }
+                            }
+
+                            if (GroundAngle >= 45f && GroundAngle <= 315f)
+                            {
+                                XSpeed += YSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                            }
+                            else if (GroundAngle >= 22.5f && GroundAngle <= 337.5f)
+                            {
+                                XSpeed += YSpeed * 0.5f * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                            }
+
+                            CeilingLand = 0;
+                            GroundSpeed = XSpeed;
+                            Ground = Landed = true;
+                        }
+
+                        if (Ground)
+                        {
+                            if (leftAngle && rightAngle)
+                            {
+                                float angleX = (rightAngle.point - leftAngle.point).x;
+                                float angleY = (rightAngle.point - leftAngle.point).y;
+                                GroundAngle = Utils.AngleCalculator(angleX, angleY);
+                            }
+
+                            RaycastHit2D leftSlope = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius, true, 12f);
+                            RaycastHit2D rightSlope = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius, true, 12f);
+
+                            if (leftSlope && rightSlope)
+                            {
+                                if (leftSlope.distance < rightSlope.distance)
+                                {
+                                    Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(-WidthRadius, -HeightRadius);
+                                    vector.x += XPosition;
+                                    vector.y += YPosition;
+
+                                    XPosition += (leftSlope.point - vector).x;
+                                    YPosition += (leftSlope.point - vector).y;
+                                }
+                                else
+                                {
+                                    Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(WidthRadius, -HeightRadius);
+                                    vector.x += XPosition;
+                                    vector.y += YPosition;
+
+                                    XPosition += (rightSlope.point - vector).x;
+                                    YPosition += (rightSlope.point - vector).y;
+                                }
+                            }
+                            else
+                            {
+                                if (rightSlope)
+                                {
+                                    Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(WidthRadius, -HeightRadius);
+                                    vector.x += XPosition;
+                                    vector.y += YPosition;
+
+                                    XPosition += (rightSlope.point - vector).x;
+                                    YPosition += (rightSlope.point - vector).y;
+                                }
+                                else if (leftSlope)
+                                {
+                                    Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(-WidthRadius, -HeightRadius);
+                                    vector.x += XPosition;
+                                    vector.y += YPosition;
+
+                                    XPosition += (leftSlope.point - vector).x;
+                                    YPosition += (leftSlope.point - vector).y;
+                                }
+                                else
+                                {
+                                    Ground = false;
+                                    XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
+                                    YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
+                                    GroundAngle = 0f;
+                                    CeilingLand = -1;
+                                }
+                            }
+                        }
+
+                        if (leftFloor && rightFloor)
+                        {
+                            if (leftFloor.distance < rightFloor.distance)
+                            {
+                                Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(-WidthRadius, -HeightRadius);
+                                vector.x += XPosition;
+                                vector.y += YPosition;
+
+                                XPosition += (leftFloor.point - vector).x;
+                                YPosition += (leftFloor.point - vector).y;
+                            }
+                            else
+                            {
+                                Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(WidthRadius, -HeightRadius);
+                                vector.x += XPosition;
+                                vector.y += YPosition;
+
+                                XPosition += (rightFloor.point - vector).x;
+                                YPosition += (rightFloor.point - vector).y;
+                            }
+                        }
+                        else
+                        {
+                            if (rightFloor)
+                            {
+                                Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(WidthRadius, -HeightRadius);
+                                vector.x += XPosition;
+                                vector.y += YPosition;
+
+                                XPosition += (rightFloor.point - vector).x;
+                                YPosition += (rightFloor.point - vector).y;
+                            }
+                            else if (leftFloor)
+                            {
+                                Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(-WidthRadius, -HeightRadius);
+                                vector.x += XPosition;
+                                vector.y += YPosition;
+
+                                XPosition += (leftFloor.point - vector).x;
+                                YPosition += (leftFloor.point - vector).y;
+                            }
+                        }
+
+                        ColliderFloor = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius, true, Mathf.Abs(Ground ? 12f : YSpeed)).collider ??
+                                        SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius, true, Mathf.Abs(Ground ? 12f : YSpeed)).collider;
+                    }
+
+                    if (!DisableCeilingCollision && !Ground && YSpeed > 0f)
+                    {
+                        RaycastHit2D leftCeiling = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.up, HeightRadius);
+                        RaycastHit2D rightCeiling = SensorCast(new Vector2(WidthRadius, 0f), Vector2.up, HeightRadius);
+
+                        if (YSpeed > 0f && (leftCeiling || rightCeiling))
+                        {
+                            if (leftCeiling && rightCeiling)
+                            {
+                                if (leftCeiling.distance < rightCeiling.distance)
+                                {
+                                    Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(-WidthRadius, HeightRadius);
+                                    vector.x += XPosition;
+                                    vector.y += YPosition;
+
+                                    XPosition += (leftCeiling.point - vector).x;
+                                    YPosition += (leftCeiling.point - vector).y;
+                                }
+                                else
+                                {
+                                    Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(WidthRadius, HeightRadius);
+                                    vector.x += XPosition;
+                                    vector.y += YPosition;
+
+                                    XPosition += (rightCeiling.point - vector).x;
+                                    YPosition += (rightCeiling.point - vector).y;
+                                }
+                            }
+                            else
+                            {
+                                if (rightCeiling)
+                                {
+                                    Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(WidthRadius, HeightRadius);
+                                    vector.x += XPosition;
+                                    vector.y += YPosition;
+
+                                    XPosition += (rightCeiling.point - vector).x;
+                                    YPosition += (rightCeiling.point - vector).y;
+                                }
+                                else if (leftCeiling)
+                                {
+                                    Vector2 vector = Quaternion.Euler(0f, 0f, GroundAngle) * new Vector2(-WidthRadius, HeightRadius);
+                                    vector.x += XPosition;
+                                    vector.y += YPosition;
+
+                                    XPosition += (leftCeiling.point - vector).x;
+                                    YPosition += (leftCeiling.point - vector).y;
+                                }
+                            }
+
+                            if (CeilingLand == 0)
+                            {
+                                CeilingLand = 1;
+                                GroundAngle = 180f;
+
+                                if (CeilingLand == 1)
+                                {
+                                    RaycastHit2D leftFloor = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius, false, 12f);
+                                    RaycastHit2D rightFloor = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius, false, 12f);
+
+                                    if (leftFloor || rightFloor)
+                                    {
+                                        CeilingLand = 2;
+                                    }
+
+                                    if (CeilingLand == 2)
+                                    {
+                                        RaycastHit2D leftAngle = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius + 24f);
+                                        RaycastHit2D rightAngle = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius + 24f);
+
+                                        if (leftAngle && rightAngle)
+                                        {
+                                            float angleX = (rightAngle.point - leftAngle.point).x;
+                                            float angleY = (rightAngle.point - leftAngle.point).y;
+                                            GroundAngle = Utils.AngleCalculator(angleX, angleY);
+                                        }
+                                        else
+                                        {
+                                            if (rightAngle)
+                                            {
+                                                float angleX = rightAngle.normal.x;
+                                                float angleY = rightAngle.normal.y;
+                                                GroundAngle = Utils.AngleCalculator(angleX, angleY, true);
+                                            }
+                                            else if (leftAngle)
+                                            {
+                                                float angleX = leftAngle.normal.x;
+                                                float angleY = leftAngle.normal.y;
+                                                GroundAngle = Utils.AngleCalculator(angleX, angleY, true);
+                                            }
+                                        }
+
+                                        if (GroundAngle >= 170f && GroundAngle <= 190f)
+                                        {
+                                            CeilingLand = -1;
+                                            GroundAngle = 0f;
+                                        }
+                                        else
+                                        {
+                                            CeilingLand = 3;
+                                        }
+
+                                        if (CeilingLand == 3)
+                                        {
+                                            CeilingLand = 0;
+                                            XSpeed += YSpeed * (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) / 0.5f);
+                                            GroundSpeed = XSpeed;
+                                            Ground = Landed = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (!Ground && CeilingLand > 0 && CeilingLand <= 3)
+                            {
+                                CeilingLand = 0;
+                                GroundAngle = 0f;
+                            }
+
+                            YSpeed = 0f;
+                        }
+
+
+                        ColliderCeiling = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.up, HeightRadius, true, Mathf.Abs(Ground ? 0f : YSpeed)).collider ??
+                                          SensorCast(new Vector2(WidthRadius, 0f), Vector2.up, HeightRadius, true, Mathf.Abs(Ground ? 0f : YSpeed)).collider;
                     }
                 }
-            }
-            else if (AllowPhysics)
-            {
-                DetectAngle();
 
-                SensorHit floorLeft = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius, true, 12f);
-                SensorHit floorRight = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius, true, 12f);
-                SensorHit floorHit = SensorWithShortestDistance(floorLeft, floorRight);
-
-                if (floorHit.Collision)
-                {
-                    XPosition += floorHit.AddX;
-                    YPosition += floorHit.AddY;
-                }
-                else
-                {
-                    Ground = false;
-                    XSpeed = GroundSpeed * Mathf.Cos(GroundAngle * Mathf.Deg2Rad);
-                    YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
-                    GroundAngle = 0f;
-                    Fell = true;
-                }
-            }
-            else
-            {
-                SensorHit floorLeft = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius, true);
-                SensorHit floorRight = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius, true);
-                SensorHit floorHit = SensorWithShortestDistance(floorLeft, floorRight);
-
-                if (floorHit.Collision)
-                {
-                    XPosition += floorHit.AddX;
-                    YPosition += floorHit.AddY;
-                }
-                else
-                {
-                    Ground = false;
-                    GroundAngle = 0f;
-                    Fell = true;
-                }
+                Quadrant = (int)(GroundAngle + (360f + 45f)) % 360 / 90;
             }
         }
-
-        ColliderFloor = OverlapBox(new Vector2(0f, -HeightRadius + (Ground ? 0f : Mathf.Min(YSpeed, 0f))), new Vector2(WidthRadius * 2f, WidthRadius), true);
-        ColliderCeiling = OverlapBox(new Vector2(0f, HeightRadius + (Ground ? 0f : Mathf.Max(YSpeed, 0f))), new Vector2(WidthRadius * 2f, WidthRadius));
-        ColliderWallLeft = OverlapBox(new Vector2(-PushRadius + Mathf.Min(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(PushRadius, PushRadius / 2f));
-        ColliderWallRight = OverlapBox(new Vector2(PushRadius + Mathf.Max(Ground ? GroundSpeed : XSpeed, 0f), WallShift), new Vector2(PushRadius, PushRadius / 2f));
     }
 
-    public void DetectAngle(bool useNormals = false)
+    public RaycastHit2D SensorCast(Vector2 offset, Vector2 direction, float distance, bool allowPlatforms = false, float extension = 0f)
     {
-        if (!AllowPhysics) return;
-
-        SensorHit angleLeft = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius + 20f, true);
-        SensorHit angleRight = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius + 20f, true);
-
-        if (angleLeft.Collision && angleRight.Collision)
-        {
-            float PointX = (angleRight.Result.point - angleLeft.Result.point).x;
-            float PointY = (angleRight.Result.point - angleLeft.Result.point).y;
-
-            GroundAngle = AngleCalculator(PointX, PointY);
-        }
-        else if (useNormals)
-        {
-            if (!angleLeft.Collision && angleRight.Collision)
-            {
-                float PointX = angleRight.Result.normal.x;
-                float PointY = angleRight.Result.normal.y;
-
-                GroundAngle = AngleCalculatorAlt(PointX, PointY);
-            }
-            else if (angleLeft.Collision && !angleRight.Collision)
-            {
-                float PointX = angleLeft.Result.normal.x;
-                float PointY = angleLeft.Result.normal.y;
-
-                GroundAngle = AngleCalculatorAlt(PointX, PointY);
-            }
-        }
-
-        Quadrant = ((int)GroundAngle + (360 + 45)) % 360 / 90;
-    }
-
-    public float AngleCalculator(float angleCalculatorX, float angleCalculatorY)
-    {
-        float angleCalculatorResult = Mathf.Atan2(angleCalculatorY, angleCalculatorX) * Mathf.Rad2Deg;
-        return (720f + angleCalculatorResult) % 360f;
-    }
-
-    public float AngleCalculatorAlt(float angleCalculatorX, float angleCalculatorY)
-    {
-        float angleCalculatorResult = Mathf.Atan2(angleCalculatorX, angleCalculatorY) * Mathf.Rad2Deg;
-        return (720f - angleCalculatorResult) % 360f;
-    }
-
-    public SensorHit SensorWithShortestDistance(SensorHit left, SensorHit right)
-    {
-        if (left.Collision && right.Collision)
-        {
-            if (left.Result.distance < right.Result.distance)
-            {
-                return left;
-            }
-            else
-            {
-                return right;
-            }
-        }
-        else if (!left.Collision && right.Collision)
-        {
-            return right;
-        }
-        else if (left.Collision && !right.Collision)
-        {
-            return left;
-        }
-
-        return default(SensorHit);
-    }
-
-    public SensorHit SensorCast(Vector2 offset, Vector2 direction, float distance, bool allowPlatforms = false, float extension = 0f)
-    {
-        SensorHit result = default(SensorHit);
-
 #if UNITY_2019_1_OR_NEWER
         List<RaycastHit2D> results = new List<RaycastHit2D>();
 #else
@@ -404,20 +538,19 @@ public class BaseObject : MonoBehaviour
             }
         }
 
-        Debug.DrawLine(start, anchor, Color.magenta);
+        Debug.DrawLine(start, anchor);
 
         if (num > -1)
         {
-            result.Collision = true;
-            result.AddX = (results[num].point - anchor).x;
-            result.AddY = (results[num].point - anchor).y;
-            result.Result = results[num];
+            return results[num];
         }
-
-        return result;
+        else
+        {
+            return default(RaycastHit2D);
+        }
     }
 
-    public Collider2D OverlapBox(Vector2 offset, Vector2 size, bool allowPlatforms = false)
+    /*public Collider2D OverlapBox(Vector2 offset, Vector2 size, bool allowPlatforms = false)
     {
 #if UNITY_2019_1_OR_NEWER
         List<Collider2D> results = new List<Collider2D>();
@@ -508,5 +641,5 @@ public class BaseObject : MonoBehaviour
         }
 
         return null;
-    }
+    }*/
 }

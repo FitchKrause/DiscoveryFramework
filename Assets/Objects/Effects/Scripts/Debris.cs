@@ -9,7 +9,7 @@ public class Debris : BaseObject
 
         YSpeed -= 0.4f * Time.timeScale;
 
-        if (YPosition < SceneController.YBottomFrame - 16f)
+        if (YPosition < GameController.YBottomFrame - 16f)
         {
             SceneController.DestroyStageObject(this);
         }

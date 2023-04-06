@@ -41,7 +41,6 @@ public class Spring : BaseObject
                             Flag = true;
                             player.YSpeed = 16f;
                             player.Ground = false;
-                            player.Action = 40;
                             player.PlayerAction = player.Action40_Springs;
                             player.JumpVariable = false;
                             AudioController.PlaySFX(Sound_Spring);
@@ -53,7 +52,6 @@ public class Spring : BaseObject
                             Flag = true;
                             player.YSpeed = -16f;
                             player.Ground = false;
-                            player.Action = 40;
                             player.PlayerAction = player.Action40_Springs;
                             AudioController.PlaySFX(Sound_Spring);
                         }
@@ -85,7 +83,6 @@ public class Spring : BaseObject
                             player.XSpeed = -12f;
                             player.YSpeed = 12f;
                             player.Ground = false;
-                            player.Action = 40;
                             player.PlayerAction = player.Action40_Springs;
                             player.JumpVariable = false;
                             AudioController.PlaySFX(Sound_Spring);
@@ -98,7 +95,6 @@ public class Spring : BaseObject
                             player.XSpeed = 12f;
                             player.YSpeed = 12f;
                             player.Ground = false;
-                            player.Action = 40;
                             player.PlayerAction = player.Action40_Springs;
                             player.JumpVariable = false;
                             AudioController.PlaySFX(Sound_Spring);
@@ -115,7 +111,6 @@ public class Spring : BaseObject
                             Flag = true;
                             player.YSpeed = 10f;
                             player.Ground = false;
-                            player.Action = 40;
                             player.PlayerAction = player.Action40_Springs;
                             player.JumpVariable = false;
                             AudioController.PlaySFX(Sound_Spring);
@@ -127,7 +122,6 @@ public class Spring : BaseObject
                             Flag = true;
                             player.YSpeed = -10f;
                             player.Ground = false;
-                            player.Action = 40;
                             player.PlayerAction = player.Action40_Springs;
                             AudioController.PlaySFX(Sound_Spring);
                         }
@@ -159,7 +153,6 @@ public class Spring : BaseObject
                             player.XSpeed = -8f;
                             player.YSpeed = 8f;
                             player.Ground = false;
-                            player.Action = 40;
                             player.PlayerAction = player.Action40_Springs;
                             player.JumpVariable = false;
                             AudioController.PlaySFX(Sound_Spring);
@@ -172,7 +165,6 @@ public class Spring : BaseObject
                             player.XSpeed = 8f;
                             player.YSpeed = 8f;
                             player.Ground = false;
-                            player.Action = 40;
                             player.PlayerAction = player.Action40_Springs;
                             player.JumpVariable = false;
                             AudioController.PlaySFX(Sound_Spring);

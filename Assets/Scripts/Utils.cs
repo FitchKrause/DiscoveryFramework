@@ -3,25 +3,19 @@ using System.Collections;
 
 public static class Utils
 {
-    public static bool AABB(HitBox rectA, HitBox rectB)
+    public static float AngleCalculator(float angleCalculatorX, float angleCalculatorY, bool usingNormals = false)
     {
-        float combinedXRadius = rectB.WidthRadius + rectA.WidthRadius;
-        float combinedYRadius = rectB.HeightRadius + rectA.HeightRadius;
+        float angleCalculatorResult;
 
-        float combinedXDiameter = combinedXRadius * 2f;
-        float combinedYDiameter = combinedYRadius * 2f;
-
-        float left_difference = (rectB.XPosition - rectA.XPosition) + combinedXRadius;
-        float top_difference = (rectB.YPosition - rectA.YPosition) + combinedYRadius;
-
-        if (left_difference < 0f ||
-            left_difference > combinedXDiameter ||
-            top_difference < 0f ||
-            top_difference > combinedYDiameter)
+        if (usingNormals)
         {
-            return false;
+            angleCalculatorResult = Mathf.Atan2(angleCalculatorX, angleCalculatorY) * -Mathf.Rad2Deg;
+        }
+        else
+        {
+            angleCalculatorResult = Mathf.Atan2(angleCalculatorY, angleCalculatorX) * Mathf.Rad2Deg;
         }
 
-        return true;
+        return (720f + angleCalculatorResult) % 360f;
     }
 }

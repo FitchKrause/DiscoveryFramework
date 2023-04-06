@@ -73,7 +73,7 @@ public class Bubble : BaseObject
                 break;
         }
 
-        if (Utils.AABB(rect, player.Rect) && player.Shield != 4 &&
+        if (HitBox.AABB(rect, player.Rect) && player.Shield != 4 &&
             GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("LargeBubble_Loop"))
         {
             AudioController.PlaySFX(Sound_Breathe);
@@ -83,10 +83,5 @@ public class Bubble : BaseObject
             player.Air = 0;
             SceneController.DestroyStageObject(this);
         }
-    }
-
-    private new void LateUpdate()
-    {
-        transform.position = new Vector3(Mathf.Floor(XPosition), Mathf.Floor(YPosition), transform.position.z);
     }
 }

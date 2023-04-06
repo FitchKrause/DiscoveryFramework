@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013597945446}
   - 114: {fileID: 114000011304144452}
+  - 114: {fileID: 114000010737230214}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -40,6 +41,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000010737230214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014150540636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982e8387b725c194ca1a8d137e01661a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MasterVolume: 50
+  SFXVolume: 100
+  BGMVolume: 0
 --- !u!114 &114000011304144452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,5 +66,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65353a878be19164796395903fbbcff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Width: 424
-  Height: 240
+  TargetTexture: {fileID: 8400000, guid: 4a3eaaf6c47112049888b46560df5e08, type: 2}
+  CurrentSlot: 0

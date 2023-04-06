@@ -99,10 +99,11 @@ public class Monitor : BaseObject
 
             ColliderBody.enabled = !(player.Attacking && player.YSpeed <= 0f);
 
-            if (Utils.AABB(Rect, player.Rect) && player.Attacking || ((player.Action == 6 &&
+            if (HitBox.AABB(Rect, player.Rect) && player.Attacking && player.ColliderCeiling != ColliderBody ||
+               (player.PlayerAction == new ObjectState(player.Action06_Rolling) &&
                (player.GroundSpeed >= 0f && player.ColliderWallRight == ColliderBody ||
                 player.GroundSpeed <= 0f && player.ColliderWallLeft == ColliderBody)) ||
-                player.Action == 1 && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody))
+                player.PlayerAction == new ObjectState(player.Action01_Jump) && player.YSpeed <= 0f && player.ColliderFloor == ColliderBody)
             {
                 ColliderBody.enabled = false;
                 if (attacher != null)
@@ -123,7 +124,7 @@ public class Monitor : BaseObject
                     debris.YSpeed = Random.Range(80f, 20f) / 10f;
                     debris.transform.rotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 45f) * 8f);
                 }
-                if (player.Action == 1)
+                if (player.PlayerAction == new ObjectState(player.Action01_Jump))
                 {
                     player.LandingSpeed = player.YSpeed;
                     player.Ground = false;

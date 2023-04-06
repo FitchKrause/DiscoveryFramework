@@ -21,6 +21,8 @@ public class InputManager : MonoBehaviour
     public static bool KeyActionCPressed;
     public static bool KeyStartPressed;
 
+    public static bool IgnoreInput;
+
     private static InputManager instance;
 
     public void Awake()
@@ -39,28 +41,28 @@ public class InputManager : MonoBehaviour
 
     public void FixedUpdate()
     {
-        KeyUpPressed = Input.GetKey(KeyCode.UpArrow) && !KeyUp;
-        KeyUp = Input.GetKey(KeyCode.UpArrow);
+        KeyUpPressed = !IgnoreInput && Input.GetKey(KeyCode.UpArrow) && !KeyUp;
+        KeyUp = !IgnoreInput && Input.GetKey(KeyCode.UpArrow);
 
-        KeyDownPressed = Input.GetKey(KeyCode.DownArrow) && !KeyDown;
-        KeyDown = Input.GetKey(KeyCode.DownArrow);
+        KeyDownPressed = !IgnoreInput && Input.GetKey(KeyCode.DownArrow) && !KeyDown;
+        KeyDown = !IgnoreInput && Input.GetKey(KeyCode.DownArrow);
 
-        KeyLeftPressed = Input.GetKey(KeyCode.LeftArrow) && !KeyLeft;
-        KeyLeft = Input.GetKey(KeyCode.LeftArrow);
+        KeyLeftPressed = !IgnoreInput && Input.GetKey(KeyCode.LeftArrow) && !KeyLeft;
+        KeyLeft = !IgnoreInput && Input.GetKey(KeyCode.LeftArrow);
 
-        KeyRightPressed = Input.GetKey(KeyCode.RightArrow) && !KeyRight;
-        KeyRight = Input.GetKey(KeyCode.RightArrow);
+        KeyRightPressed = !IgnoreInput && Input.GetKey(KeyCode.RightArrow) && !KeyRight;
+        KeyRight = !IgnoreInput && Input.GetKey(KeyCode.RightArrow);
 
-        KeyActionAPressed = Input.GetKey(KeyCode.Z) && !KeyActionA;
-        KeyActionA = Input.GetKey(KeyCode.Z);
+        KeyActionAPressed = !IgnoreInput && Input.GetKey(KeyCode.Z) && !KeyActionA;
+        KeyActionA = !IgnoreInput && Input.GetKey(KeyCode.Z);
 
-        KeyActionBPressed = Input.GetKey(KeyCode.X) && !KeyActionB;
-        KeyActionB = Input.GetKey(KeyCode.X);
+        KeyActionBPressed = !IgnoreInput && Input.GetKey(KeyCode.X) && !KeyActionB;
+        KeyActionB = !IgnoreInput && Input.GetKey(KeyCode.X);
 
-        KeyActionCPressed = Input.GetKey(KeyCode.C) && !KeyActionC;
-        KeyActionC = Input.GetKey(KeyCode.C);
+        KeyActionCPressed = !IgnoreInput && Input.GetKey(KeyCode.C) && !KeyActionC;
+        KeyActionC = !IgnoreInput && Input.GetKey(KeyCode.C);
 
-        KeyStartPressed = Input.GetKey(KeyCode.Return) && !KeyStart;
-        KeyStart = Input.GetKey(KeyCode.Return);
+        KeyStartPressed = !IgnoreInput && Input.GetKey(KeyCode.Return) && !KeyStart;
+        KeyStart = !IgnoreInput && Input.GetKey(KeyCode.Return);
     }
 }

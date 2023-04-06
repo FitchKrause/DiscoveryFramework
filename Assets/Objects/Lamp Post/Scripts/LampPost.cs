@@ -46,7 +46,7 @@ public class LampPost : BaseObject
     {
         PlayerPhysics player = SceneController.FindStageObject("PlayerPhysics") as PlayerPhysics;
 
-        if (!Flag1 && Utils.AABB(Rect, player.Rect))
+        if (!Flag1 && HitBox.AABB(Rect, player.Rect))
         {
             Flag0 = true;
             AudioController.PlaySFX(Sound_LampPost);

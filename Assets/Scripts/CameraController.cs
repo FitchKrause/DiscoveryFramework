@@ -21,11 +21,6 @@ public class CameraController : MonoBehaviour
     public float LookUpTimer;
     public float CrouchDownTimer;
 
-    public static float XLeftFrame;
-    public static float XRightFrame;
-    public static float YTopFrame;
-    public static float YBottomFrame;
-
     private void Awake()
     {
         CameraMode = CameraAction = 0;
@@ -42,6 +37,18 @@ public class CameraController : MonoBehaviour
         CameraY = -player.YPosition;
         CameraX += 0.1f * (player.XPosition - CameraX);
         CameraY += 0.1f * (-player.YPosition - CameraY);
+
+        Camera.main.transform.position = new Vector3()
+        {
+            x = Mathf.Clamp(CameraX, GameController.WindowMidWidth, SceneController.CurrentScene.Width - GameController.WindowMidWidth),
+            y = -Mathf.Clamp(CameraY, GameController.WindowMidHeight, SceneController.CurrentScene.Height - GameController.WindowMidHeight),
+            z = -10f
+        };
+
+        GameController.XLeftFrame = Camera.main.transform.position.x - GameController.WindowMidWidth;
+        GameController.XRightFrame = Camera.main.transform.position.x + GameController.WindowMidWidth;
+        GameController.YTopFrame = Camera.main.transform.position.y + GameController.WindowMidHeight;
+        GameController.YBottomFrame = Camera.main.transform.position.y - GameController.WindowMidHeight;
     }
 
     private void FixedUpdate()
@@ -58,9 +65,9 @@ public class CameraController : MonoBehaviour
         }
         if (CameraAction == 2)
         {
-            CameraMinimumX = GoalPost.XPosition - SceneController.WindowMidWidth;
+            CameraMinimumX = GoalPost.XPosition - GameController.WindowMidWidth;
             CameraMinimumY = -GoalPost.YPosition - 160;
-            CameraMaximumX = GoalPost.XPosition + SceneController.WindowMidWidth;
+            CameraMaximumX = GoalPost.XPosition + GameController.WindowMidWidth;
             CameraMaximumY = -GoalPost.YPosition + 80;
         }
         if (CameraAction == 3)
@@ -72,11 +79,11 @@ public class CameraController : MonoBehaviour
 
         if (LagTimer == 0f && CameraMode == 0)
         {
-            if (CameraX < CameraMaximumX - SceneController.WindowMidWidth && player.XPosition > CameraX + 8f - CameraShiftX - CameraShiftXSpeed)
+            if (CameraX < CameraMaximumX - GameController.WindowMidWidth && player.XPosition > CameraX + 8f - CameraShiftX - CameraShiftXSpeed)
             {
                 CameraX += Mathf.Min(16f * Time.timeScale, player.XPosition - CameraX - 8f + CameraShiftXSpeed + CameraShiftX);
             }
-            else if (CameraX > CameraMinimumX + SceneController.WindowMidWidth && player.XPosition < CameraX - 8f - CameraShiftX - CameraShiftXSpeed)
+            else if (CameraX > CameraMinimumX + GameController.WindowMidWidth && player.XPosition < CameraX - 8f - CameraShiftX - CameraShiftXSpeed)
             {
                 CameraX += Mathf.Max(-16f * Time.timeScale, player.XPosition - CameraX + 8f + CameraShiftXSpeed + CameraShiftX);
             }
@@ -86,28 +93,28 @@ public class CameraController : MonoBehaviour
         {
             if (player.Ground)
             {
-                if (CameraY > CameraMinimumY + SceneController.WindowMidHeight && -player.YPosition < CameraY + CameraShiftY + CameraShiftYSpeed)
+                if (CameraY > CameraMinimumY + GameController.WindowMidHeight && -player.YPosition < CameraY + CameraShiftY + CameraShiftYSpeed)
                 {
                     CameraY += Mathf.Max(-Mathf.Max(3f, Mathf.Abs(player.GroundSpeed * Mathf.Sin(player.GroundAngle * Mathf.Deg2Rad))) - 1f, -player.YPosition - CameraY - CameraShiftY - CameraShiftYSpeed) * Time.timeScale;
                 }
-                else if (CameraY < CameraMaximumY - SceneController.WindowMidHeight && -player.YPosition > CameraY + CameraShiftY + CameraShiftYSpeed)
+                else if (CameraY < CameraMaximumY - GameController.WindowMidHeight && -player.YPosition > CameraY + CameraShiftY + CameraShiftYSpeed)
                 {
                     CameraY += Mathf.Min(Mathf.Max(3f, Mathf.Abs(player.GroundSpeed * Mathf.Sin(player.GroundAngle * Mathf.Deg2Rad) * 2f)) - 1f, -player.YPosition - CameraY - CameraShiftY - CameraShiftYSpeed) * Time.timeScale;
                 }
             }
             else
             {
-                if (CameraY > CameraMinimumY + SceneController.WindowMidHeight && -player.YPosition < CameraY - 48f + CameraShiftY + CameraShiftYSpeed)
+                if (CameraY > CameraMinimumY + GameController.WindowMidHeight && -player.YPosition < CameraY - 48f + CameraShiftY + CameraShiftYSpeed)
                 {
                     CameraY += Mathf.Max(-16f * Time.timeScale, -player.YPosition - CameraY + 48f - CameraShiftY - CameraShiftYSpeed);
                 }
             }
-            if ((player.Landed || !player.Ground && -player.YPosition > CameraY + CameraShiftY + CameraShiftYSpeed + 24f) && CameraY < CameraMaximumY - SceneController.WindowMidHeight)
+            if ((player.Landed || !player.Ground && -player.YPosition > CameraY + CameraShiftY + CameraShiftYSpeed + 24f) && CameraY < CameraMaximumY - GameController.WindowMidHeight)
             {
                 CameraY += Mathf.Max(0f, Mathf.Min(16f * Time.timeScale, -player.YPosition - CameraY - CameraShiftY - 24f) - CameraShiftYSpeed);
             }
 
-            if (player.Action == 2 && LookUpTimer < 110f)
+            if (player.PlayerAction == new ObjectState(player.Action02_StandUp) && LookUpTimer < 110f)
             {
                 LookUpTimer += Time.timeScale;
             }
@@ -121,12 +128,12 @@ public class CameraController : MonoBehaviour
                 CameraShiftYSpeed = Mathf.Min(88f, CameraShiftYSpeed + (2f * Time.timeScale));
             }
 
-            if (player.Action != 2)
+            if (player.PlayerAction != new ObjectState(player.Action02_StandUp))
             {
                 LookUpTimer = 0f;
             }
 
-            if (player.Action == 3 && CrouchDownTimer < 110f)
+            if (player.PlayerAction == new ObjectState(player.Action03_CrouchDown) && CrouchDownTimer < 110f)
             {
                 CrouchDownTimer += Time.timeScale;
             }
@@ -140,7 +147,7 @@ public class CameraController : MonoBehaviour
                 CameraShiftYSpeed = Mathf.Max(-88f, CameraShiftYSpeed - (2f * Time.timeScale));
             }
 
-            if (player.Action != 3)
+            if (player.PlayerAction != new ObjectState(player.Action03_CrouchDown))
             {
                 CrouchDownTimer = 0f;
             }
@@ -160,22 +167,22 @@ public class CameraController : MonoBehaviour
             LagTimer = 0f;
         }
 
-        if (CameraX < CameraMinimumX + SceneController.WindowMidWidth)
+        if (CameraX < CameraMinimumX + GameController.WindowMidWidth)
         {
-            CameraX = Mathf.Min(CameraX + (2f * Time.timeScale), CameraMinimumX + SceneController.WindowMidWidth);
+            CameraX = Mathf.Min(CameraX + (2f * Time.timeScale), CameraMinimumX + GameController.WindowMidWidth);
         }
-        else if (CameraX > CameraMaximumX - SceneController.WindowMidWidth)
+        else if (CameraX > CameraMaximumX - GameController.WindowMidWidth)
         {
-            CameraX = Mathf.Max(CameraX - (2f * Time.timeScale), CameraMaximumX - SceneController.WindowMidWidth);
+            CameraX = Mathf.Max(CameraX - (2f * Time.timeScale), CameraMaximumX - GameController.WindowMidWidth);
         }
 
-        if (CameraY < CameraMinimumY + SceneController.WindowMidHeight)
+        if (CameraY < CameraMinimumY + GameController.WindowMidHeight)
         {
-            CameraY = Mathf.Min(CameraY + (2f * Time.timeScale), CameraMinimumY + SceneController.WindowMidHeight);
+            CameraY = Mathf.Min(CameraY + (2f * Time.timeScale), CameraMinimumY + GameController.WindowMidHeight);
         }
-        else if (CameraY > CameraMaximumY - SceneController.WindowMidHeight)
+        else if (CameraY > CameraMaximumY - GameController.WindowMidHeight)
         {
-            CameraY = Mathf.Max(CameraY - (2f * Time.timeScale), CameraMaximumY - SceneController.WindowMidHeight);
+            CameraY = Mathf.Max(CameraY - (2f * Time.timeScale), CameraMaximumY - GameController.WindowMidHeight);
         }
 
         if (CameraAction == 0 && ShakeTimer > 0f)
@@ -195,11 +202,16 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        Camera.main.transform.position = new Vector3(CameraX, -CameraY, -10f);
+        Camera.main.transform.position = new Vector3()
+        {
+            x = Mathf.Clamp(CameraX, GameController.WindowMidWidth, SceneController.CurrentScene.Width - GameController.WindowMidWidth),
+            y = -Mathf.Clamp(CameraY, GameController.WindowMidHeight, SceneController.CurrentScene.Height - GameController.WindowMidHeight),
+            z = -10f
+        };
 
-        XLeftFrame = Camera.main.transform.position.x - SceneController.WindowMidWidth;
-        XRightFrame = Camera.main.transform.position.x + SceneController.WindowMidWidth;
-        YTopFrame = Camera.main.transform.position.y + SceneController.WindowMidHeight;
-        YBottomFrame = Camera.main.transform.position.y - SceneController.WindowMidHeight;
+        GameController.XLeftFrame = Camera.main.transform.position.x - GameController.WindowMidWidth;
+        GameController.XRightFrame = Camera.main.transform.position.x + GameController.WindowMidWidth;
+        GameController.YTopFrame = Camera.main.transform.position.y + GameController.WindowMidHeight;
+        GameController.YBottomFrame = Camera.main.transform.position.y - GameController.WindowMidHeight;
     }
 }

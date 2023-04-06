@@ -15,9 +15,8 @@ public class PlayerPhysics : BaseObject
     public RotationMethods RotationMethod;
     public float RotationSnap = 45f;
 
-    [HideInInspector] public int Action;
     [HideInInspector] public int Hurt;
-    [HideInInspector] public int CeilingLand;
+    [HideInInspector] public int Direction;
     [HideInInspector] public float SmoothAngle;
 
     [HideInInspector] public bool Attacking;
@@ -89,7 +88,7 @@ public class PlayerPhysics : BaseObject
     private new void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = (AudioController.SFX_VOLUME * (AudioController.MASTER_VOLUME / 100f)) / 100f;
+        audioSource.volume = AudioController.SFX_VOLUME * AudioController.MASTER_VOLUME;
         Shields = FindObjectsOfType<Shield>();
 
         base.Start();
@@ -145,11 +144,18 @@ public class PlayerPhysics : BaseObject
         }
 
         AllowInput = AllowDirection = true;
+        Direction = 1;
     }
     #endregion
     #region Player Update
     private void FixedUpdate()
     {
+        if (!SuperForm && Invincibility == 0 && !SpeedSneakers && !(PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown)) &&
+            MusicController.Playing != "Stage" && !(MusicController.Playing == "1-UP" || MusicController.Playing == "Drowning" || MusicController.Playing == "Clear"))
+        {
+            MusicController.ToPlay = "Stage";
+        }
+
         #region Player Input
         int inpDir = (PlayerInput.KeyRight ? 1 : 0) - (PlayerInput.KeyLeft ? 1 : 0);
         #endregion
@@ -206,16 +212,16 @@ public class PlayerPhysics : BaseObject
         #endregion
         #region Player Control (Pre)
         #region Control (Pre)
-        if (Action != 9 && Action != 10)
+        if (!(PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown)))
         {
             #region Slope Factor
-            if (AllowInput && Ground && Action != 6)
+            if (AllowInput && Ground && PlayerAction != new ObjectState(Action06_Rolling))
             {
                 GroundSpeed -= SlopeFactor * Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * Time.timeScale;
             }
             #endregion
             #region X Control
-            if (AllowInput && !(Ground && ControlLockTimer > 0f || Action == 6))
+            if (AllowInput && !(Ground && ControlLockTimer > 0f) && PlayerAction != new ObjectState(Action06_Rolling))
             {
                 if (inpDir < 0)
                 {
@@ -325,7 +331,6 @@ public class PlayerPhysics : BaseObject
                             YSpeed = GroundSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
                             GroundAngle = 0f;
                             Ground = false;
-                            Fell = true;
                         }
                         else
                         {
@@ -371,46 +376,6 @@ public class PlayerPhysics : BaseObject
         Rect.YPosition = YPosition + YSpeed;
         Rect.WidthRadius = WidthRadius;
         Rect.HeightRadius = HeightRadius;
-
-        if (ColliderCeiling && CeilingLand == 0 && Fell == false)
-        {
-            CeilingLand = 1;
-            GroundAngle = 180f;
-            SmoothAngle = 180f;
-            SensorHit floorLeft = SensorCast(new Vector2(-WidthRadius, 0f), Vector2.down, HeightRadius, true, 12f);
-            SensorHit floorRight = SensorCast(new Vector2(WidthRadius, 0f), Vector2.down, HeightRadius, true, 12f);
-            if (CeilingLand == 1 && (floorLeft.Collision || floorRight.Collision))
-            {
-                CeilingLand = 2;
-                DetectAngle(true);
-                if (GroundAngle >= 170f && GroundAngle <= 190f)
-                {
-                    GroundAngle = 0f;
-                    SmoothAngle = 0f;
-                }
-                else
-                {
-                    CeilingLand = 3;
-                    XSpeed += YSpeed * Mathf.Sin(GroundAngle * Mathf.Deg2Rad);
-                    if (CeilingLand == 3)
-                    {
-                        CeilingLand = 0;
-                        GroundSpeed = XSpeed;
-                        LandingSpeed = YSpeed;
-                        Ground = true;
-                        Landed = true;
-                        PlayerAction = Action01_Jump;
-                    }
-                }
-            }
-        }
-
-        if (CeilingLand > 0 && CeilingLand <= 3 && !Ground)
-        {
-            CeilingLand = 0;
-            GroundAngle = 0f;
-            SmoothAngle = 0f;
-        }
         #endregion
         #region Player Control
         #region Control
@@ -427,7 +392,7 @@ public class PlayerPhysics : BaseObject
         #endregion
         #endregion
         #region Invincibility and Speed Sneakers
-        if (Action != 9 && Action != 10)
+        if (!(PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown)))
         {
             if (SuperForm)
             {
@@ -474,11 +439,11 @@ public class PlayerPhysics : BaseObject
         }
         #endregion
         #region Check for Being Hurt
-        if (Action != 9 && Action != 10)
+        if (!(PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown)))
         {
             if (Hurt == 1)
             {
-                if (Invincibility != 0 || Action == 9)
+                if (Invincibility != 0)
                 {
                     Hurt = 0;
                 }
@@ -486,7 +451,7 @@ public class PlayerPhysics : BaseObject
                 {
                     XSpeed = -2.2f * (float)Direction;
                     YSpeed = 4.2f;
-                    Action = 8;
+                    PlayerAction = Action08_Hurt;
                     Ground = false;
                     GroundAngle = 0f;
                     AllowInput = false;
@@ -495,13 +460,12 @@ public class PlayerPhysics : BaseObject
                     InvincibilityTimer = 250;
                     Shield = 0;
                     AudioController.PlaySFX(Sound_Hurt);
-                    PlayerAction = Action08_Hurt;
                 }
                 else if (LevelController.CurrentLevel.Rings > 0)
                 {
                     XSpeed = -2.2f * (float)Direction;
                     YSpeed = 4.2f;
-                    Action = 8;
+                    PlayerAction = Action08_Hurt;
                     Ground = false;
                     GroundAngle = 0f;
                     AllowInput = false;
@@ -511,7 +475,6 @@ public class PlayerPhysics : BaseObject
                     LevelController.RingLoss(LevelController.CurrentLevel.Rings, XPosition, YPosition);
                     LevelController.CurrentLevel.Rings = 0;
                     AudioController.PlaySFX(Sound_LoseRings);
-                    PlayerAction = Action08_Hurt;
                 }
                 else if (LevelController.CurrentLevel.Rings == 0)
                 {
@@ -528,24 +491,27 @@ public class PlayerPhysics : BaseObject
 
                 foreach (BaseObject objRef in LevelController.CurrentLevel.ObjectList)
                 {
-                    if (objRef == this) continue;
-                    objRef.enabled = false;
+                    if (objRef != this)
+                    {
+                        objRef.enabled = false;
+                    }
                 }
 
                 foreach (Animator animator in FindObjectsOfType<Animator>())
                 {
-                    if (animator == this.animator) continue;
-                    animator.enabled = false;
+                    if (animator != this.animator)
+                    {
+                        animator.enabled = false;
+                    }
                 }
 
                 CameraController.CameraMode = 3;
                 Ground = false;
                 XSpeed = 0f;
                 YSpeed = 7.8f;
-                Action = 9;
+                PlayerAction = Action09_Die;
                 Hurt = 0;
                 CollisionLayer = 0;
-                PlayerAction = Action09_Die;
                 AudioController.PlaySFX(Sound_Hurt);
             }
             if (Hurt == 3)
@@ -554,24 +520,27 @@ public class PlayerPhysics : BaseObject
 
                 foreach (BaseObject objRef in LevelController.CurrentLevel.ObjectList)
                 {
-                    if (objRef == this) continue;
-                    objRef.enabled = false;
+                    if (objRef != this)
+                    {
+                        objRef.enabled = false;
+                    }
                 }
 
                 foreach (Animator animator in FindObjectsOfType<Animator>())
                 {
-                    if (animator == this.animator) continue;
-                    animator.enabled = false;
+                    if (animator != this.animator)
+                    {
+                        animator.enabled = false;
+                    }
                 }
 
                 CameraController.CameraMode = 3;
                 Ground = false;
                 XSpeed = 0f;
                 YSpeed = 0f;
-                Action = 10;
+                PlayerAction = Action10_Drown;
                 Hurt = 0;
                 CollisionLayer = 0;
-                PlayerAction = Action09_Die;
                 AudioController.PlaySFX(Sound_Drown);
             }
         }
@@ -606,103 +575,7 @@ public class PlayerPhysics : BaseObject
         }
         #endregion
         #region Change Direction
-        if (AllowDirection)
-        {
-            if (inpDir > 0)
-            {
-                Direction = Directions.Right;
-            }
-            if (inpDir < 0)
-            {
-                Direction = Directions.Left;
-            }
-        }
-
-        render.flipX = Direction < 0;
-        #endregion
-        #region Change Animation Speed
-        if (AnimationName == "Stopped" ||
-            AnimationName == "Die" ||
-            AnimationName == "Drown")
-        {
-            AnimationRate = 5;
-        }
-        else if (AnimationName == "Breathe" ||
-                 AnimationName == "Hurt")
-        {
-            AnimationRate = 15;
-        }
-        else if (AnimationName == "Walking" ||
-                 AnimationName == "Air Walking" ||
-                 AnimationName == "Jog" ||
-                 AnimationName == "Jumping" ||
-                 AnimationName == "Skid Turn" ||
-                 AnimationName == "Springs")
-        {
-            AnimationRate = 20;
-        }
-        else if (AnimationName == "Running" ||
-                 AnimationName == "Skidding" ||
-                 AnimationName == "Stand Up" ||
-                 AnimationName == "Crouch Down" ||
-                 AnimationName == "Spindash")
-        {
-            AnimationRate = 30;
-        }
-        else if (AnimationName == "Dash")
-        {
-            AnimationRate = 40;
-        }
-
-        this.animator.speed = 1f;
-
-        if (AnimationName == "Walking" ||
-            AnimationName == "Air Walking" ||
-            AnimationName == "Jog" ||
-            AnimationName == "Running" ||
-            AnimationName == "Dash" ||
-            AnimationName == "Jumping" ||
-            AnimationName == "Spindash")
-        {
-            if (Ground)
-            {
-                if (AnimationName == "Walking" ||
-                    AnimationName == "Jog")
-                {
-                    animator.speed = 20f + (Mathf.Abs(GroundSpeed) * 3f);
-                }
-                else if (AnimationName == "Running")
-                {
-                    animator.speed = 20f + (Mathf.Abs(GroundSpeed) * 4f);
-                }
-                else if (AnimationName == "Dash")
-                {
-                    animator.speed = 30f + (Mathf.Abs(GroundSpeed) * 4f);
-                }
-            }
-            else if (AnimationName == "Air Walking" ||
-                     AnimationName == "Running" ||
-                     AnimationName == "Dash")
-            {
-                animator.speed = 20f + (Mathf.Abs(GroundSpeed) * 3f);
-                //animator.speed = 20f + (Mathf.Abs((Action != 40) ? GroundSpeed : XSpeed) * 3f);
-            }
-
-            if (Action == 1 && AnimationName == "Jumping")
-            {
-                animator.speed = 25f + (Mathf.Abs(GroundSpeed) * 10f);
-            }
-            if (Action == 5 && AnimationName == "Spindash")
-            {
-                animator.speed = 20f + (Mathf.Abs(SpindashRev) * 10f);
-            }
-            if (Action == 6 && AnimationName == "Jumping")
-            {
-                animator.speed = 25f + (Mathf.Abs(GroundSpeed) * 10f);
-            }
-
-            animator.speed /= AnimationRate;
-        }
+        render.flipX = (Direction = (AllowDirection && inpDir != 0) ? inpDir : Direction) < 0;
         #endregion
         #region Change Angle
         if (Ground)
@@ -753,7 +626,7 @@ public class PlayerPhysics : BaseObject
         }
         #endregion
         #region Flash!
-        if (Action != 8 && Invincibility == 2 && InvincibilityTimer > 0f)
+        if (PlayerAction != new ObjectState(Action08_Hurt) && Invincibility == 2 && InvincibilityTimer > 0f)
         {
             render.enabled = (LevelController.LevelTimer % 6f) < 3f;
         }
@@ -764,7 +637,7 @@ public class PlayerPhysics : BaseObject
         #endregion
         #endregion
         #region Water
-        if (!Underwater && Action != 9 && Action != 10 && LevelController.CurrentLevel.Water && YPosition <= LevelController.CurrentLevel.WaterLevel)
+        if (!Underwater && !(PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown)) && LevelController.CurrentLevel.Water && YPosition <= LevelController.CurrentLevel.WaterLevel)
         {
             Underwater = true;
             if (!Ground)
@@ -777,7 +650,7 @@ public class PlayerPhysics : BaseObject
             waterSplash.XPosition = XPosition;
             waterSplash.render.sortingLayerName = render.sortingLayerName;
         }
-        if (Underwater && Action != 9 && Action != 10 && LevelController.CurrentLevel.Water && YPosition >= LevelController.CurrentLevel.WaterLevel)
+        if (Underwater && !(PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown)) && LevelController.CurrentLevel.Water && YPosition >= LevelController.CurrentLevel.WaterLevel)
         {
             Underwater = false;
             if (!Ground)
@@ -790,7 +663,7 @@ public class PlayerPhysics : BaseObject
             waterSplash.render.sortingLayerName = render.sortingLayerName;
         }
 
-        if (Action == 9 || Action == 10)
+        if (PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown))
         {
             Air = 0;
             Underwater = false;
@@ -830,7 +703,7 @@ public class PlayerPhysics : BaseObject
         #endregion
         #region Effects
         #region Spindash Dust
-        SpindashDust.SetActive(Action == 5);
+        SpindashDust.SetActive(PlayerAction == new ObjectState(Action05_Spindash));
         SpindashDust.GetComponent<Animator>().speed = this.animator.speed;
         SpindashDust.GetComponent<SpriteRenderer>().flipX = this.render.flipX;
         SpindashDust.GetComponent<SpriteRenderer>().sortingLayerName = this.render.sortingLayerName;
@@ -838,7 +711,7 @@ public class PlayerPhysics : BaseObject
         SpindashDust.transform.rotation = Quaternion.Euler(0f, 0f, Angle);
         #endregion
         #region Skidding Dust
-        if (Action == 4 && LevelController.GlobalTimer % 4 == 0 && GameController.Frame == 1)
+        if (PlayerAction == new ObjectState(Action04_Skidding) && LevelController.GlobalTimer % 4 == 0 && GameController.Frame == 1)
         {
             Dust dust = SceneController.CreateStageObject("Skid Dust",
                 XPosition - (Mathf.Sin(Angle * Mathf.Deg2Rad) * -13f),
@@ -936,7 +809,7 @@ public class PlayerPhysics : BaseObject
                 YSpeed = (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * 8f) + (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
                 Ground = false;
                 GroundAngle = 0f;
-                Action = 1;
+                PlayerAction = Action01_Jump;
                 JumpVariable = true;
                 AudioController.PlaySFX(Sound_BubbleBounce);
                 ShieldStatus = 1;
@@ -949,7 +822,6 @@ public class PlayerPhysics : BaseObject
                     }
                     shield.GetComponent<Animator>().Play("Running");
                 }
-                PlayerAction = Action01_Jump;
             }
             if (Ground)
             {
@@ -984,45 +856,47 @@ public class PlayerPhysics : BaseObject
     #region Actions - [00] Common
     public void Action00_Common()
     {
-        Action = 0;
-
         if (Ground)
         {
-            if (Mathf.Abs(GroundSpeed) == 0f)
+            if (Mathf.Abs(GroundSpeed) < Acceleration)
             {
-                if (!(animator.GetCurrentAnimatorStateInfo(0).IsName("Stopped") ||
-                      animator.GetCurrentAnimatorStateInfo(0).IsName("Bored")))
+                if (CurrentAnimation != "Stopped")
                 {
+                    CurrentAnimation = "Stopped";
+                    animator.speed = 1f;
                     animator.Play("Stopped");
-                    AnimationName = "Stopped";
                 }
             }
-            else if (Mathf.Abs(GroundSpeed) > 0f && Mathf.Abs(GroundSpeed) < 4f)
+            else if (Mathf.Abs(GroundSpeed) < 4f)
             {
+                CurrentAnimation = "Walking";
+                animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.125f);
                 animator.Play("Walking");
-                AnimationName = "Walking";
             }
-            else if (Mathf.Abs(GroundSpeed) >= 4f && Mathf.Abs(GroundSpeed) < 6f)
+            else if (Mathf.Abs(GroundSpeed) < 6f)
             {
+                CurrentAnimation = "Jog";
+                animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.125f);
                 animator.Play("Jog");
-                AnimationName = "Jog";
             }
             else if (Mathf.Abs(GroundSpeed) < 12f)
             {
+                CurrentAnimation = "Running";
                 animator.Play("Running");
-                AnimationName = "Running";
+                animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.125f);
             }
-            else if (!(animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") ||
-                       animator.GetCurrentAnimatorStateInfo(0).IsName("Dash (Loop)")))
+            else if (CurrentAnimation != "Dash")
             {
+                CurrentAnimation = "Dash";
+                animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.125f);
                 animator.Play("Dash");
-                AnimationName = "Dash";
             }
         }
-        else if (AnimationName == "Walking" || AnimationName == "Jog")
+        else if (CurrentAnimation == "Walking" || CurrentAnimation == "Jog")
         {
+            CurrentAnimation = "Air Walking";
+            animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.125f);
             animator.Play("Air Walking");
-            AnimationName = "Air Walking";
         }
 
         if (Ground && Mathf.Abs(GroundSpeed) == 0f && !(PlayerInput.KeyLeft || PlayerInput.KeyRight))
@@ -1048,9 +922,10 @@ public class PlayerPhysics : BaseObject
                 SkidTimer = 20;
                 AllowInput = true;
                 AllowDirection = false;
-                Direction = Directions.Right;
+                Direction = 1;
+                CurrentAnimation = "Skidding";
+                animator.speed = 1f;
                 animator.Play("Skidding");
-                AnimationName = "Skidding";
                 AudioController.PlaySFX(Sound_Skidding);
                 PlayerAction = Action04_Skidding;
             }
@@ -1059,9 +934,10 @@ public class PlayerPhysics : BaseObject
                 SkidTimer = 20;
                 AllowInput = true;
                 AllowDirection = false;
-                Direction = Directions.Left;
+                Direction = -1;
+                CurrentAnimation = "Skidding";
+                animator.speed = 1f;
                 animator.Play("Skidding");
-                AnimationName = "Skidding";
                 AudioController.PlaySFX(Sound_Skidding);
                 PlayerAction = Action04_Skidding;
             }
@@ -1071,8 +947,9 @@ public class PlayerPhysics : BaseObject
         {
             AllowInput = false;
             AllowDirection = true;
+            CurrentAnimation = "Jumping";
+            animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.25f);
             animator.Play("Jumping");
-            AnimationName = "Jumping";
             AudioController.PlaySFX(Sound_Rolling);
             PlayerAction = Action06_Rolling;
         }
@@ -1087,8 +964,9 @@ public class PlayerPhysics : BaseObject
             AllowInput = true;
             AllowDirection = true;
             JumpVariable = true;
+            CurrentAnimation = "Jumping";
+            animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.25f);
             animator.Play("Jumping");
-            AnimationName = "Jumping";
             AudioController.PlaySFX(Sound_Jump);
             PlayerAction = Action01_Jump;
         }
@@ -1097,11 +975,11 @@ public class PlayerPhysics : BaseObject
     #region Actions - [01] Jump
     public void Action01_Jump()
     {
-        Action = 1;
         Attacking = true;
 
+        CurrentAnimation = "Jumping";
+        animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.25f);
         animator.Play("Jumping");
-        AnimationName = "Jumping";
 
         if (!PlayerInput.KeyActionA && YSpeed > JumpReleaseForce && JumpVariable)
         {
@@ -1119,17 +997,16 @@ public class PlayerPhysics : BaseObject
     #region Actions - [02] Stand Up
     public void Action02_StandUp()
     {
-        Action = 2;
-
         if (PlayerInput.KeyUp)
         {
             animator.Play("Stand Up");
         }
-        else
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Stand Up") &&
+                 animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             animator.Play("Stand Up (Reverse)");
         }
-        AnimationName = "Stand Up";
+        CurrentAnimation = "Stand Up";
 
         if (!Ground || GroundSpeed != 0f ||
             animator.GetCurrentAnimatorStateInfo(0).IsName("Stand Up (Reverse)") &&
@@ -1144,17 +1021,16 @@ public class PlayerPhysics : BaseObject
     #region Actions - [03] Crouch Down
     public void Action03_CrouchDown()
     {
-        Action = 3;
-
         if (PlayerInput.KeyDown)
         {
             animator.Play("Crouch Down");
         }
-        else
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Crouch Down") &&
+                 animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
             animator.Play("Crouch Down (Reverse)");
         }
-        AnimationName = "Crouch Down";
+        CurrentAnimation = "Crouch Down";
 
         if (!Ground || GroundSpeed != 0f ||
             animator.GetCurrentAnimatorStateInfo(0).IsName("Crouch Down (Reverse)") &&
@@ -1175,20 +1051,19 @@ public class PlayerPhysics : BaseObject
     #region Actions - [04] Skidding
     public void Action04_Skidding()
     {
-        Action = 4;
-
         if (SkidTimer > 0)
         {
             SkidTimer -= GameController.Frame;
         }
 
         if (SkidTimer == 0f && (Mathf.Abs(GroundSpeed) >= 0f && !(PlayerInput.KeyLeft || PlayerInput.KeyRight) ||
-            AnimationName == "Skidding" && Mathf.Abs(GroundSpeed) > 1.5f &&
+            CurrentAnimation == "Skidding" && Mathf.Abs(GroundSpeed) > 1.5f &&
            (PlayerInput.KeyLeft && GroundSpeed <= 0f || PlayerInput.KeyRight && GroundSpeed >= 0f)) ||
             !Ground)
         {
+            CurrentAnimation = "Walking";
+            animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.125f);
             animator.Play("Walking");
-            AnimationName = "Walking";
             AllowDirection = true;
             AllowInput = true;
             PlayerAction = Action00_Common;
@@ -1198,9 +1073,10 @@ public class PlayerPhysics : BaseObject
              animator.GetCurrentAnimatorStateInfo(0).IsName("Skidding (Loop)")) &&
             (PlayerInput.KeyLeft || PlayerInput.KeyRight) && Ground && Mathf.Abs(GroundSpeed) <= 1.5f)
         {
-            Direction = (Directions)((int)Direction * -1);
+            Direction *= -1;
+            CurrentAnimation = "Skid Turn";
+            animator.speed = 1f;
             animator.Play("Skidding (Turn)");
-            AnimationName = "Skid Turn";
         }
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Skidding (Turn)") &&
@@ -1215,8 +1091,9 @@ public class PlayerPhysics : BaseObject
         {
             AllowDirection = false;
             AllowInput = false;
+            CurrentAnimation = "Jumping";
+            animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.25f);
             animator.Play("Jumping");
-            AnimationName = "Jumping";
             AudioController.PlaySFX(Sound_Rolling);
             PlayerAction = Action06_Rolling;
         }
@@ -1231,8 +1108,9 @@ public class PlayerPhysics : BaseObject
             AllowInput = true;
             AllowDirection = true;
             JumpVariable = true;
+            CurrentAnimation = "Jumping";
+            animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.25f);
             animator.Play("Jumping");
-            AnimationName = "Jumping";
             AudioController.PlaySFX(Sound_Jump);
             PlayerAction = Action01_Jump;
         }
@@ -1241,11 +1119,11 @@ public class PlayerPhysics : BaseObject
     #region Actions - [05] Spindash
     public void Action05_Spindash()
     {
-        Action = 5;
         Attacking = true;
 
+        CurrentAnimation = "Spindash";
+        animator.speed = 1f + (Mathf.Abs(SpindashRev) * 0.125f);
         animator.Play("Spindash");
-        AnimationName = "Spindash";
 
         SpindashRev -= ((SpindashRev / 0.125f) / 256f) * Time.timeScale;
 
@@ -1268,7 +1146,7 @@ public class PlayerPhysics : BaseObject
             AllowDirection = false;
             AllowInput = false;
             animator.Play("Jumping");
-            AnimationName = "Jumping";
+            CurrentAnimation = "Jumping";
             CameraController.LagTimer = 16f;
             AudioController.PlaySFX(Sound_Release);
             PlayerAction = Action06_Rolling;
@@ -1278,13 +1156,13 @@ public class PlayerPhysics : BaseObject
     #region Actions - [06] Rolling
     public void Action06_Rolling()
     {
-        Action = 6;
         Attacking = true;
 
         SpindashRev = 0f;
 
+        CurrentAnimation = "Jumping";
+        animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.125f);
         animator.Play("Jumping");
-        AnimationName = "Jumping";
 
         GroundSpeed = Mathf.Max(Mathf.Abs(GroundSpeed) - (RollFriction * Time.timeScale), 0f) * Mathf.Sign(GroundSpeed);
 
@@ -1320,13 +1198,13 @@ public class PlayerPhysics : BaseObject
             YSpeed = (Mathf.Cos(GroundAngle * Mathf.Deg2Rad) * JumpForce) + (Mathf.Sin(GroundAngle * Mathf.Deg2Rad) * GroundSpeed);
             Ground = false;
             GroundAngle = 0f;
-            Action = 1;
             ControlLockTimer = 0;
             AllowInput = true;
             AllowDirection = true;
             JumpVariable = true;
+            CurrentAnimation = "Jumping";
+            animator.speed = 1f + (Mathf.Abs(GroundSpeed) * 0.25f);
             animator.Play("Jumping");
-            AnimationName = "Jumping";
             AudioController.PlaySFX(Sound_Jump);
             PlayerAction = Action01_Jump;
         }
@@ -1342,10 +1220,9 @@ public class PlayerPhysics : BaseObject
     #region Actions - [07] Breathe
     public void Action07_Breathe()
     {
-        Action = 7;
-
+        CurrentAnimation = "Breathe";
+        animator.speed = 1f;
         animator.Play("Breathe");
-        AnimationName = "Breathe";
 
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Breathe") &&
             animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f && Ground)
@@ -1359,10 +1236,9 @@ public class PlayerPhysics : BaseObject
     #region Actions - [08] Hurt
     public void Action08_Hurt()
     {
-        Action = 8;
-
+        CurrentAnimation = "Hurt";
+        animator.speed = 1f;
         animator.Play("Hurt");
-        AnimationName = "Hurt";
 
         if (Ground)
         {
@@ -1376,13 +1252,13 @@ public class PlayerPhysics : BaseObject
     #region Actions - [09] Die
     public void Action09_Die()
     {
-        Action = 9;
-        AllowCollision = AllowDirection = AllowInput = AllowPhysics = false;
+        AllowCollision = AllowDirection = AllowInput = false;
 
+        CurrentAnimation = "Die";
+        animator.speed = 1f;
         animator.Play("Die");
-        AnimationName = "Die";
 
-        if (YPosition < SceneController.YBottomFrame - 48f)
+        if (YPosition < GameController.YBottomFrame - 48f)
         {
             GameController.Lives--;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -1392,13 +1268,13 @@ public class PlayerPhysics : BaseObject
     #region Actions - [10] Drown
     public void Action10_Drown()
     {
-        Action = 10;
-        AllowCollision = AllowDirection = AllowInput = AllowPhysics = false;
+        AllowCollision = AllowDirection = AllowInput = false;
 
+        CurrentAnimation = "Drown";
+        animator.speed = 1f;
         animator.Play("Drown");
-        AnimationName = "Drown";
 
-        if (YPosition < SceneController.YBottomFrame - 48f)
+        if (YPosition < GameController.YBottomFrame - 48f)
         {
             GameController.Lives--;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -1410,9 +1286,9 @@ public class PlayerPhysics : BaseObject
     #region Actions - [40] Springs
     public void Action40_Springs()
     {
-        Action = 40;
+        CurrentAnimation = (YSpeed > 0f) ? "Springs" : "Air Walking";
+        animator.speed = 1f;
         animator.Play((YSpeed > 0f) ? "Springs" : "Air Walking");
-        AnimationName = (YSpeed > 0f) ? "Springs" : "Air Walking";
         AllowInput = true;
         AllowDirection = true;
         if (Ground)

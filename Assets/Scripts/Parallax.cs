@@ -86,14 +86,14 @@ public class Parallax : MonoBehaviour
             }
         }
 
-        float PosX = (((CameraController.XLeftFrame + CameraController.XRightFrame) / 2f) - SceneController.WindowMidWidth) * FactorX;
-        float PosY = (((CameraController.YBottomFrame + CameraController.YTopFrame) / 2f) + SceneController.WindowMidHeight) * -FactorY;
+        float PosX = (((GameController.XLeftFrame + GameController.XRightFrame) / 2f) - GameController.WindowMidWidth) * FactorX;
+        float PosY = (((GameController.YBottomFrame + GameController.YTopFrame) / 2f) + GameController.WindowMidHeight) * -FactorY;
 
-        float XPosition = SceneController.WindowMidWidth + (RepeatX ? Mathf.Repeat(PosX + AddX, Width) : (PosX + AddX));
-        float YPosition = -SceneController.WindowMidHeight - (RepeatY ? Mathf.Repeat(PosY + AddY, Height) : (PosY + AddY));
+        float XPosition = GameController.WindowMidWidth + (RepeatX ? Mathf.Repeat(PosX + AddX, Width) : (PosX + AddX));
+        float YPosition = -GameController.WindowMidHeight - (RepeatY ? Mathf.Repeat(PosY + AddY, Height) : (PosY + AddY));
 
-        transform.position = new Vector3(InitialX + (Camera.main.transform.position.x - Mathf.Floor(XPosition)),
-                                         InitialY + (Camera.main.transform.position.y - Mathf.Floor(YPosition)),
+        transform.position = new Vector3(InitialX + (Camera.main.transform.position.x - XPosition),
+                                         InitialY + (Camera.main.transform.position.y - YPosition),
                                          transform.position.z);
     }
 }

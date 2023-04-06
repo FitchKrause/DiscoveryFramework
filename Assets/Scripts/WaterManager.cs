@@ -18,10 +18,7 @@ public class WaterManager : MonoBehaviour
         LevelController.CurrentLevel.Water = Water;
         LevelController.CurrentLevel.WaterLevel = WaterLevel;
 
-        float screenWidth = (SceneController.XRightFrame - SceneController.XLeftFrame);
-        float screenHeight = (SceneController.YTopFrame - SceneController.YBottomFrame);
-
-        WaterObject.transform.localScale = new Vector3(screenWidth / 16f, screenHeight / 16f, 1f);
+        WaterObject.transform.localScale = new Vector3(GameController.WindowWidth / 16f, GameController.WindowHeight / 16f, 1f);
     }
 
     private void FixedUpdate()
@@ -36,8 +33,8 @@ public class WaterManager : MonoBehaviour
     {
         if (!Water) return;
 
-        Vector2 vector = new Vector2(CameraController.XLeftFrame - (CameraController.XLeftFrame % 64), WaterLevelApparent);
-        Vector2 vector2 = new Vector2(CameraController.XLeftFrame, Mathf.Min(CameraController.YTopFrame, WaterLevelApparent));
+        Vector2 vector = new Vector2(GameController.XLeftFrame - (GameController.XLeftFrame % 64), WaterLevelApparent);
+        Vector2 vector2 = new Vector2(GameController.XLeftFrame, Mathf.Min(GameController.YTopFrame, WaterLevelApparent));
 
         WaterHorizonObject.transform.position = vector;
         WaterObject.transform.position = vector2;

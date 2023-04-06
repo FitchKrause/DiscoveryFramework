@@ -94,13 +94,13 @@ public class GoalSign : BaseObject
                 animator.Play("Sonic (Static)");
                 animator.SetBool("Spin!", false);
             }
-            if (!(PlayerInput.ClearInput || PlayerInput.IgnoreInput))
+            if (!PlayerInput.OverrideInput)
             {
-                PlayerInput.IgnoreInput = true;
                 PlayerInput.ClearInput = true;
+                PlayerInput.OverrideInput = true;
             }
             PlayerInput.KeyRight = true;
-            if (player.XPosition >= SceneController.XRightFrame + 16f)
+            if (player.XPosition >= GameController.XRightFrame + 16f)
             {
                 Flag1 = true;
                 MusicController.ToPlay = "Clear";
@@ -115,7 +115,6 @@ public class GoalSign : BaseObject
 
         if (Flag1)
         {
-            if (!PlayerInput.ClearInput) PlayerInput.ClearInput = true;
             EventTimer += GameController.Frame;
             if (EventTimer == 200)
             {
