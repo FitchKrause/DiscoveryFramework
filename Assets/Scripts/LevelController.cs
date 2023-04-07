@@ -10,8 +10,6 @@ public class LevelController : SceneController
 
     public static bool AllowTime;
     public static bool AllowPause;
-    public static bool PauseTrigger;
-    public static bool Paused;
     public static bool Boss;
     public static bool Clear;
 
@@ -38,7 +36,6 @@ public class LevelController : SceneController
 
     private new void Awake()
     {
-        Paused = false;
         AllowTime = AllowPause = true;
 
         base.Awake();
@@ -53,64 +50,11 @@ public class LevelController : SceneController
         base.Start();
     }
 
-    private void FixedUpdate()
+    private new void FixedUpdate()
     {
+        base.FixedUpdate();
+
         Rings = Mathf.Clamp(Rings, 0, 999);
-
-        if (AllowPause)
-        {
-            if (PauseTrigger)
-            {
-                Paused = !Paused;
-
-                foreach (BaseObject objRef in ObjectList)
-                {
-                    objRef.enabled = !Paused;
-                }
-
-                foreach (Animator animator in FindObjectsOfType<Animator>())
-                {
-                    animator.enabled = !Paused;
-                }
-
-                /*foreach (Attacher attacher in FindObjectsOfType<Attacher>())
-                {
-                    attacher.enabled = !Paused;
-                }*/
-
-                if (Paused) AudioController.Pause();
-                else AudioController.Resume();
-
-                PauseTrigger = false;
-            }
-        }
-        else
-        {
-            if (Paused || PauseTrigger)
-            {
-                foreach (BaseObject objRef in ObjectList)
-                {
-                    if (!objRef.enabled) objRef.enabled = true;
-                    else continue;
-                }
-
-                foreach (Animator animator in FindObjectsOfType<Animator>())
-                {
-                    if (!animator.enabled) animator.enabled = true;
-                    else continue;
-                }
-
-                /*foreach (Attacher attacher in FindObjectsOfType<Attacher>())
-                {
-                    attacher.enabled = true;
-                }*/
-
-                AudioController.Resume();
-
-                PauseTrigger = false;
-                Paused = false;
-            }
-        }
 
         if (!Paused)
         {

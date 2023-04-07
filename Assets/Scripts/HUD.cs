@@ -121,13 +121,13 @@ public class HUD : MonoBehaviour
         TotalBonus[1].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 10;
         TotalBonus[0].GetComponent<SpriteRenderer>().enabled = true;
 
-        if (LevelController.Paused ? InputManager.KeyActionBPressed : InputManager.KeyStartPressed)
+        if (!LevelController.CurrentLevel.Paused && InputManager.KeyStartPressed)
         {
             PauseOption = 0;
-            LevelController.PauseTrigger = true;
+            SceneController.CurrentScene.PauseScene(true);
         }
 
-        if (LevelController.Paused)
+        if (LevelController.CurrentLevel.Paused)
         {
             if (InputManager.KeyDownPressed)
             {
@@ -146,11 +146,11 @@ public class HUD : MonoBehaviour
                 }
             }
 
-            if (InputManager.KeyActionAPressed || InputManager.KeyStartPressed)
+            if (InputManager.KeyStartPressed)
             {
                 if (PauseOption == 0)
                 {
-                    LevelController.PauseTrigger = true;
+                    SceneController.CurrentScene.PauseScene(false);
                 }
                 if (PauseOption == 1)
                 {
@@ -163,7 +163,7 @@ public class HUD : MonoBehaviour
             }
         }
 
-        GUI_Pause.SetActive(LevelController.Paused);
+        GUI_Pause.SetActive(LevelController.CurrentLevel.Paused);
         Vector3 vector = GUI_PauseCursor.transform.position;
         vector.y = GUI_Pause.transform.position.y + (-16f * PauseOption);
         GUI_PauseCursor.transform.position = vector;

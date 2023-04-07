@@ -46,6 +46,7 @@ public class PlayerPhysics : BaseObject
     public AudioClip Sound_Jump;
     public AudioClip Sound_Skidding;
     public AudioClip Sound_Rolling;
+    public AudioClip Sound_Charge;
     public AudioClip Sound_Release;
     public AudioClip Sound_Hurt;
     public AudioClip Sound_Drown;
@@ -81,14 +82,19 @@ public class PlayerPhysics : BaseObject
     public GameObject[] Skins;
     public GameObject[] SuperSkins;
     public GameObject SpindashDust;
-    private AudioSource audioSource;
+    private AudioSource[] audioSources;
     private Shield[] Shields;
     #endregion
     #region Player Initialization
     private new void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.volume = AudioController.SFX_VOLUME * AudioController.MASTER_VOLUME;
+        audioSources = new AudioSource[3];
+        for (int i = 0; i < audioSources.Length; i++)
+        {
+            audioSources[i] = new GameObject(string.Format("AudioSource {0}", i)).AddComponent<AudioSource>();
+            audioSources[i].volume = AudioController.SFX_VOLUME * AudioController.MASTER_VOLUME;
+        }
+
         Shields = FindObjectsOfType<Shield>();
 
         base.Start();
@@ -148,14 +154,18 @@ public class PlayerPhysics : BaseObject
     }
     #endregion
     #region Player Update
-    private void FixedUpdate()
+    private void Update()
     {
         if (!SuperForm && Invincibility == 0 && !SpeedSneakers && !(PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown)) &&
-            MusicController.Playing != "Stage" && !(MusicController.Playing == "1-UP" || MusicController.Playing == "Drowning" || MusicController.Playing == "Clear"))
+             MusicController.Playing != "Stage" && !(MusicController.Playing == "1-UP" || MusicController.Playing == "Drowning" || MusicController.Playing == "Clear"))
         {
             MusicController.ToPlay = "Stage";
         }
-
+    }
+    #endregion
+    #region Player Update (Fixed)
+    private void FixedUpdate()
+    {
         #region Player Input
         int inpDir = (PlayerInput.KeyRight ? 1 : 0) - (PlayerInput.KeyLeft ? 1 : 0);
         #endregion
@@ -1043,7 +1053,7 @@ public class PlayerPhysics : BaseObject
 
         if (PlayerInput.KeyActionAPressed)
         {
-            audioSource.Play();
+            audioSources[0].PlayOneShot(Sound_Charge);
             PlayerAction = Action05_Spindash;
         }
     }
@@ -1136,8 +1146,8 @@ public class PlayerPhysics : BaseObject
         {
             animator.Play("Spindash", -1, 0f);
             SpindashRev += 2f;
-            audioSource.Stop();
-            audioSource.Play();
+            audioSources[0].Stop();
+            audioSources[0].PlayOneShot(Sound_Charge);
         }
 
         if (!PlayerInput.KeyDown)

@@ -9,6 +9,9 @@ public class SceneController : MonoBehaviour
     public int Width;
     public int Height;
 
+    public bool Paused;
+    private int PauseTimer;
+
     [HideInInspector] public List<BaseObject> ObjectList;
     [HideInInspector] public List<ObjectPool> ObjectPools;
     [HideInInspector] public int ObjectCount;
@@ -20,6 +23,8 @@ public class SceneController : MonoBehaviour
 
     protected void Awake()
     {
+        Paused = false;
+
         ObjectList = new List<BaseObject>();
         ObjectPools = new List<ObjectPool>();
         ObjectCount = 0;
@@ -51,6 +56,14 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    protected void FixedUpdate()
+    {
+        if (PauseTimer > 0)
+        {
+            PauseTimer -= GameController.Frame;
+        }
+    }
+
     protected void LateUpdate()
     {
         Camera.main.transform.position = new Vector3()
@@ -64,6 +77,29 @@ public class SceneController : MonoBehaviour
         GameController.XRightFrame = Camera.main.transform.position.x + GameController.WindowMidWidth;
         GameController.YTopFrame = Camera.main.transform.position.y + GameController.WindowMidHeight;
         GameController.YBottomFrame = Camera.main.transform.position.y - GameController.WindowMidHeight;
+    }
+
+    public void PauseScene(bool value)
+    {
+        if (PauseTimer == 0)
+        {
+            Paused = value;
+
+            foreach (BaseObject objRef in ObjectList)
+            {
+                objRef.enabled = !Paused;
+            }
+
+            foreach (Animator animator in FindObjectsOfType<Animator>())
+            {
+                animator.enabled = !Paused;
+            }
+
+            if (Paused) AudioController.Pause();
+            else AudioController.Resume();
+
+            PauseTimer = 5;
+        }
     }
 
     public static BaseObject CreateStageObject(string objName, float PosX, float PosY)

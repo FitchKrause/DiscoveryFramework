@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MasterVolume: 50
   SFXVolume: 100
-  BGMVolume: 0
+  BGMVolume: 100
 --- !u!114 &114000011304144452
 MonoBehaviour:
   m_ObjectHideFlags: 1

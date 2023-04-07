@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour
             CameraShiftX = CameraShiftY = 0f;
         }
 
-        if (LevelController.Paused) return;
+        if (LevelController.CurrentLevel.Paused) return;
 
         if (LagTimer == 0f && CameraMode == 0)
         {
