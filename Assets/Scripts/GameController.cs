@@ -157,6 +157,15 @@ public class GameController : MonoBehaviour
         {
             Camera.main.targetTexture = TargetTexture;
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            GameCharacter = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            GameCharacter = 1;
+        }
     }
 
     private void FixedUpdate()

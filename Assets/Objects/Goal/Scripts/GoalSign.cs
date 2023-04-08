@@ -10,6 +10,9 @@ public class GoalSign : BaseObject
     public AudioClip Sound_MenuBip;
     public AudioClip Sound_ScoreTally;
 
+    public Sprite[] GUI_CharacterNames;
+    private SpriteRenderer GUI_CharacterGot;
+
     private bool Flag0;
     private bool Flag1;
     private bool LimitFlag1;
@@ -43,6 +46,8 @@ public class GoalSign : BaseObject
         CameraController.CameraMinimumY = 0f;
         CameraController.CameraMaximumX = LevelController.CurrentLevel.Width;
         CameraController.CameraMaximumY = LevelController.CurrentLevel.Height;
+
+        GUI_CharacterGot = GameObject.Find("GUI_CharacterName").GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -51,20 +56,25 @@ public class GoalSign : BaseObject
 
         LevelController.Clear = Flag1;
 
-        switch (player.Character)
+        switch (GameController.GameCharacter)
         {
             case 0:
                 charName = "Sonic";
+                break;
+            case 1:
+                charName = "Tails";
                 break;
             default:
                 charName = "Sonic";
                 break;
         }
 
+        GUI_CharacterGot.sprite = GUI_CharacterNames[GameController.GameCharacter];
+
         if (CameraController.CameraAction != 2 && player.XPosition >= XPosition && !Flag0)
         {
             Flag0 = true;
-            animator.SetInteger("Character", player.Character);
+            animator.SetInteger("Character", GameController.GameCharacter);
             animator.SetBool("Spin!", true);
             AudioController.PlaySFX(Sound_GoalPost);
             CameraController.CameraAction = 2;
@@ -89,11 +99,8 @@ public class GoalSign : BaseObject
 
         if (Trigger >= 250 && animFrame == 11 && !Flag1)
         {
-            if (player.Character == 0)
-            {
-                animator.Play("Sonic (Static)");
-                animator.SetBool("Spin!", false);
-            }
+            animator.Play(charName + " (Static)");
+            animator.SetBool("Spin!", false);
             if (!PlayerInput.OverrideInput)
             {
                 PlayerInput.ClearInput = true;
@@ -167,9 +174,6 @@ public class GoalSign : BaseObject
             {
                 TimeBonusTotal = 100000;
             }
-
-            //AddRingBonus = Mathf.Clamp(AddRingBonus, 0, MaxAddRingBonus);
-            //AddTimeBonus = Mathf.Clamp(AddTimeBonus, 0, MaxAddTimeBonus);
 
             if (CountAction == 1)
             {

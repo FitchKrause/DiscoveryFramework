@@ -16,6 +16,8 @@ public class HUD : MonoBehaviour
 
     public GameObject GUI_Pause;
     public GameObject GUI_PauseCursor;
+    public GameObject GUI_LiveIcon;
+    public Sprite[] GUI_LiveIcons;
     public int PauseOption;
 
     private int FPS;
@@ -120,6 +122,8 @@ public class HUD : MonoBehaviour
         TotalBonus[2].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 100;
         TotalBonus[1].GetComponent<SpriteRenderer>().enabled = GoalSign.TotalBonus >= 10;
         TotalBonus[0].GetComponent<SpriteRenderer>().enabled = true;
+
+        GUI_LiveIcon.GetComponent<SpriteRenderer>().sprite = GUI_LiveIcons[GameController.GameCharacter];
 
         if (!LevelController.CurrentLevel.Paused && InputManager.KeyStartPressed)
         {

@@ -29,10 +29,8 @@ public class PlayerPhysics : BaseObject
     [HideInInspector] public int InvincibilityTimer;
     [HideInInspector] public int SpeedSneakersTimer;
     [HideInInspector] public int Air;
-
-    [HideInInspector] public int Character;
+    
     [HideInInspector] public bool SuperForm;
-    [HideInInspector] public bool SuperFlag;
     [HideInInspector] public int Shield;
     [HideInInspector] public int Invincibility;
     [HideInInspector] public bool SpeedSneakers;
@@ -79,10 +77,9 @@ public class PlayerPhysics : BaseObject
     public ObjectState PlayerAction;
     public HitBox Rect;
     [Header("Player Components")]
-    public GameObject[] Skins;
-    public GameObject[] SuperSkins;
     public GameObject SpindashDust;
     private AudioSource[] audioSources;
+    private PlayerSkin[] Skins;
     private Shield[] Shields;
     #endregion
     #region Player Initialization
@@ -96,6 +93,7 @@ public class PlayerPhysics : BaseObject
         }
 
         Shields = FindObjectsOfType<Shield>();
+        Skins = FindObjectsOfType<PlayerSkin>();
 
         base.Start();
 
@@ -118,30 +116,21 @@ public class PlayerPhysics : BaseObject
 
         render.enabled = false;
 
-        for (int i = 0; i < Skins.Length; i++)
+        foreach (PlayerSkin skin in Skins)
         {
-            Skins[i].transform.SetParent(transform);
-            Skins[i].transform.position = transform.position;
-            Skins[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
-            Skins[i].SetActive(i == Character && !SuperForm);
-        }
-        for (int i = 0; i < SuperSkins.Length; i++)
-        {
-            SuperSkins[i].transform.SetParent(transform);
-            SuperSkins[i].transform.position = transform.position;
-            SuperSkins[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
-            SuperSkins[i].SetActive(i == Character && SuperForm);
-        }
+            skin.transform.SetParent(transform);
+            skin.transform.position = transform.position;
+            skin.render.sortingOrder = 0;
 
-        if (SuperForm)
-        {
-            animator = SuperSkins[Character].GetComponent<Animator>();
-            render = SuperSkins[Character].GetComponent<SpriteRenderer>();
-        }
-        else
-        {
-            animator = Skins[Character].GetComponent<Animator>();
-            render = Skins[Character].GetComponent<SpriteRenderer>();
+            if (skin.CharacterID != GameController.GameCharacter || skin.SuperSkin != SuperForm)
+            {
+                skin.render.enabled = false;
+            }
+            else
+            {
+                render = skin.render;
+                animator = skin.animator;
+            }
         }
 
         if (YPosition < GameObject.Find("Water Mark").transform.position.y)
@@ -560,30 +549,18 @@ public class PlayerPhysics : BaseObject
         #endregion
         #region Player Animations
         #region Change Character
-        if (SuperFlag != SuperForm)
+        foreach (PlayerSkin skin in Skins)
         {
-            for (int i = 0; i < SuperSkins.Length; i++)
+            if (skin.CharacterID != GameController.GameCharacter || skin.SuperSkin != SuperForm)
             {
-                SuperSkins[i].SetActive(i == Character && SuperForm);
-            }
-
-            for (int i = 0; i < Skins.Length; i++)
-            {
-                Skins[i].SetActive(i == Character && !SuperForm);
-            }
-
-            if (SuperForm)
-            {
-                animator = SuperSkins[Character].GetComponent<Animator>();
-                render = SuperSkins[Character].GetComponent<SpriteRenderer>();
+                skin.render.enabled = false;
             }
             else
             {
-                animator = Skins[Character].GetComponent<Animator>();
-                render = Skins[Character].GetComponent<SpriteRenderer>();
+                skin.render.enabled = true;
+                render = skin.render;
+                animator = skin.animator;
             }
-
-            SuperFlag = SuperForm;
         }
         #endregion
         #region Change Direction

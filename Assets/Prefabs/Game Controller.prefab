@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982e8387b725c194ca1a8d137e01661a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MasterVolume: 50
+  MasterVolume: 0
   SFXVolume: 100
   BGMVolume: 100
 --- !u!114 &114000011304144452
