@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ca88f2efdf560da48972979c7b85af43
-timeCreated: 1676049652
+timeCreated: 1680921240
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -93,9 +93,9 @@ TextureImporter:
     21300172: Sonic_Skidding_6
     21300174: Sonic_Skidding_7
     21300176: Sonic_Skidding_8
-    21300178: Sonic_Skidding_9
-    21300180: Sonic_Skidding_10
-    21300182: Sonic_Skidding_11
+    21300178: Sonic_SkiddingTurn_0
+    21300180: Sonic_SkiddingTurn_1
+    21300182: Sonic_SkiddingTurn_2
     21300184: Sonic_Spindash_0
     21300186: Sonic_Spindash_1
     21300188: Sonic_Spindash_2
@@ -121,6 +121,104 @@ TextureImporter:
     21300228: Sonic_Breathe_4
     21300230: Sonic_Breathe_5
     21300232: Sonic_Breathe_6
+    21300234: Sonic_Breathe_0
+    21300236: Sonic_Breathe_1
+    21300238: Sonic_Breathe_2
+    21300240: Sonic_Breathe_3
+    21300242: Sonic_Breathe_4
+    21300244: Sonic_Breathe_5
+    21300246: Sonic_Hurt_0
+    21300248: Sonic_Hurt_1
+    21300250: Sonic_Hurt_2
+    21300252: Sonic_Hurt_3
+    21300254: Sonic_Hurt_4
+    21300256: Sonic_Spindash_0
+    21300258: Sonic_Spindash_1
+    21300260: Sonic_Spindash_2
+    21300262: Sonic_Spindash_3
+    21300264: Sonic_Spindash_4
+    21300266: Sonic_Spindash_5
+    21300268: Sonic_Spindash_6
+    21300270: Sonic_Spindash_7
+    21300272: Sonic_Spindash_8
+    21300274: Sonic_Skidding_0
+    21300276: Sonic_Skidding_1
+    21300278: Sonic_Skidding_2
+    21300280: Sonic_Skidding_3
+    21300282: Sonic_Skidding_4
+    21300284: Sonic_Skidding_5
+    21300286: Sonic_Skidding_6
+    21300288: Sonic_Skidding_7
+    21300290: Sonic_Skidding_8
+    21300292: Sonic_SkiddingTurn_0
+    21300294: Sonic_SkiddingTurn_1
+    21300296: Sonic_SkiddingTurn_2
+    21300298: Sonic_CrouchDown_0
+    21300300: Sonic_CrouchDown_1
+    21300302: Sonic_CrouchDown_2
+    21300304: Sonic_CrouchDown_3
+    21300306: Sonic_StandUp_0
+    21300308: Sonic_StandUp_1
+    21300310: Sonic_StandUp_2
+    21300312: Sonic_StandUp_3
+    21300314: Sonic_StandUp_4
+    21300316: Sonic_StandUp_5
+    21300318: Sonic_Jumping_0
+    21300320: Sonic_Jumping_1
+    21300322: Sonic_Jumping_2
+    21300324: Sonic_Jumping_3
+    21300326: Sonic_Jumping_4
+    21300328: Sonic_Jumping_5
+    21300330: Sonic_Jumping_6
+    21300332: Sonic_Jumping_7
+    21300334: Sonic_Jumping_8
+    21300336: Sonic_Jumping_9
+    21300338: Sonic_Dash_0
+    21300340: Sonic_Dash_1
+    21300342: Sonic_Dash_2
+    21300344: Sonic_Dash_3
+    21300346: Sonic_Dash_4
+    21300348: Sonic_Running_0
+    21300350: Sonic_Running_1
+    21300352: Sonic_Running_2
+    21300354: Sonic_Running_3
+    21300356: Sonic_Running_4
+    21300358: Sonic_Running_5
+    21300360: Sonic_Running_6
+    21300362: Sonic_Running_7
+    21300364: Sonic_Jog_0
+    21300366: Sonic_Jog_1
+    21300368: Sonic_Jog_2
+    21300370: Sonic_Jog_3
+    21300372: Sonic_Jog_4
+    21300374: Sonic_Jog_5
+    21300376: Sonic_Jog_6
+    21300378: Sonic_Jog_7
+    21300380: Sonic_Jog_8
+    21300382: Sonic_Jog_9
+    21300384: Sonic_Walking_0
+    21300386: Sonic_Walking_1
+    21300388: Sonic_Walking_2
+    21300390: Sonic_Walking_3
+    21300392: Sonic_Walking_4
+    21300394: Sonic_Walking_5
+    21300396: Sonic_Walking_6
+    21300398: Sonic_Walking_7
+    21300400: Sonic_Walking_8
+    21300402: Sonic_Walking_9
+    21300404: Sonic_Walking_10
+    21300406: Sonic_Walking_11
+    21300408: Sonic_Bored_0
+    21300410: Sonic_Bored_1
+    21300412: Sonic_Bored_2
+    21300414: Sonic_Bored_3
+    21300416: Sonic_Bored_4
+    21300418: Sonic_Stopped_0
+    21300420: Sonic_Stopped_1
+    21300422: Sonic_Stopped_2
+    21300424: Sonic_Stopped_3
+    21300426: Sonic_Stopped_4
+    21300428: Sonic_Stopped_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -170,626 +268,548 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sonic_Stopped_0
+      name: Sonic_Breathe_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 711
+        x: 0
+        y: 588
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_0
+      name: Sonic_Breathe_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 662
+        x: 49
+        y: 588
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_1
+      name: Sonic_Breathe_2
       rect:
         serializedVersion: 2
-        x: 50
-        y: 662
+        x: 98
+        y: 588
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_2
+      name: Sonic_Breathe_3
       rect:
         serializedVersion: 2
-        x: 99
-        y: 662
+        x: 147
+        y: 588
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_3
+      name: Sonic_Breathe_4
       rect:
         serializedVersion: 2
-        x: 148
-        y: 662
+        x: 196
+        y: 588
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_4
+      name: Sonic_Breathe_5
       rect:
         serializedVersion: 2
-        x: 197
-        y: 662
+        x: 245
+        y: 588
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_5
+      name: Sonic_Hurt_0
       rect:
         serializedVersion: 2
-        x: 246
-        y: 662
+        x: 0
+        y: 539
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_6
+      name: Sonic_Hurt_1
       rect:
         serializedVersion: 2
-        x: 295
-        y: 662
+        x: 49
+        y: 539
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_7
+      name: Sonic_Hurt_2
       rect:
         serializedVersion: 2
-        x: 344
-        y: 662
+        x: 98
+        y: 539
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_8
+      name: Sonic_Hurt_3
       rect:
         serializedVersion: 2
-        x: 393
-        y: 662
+        x: 147
+        y: 539
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_9
+      name: Sonic_Hurt_4
       rect:
         serializedVersion: 2
-        x: 442
-        y: 662
+        x: 196
+        y: 539
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_10
+      name: Sonic_Spindash_0
       rect:
         serializedVersion: 2
-        x: 491
-        y: 662
+        x: 0
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Walking_11
+      name: Sonic_Spindash_1
       rect:
         serializedVersion: 2
-        x: 540
-        y: 662
+        x: 49
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_AirWalking_0
+      name: Sonic_Spindash_2
       rect:
         serializedVersion: 2
-        x: 1
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_1
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_2
-      rect:
-        serializedVersion: 2
-        x: 99
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_3
-      rect:
-        serializedVersion: 2
-        x: 148
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_4
-      rect:
-        serializedVersion: 2
-        x: 197
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_5
-      rect:
-        serializedVersion: 2
-        x: 246
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_6
-      rect:
-        serializedVersion: 2
-        x: 295
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_7
-      rect:
-        serializedVersion: 2
-        x: 344
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_8
-      rect:
-        serializedVersion: 2
-        x: 393
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_9
-      rect:
-        serializedVersion: 2
-        x: 442
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_10
-      rect:
-        serializedVersion: 2
-        x: 491
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_AirWalking_11
-      rect:
-        serializedVersion: 2
-        x: 540
-        y: 605
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_Jog_0
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 556
+        x: 98
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_1
+      name: Sonic_Spindash_3
       rect:
         serializedVersion: 2
-        x: 50
-        y: 556
+        x: 147
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_2
+      name: Sonic_Spindash_4
       rect:
         serializedVersion: 2
-        x: 99
-        y: 556
+        x: 196
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_3
+      name: Sonic_Spindash_5
       rect:
         serializedVersion: 2
-        x: 148
-        y: 556
+        x: 245
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_4
+      name: Sonic_Spindash_6
       rect:
         serializedVersion: 2
-        x: 197
-        y: 556
+        x: 294
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_5
+      name: Sonic_Spindash_7
       rect:
         serializedVersion: 2
-        x: 246
-        y: 556
+        x: 343
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_6
+      name: Sonic_Spindash_8
       rect:
         serializedVersion: 2
-        x: 295
-        y: 556
+        x: 392
+        y: 490
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_7
+      name: Sonic_Skidding_0
       rect:
         serializedVersion: 2
-        x: 344
-        y: 556
+        x: 0
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_8
+      name: Sonic_Skidding_1
       rect:
         serializedVersion: 2
-        x: 393
-        y: 556
+        x: 49
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Jog_9
+      name: Sonic_Skidding_2
       rect:
         serializedVersion: 2
-        x: 442
-        y: 556
+        x: 98
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Running_0
+      name: Sonic_Skidding_3
       rect:
         serializedVersion: 2
-        x: 1
-        y: 507
+        x: 147
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Running_1
+      name: Sonic_Skidding_4
       rect:
         serializedVersion: 2
-        x: 50
-        y: 507
+        x: 196
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Running_2
+      name: Sonic_Skidding_5
       rect:
         serializedVersion: 2
-        x: 99
-        y: 507
+        x: 245
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Running_3
+      name: Sonic_Skidding_6
       rect:
         serializedVersion: 2
-        x: 148
-        y: 507
+        x: 294
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Running_5
+      name: Sonic_Skidding_7
       rect:
         serializedVersion: 2
-        x: 197
-        y: 507
+        x: 343
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Running_6
+      name: Sonic_Skidding_8
       rect:
         serializedVersion: 2
-        x: 246
-        y: 507
+        x: 392
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Running_7
+      name: Sonic_SkiddingTurn_0
       rect:
         serializedVersion: 2
-        x: 295
-        y: 507
+        x: 441
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Running_8
+      name: Sonic_SkiddingTurn_1
       rect:
         serializedVersion: 2
-        x: 344
-        y: 507
+        x: 490
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Dash_0
+      name: Sonic_SkiddingTurn_2
       rect:
         serializedVersion: 2
-        x: 1
-        y: 458
+        x: 539
+        y: 441
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Dash_1
+      name: Sonic_CrouchDown_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 458
+        x: 0
+        y: 392
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Dash_2
+      name: Sonic_CrouchDown_1
       rect:
         serializedVersion: 2
-        x: 99
-        y: 458
+        x: 49
+        y: 392
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Dash_3
+      name: Sonic_CrouchDown_2
       rect:
         serializedVersion: 2
-        x: 148
-        y: 458
+        x: 98
+        y: 392
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Dash_4
+      name: Sonic_CrouchDown_3
       rect:
         serializedVersion: 2
-        x: 197
-        y: 458
+        x: 147
+        y: 392
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_StandUp_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 343
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_StandUp_1
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 343
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_StandUp_2
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 343
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_StandUp_3
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 343
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_StandUp_4
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 343
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_StandUp_5
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 343
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -797,12 +817,12 @@ TextureImporter:
       name: Sonic_Jumping_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 409
+        x: 0
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -810,12 +830,12 @@ TextureImporter:
       name: Sonic_Jumping_1
       rect:
         serializedVersion: 2
-        x: 50
-        y: 409
+        x: 49
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -823,12 +843,12 @@ TextureImporter:
       name: Sonic_Jumping_2
       rect:
         serializedVersion: 2
-        x: 99
-        y: 409
+        x: 98
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -836,12 +856,12 @@ TextureImporter:
       name: Sonic_Jumping_3
       rect:
         serializedVersion: 2
-        x: 148
-        y: 409
+        x: 147
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -849,12 +869,12 @@ TextureImporter:
       name: Sonic_Jumping_4
       rect:
         serializedVersion: 2
-        x: 197
-        y: 409
+        x: 196
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -862,12 +882,12 @@ TextureImporter:
       name: Sonic_Jumping_5
       rect:
         serializedVersion: 2
-        x: 246
-        y: 409
+        x: 245
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -875,12 +895,12 @@ TextureImporter:
       name: Sonic_Jumping_6
       rect:
         serializedVersion: 2
-        x: 295
-        y: 409
+        x: 294
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -889,11 +909,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 343
-        y: 409
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -902,11 +922,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 392
-        y: 409
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -915,609 +935,609 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 441
-        y: 409
+        y: 294
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_StandUp_0
+      name: Sonic_Dash_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 360
+        x: 0
+        y: 245
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_StandUp_1
+      name: Sonic_Dash_1
       rect:
         serializedVersion: 2
-        x: 50
-        y: 360
+        x: 49
+        y: 245
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_StandUp_2
+      name: Sonic_Dash_2
       rect:
         serializedVersion: 2
-        x: 99
-        y: 360
+        x: 98
+        y: 245
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_StandUp_3
+      name: Sonic_Dash_3
       rect:
         serializedVersion: 2
-        x: 148
-        y: 360
+        x: 147
+        y: 245
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_StandUp_4
+      name: Sonic_Dash_4
       rect:
         serializedVersion: 2
-        x: 197
-        y: 360
+        x: 196
+        y: 245
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_StandUp_5
+      name: Sonic_Running_0
       rect:
         serializedVersion: 2
-        x: 246
-        y: 360
+        x: 0
+        y: 196
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_CrouchDown_0
+      name: Sonic_Running_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 311
+        x: 49
+        y: 196
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_CrouchDown_1
+      name: Sonic_Running_2
       rect:
         serializedVersion: 2
-        x: 50
-        y: 311
+        x: 98
+        y: 196
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_CrouchDown_2
+      name: Sonic_Running_3
       rect:
         serializedVersion: 2
-        x: 99
-        y: 311
+        x: 147
+        y: 196
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_CrouchDown_3
+      name: Sonic_Running_4
       rect:
         serializedVersion: 2
-        x: 148
-        y: 311
+        x: 196
+        y: 196
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_0
+      name: Sonic_Running_5
       rect:
         serializedVersion: 2
-        x: 1
-        y: 262
+        x: 245
+        y: 196
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_1
+      name: Sonic_Running_6
       rect:
         serializedVersion: 2
-        x: 50
-        y: 262
+        x: 294
+        y: 196
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_2
+      name: Sonic_Running_7
       rect:
         serializedVersion: 2
-        x: 99
-        y: 262
+        x: 343
+        y: 196
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_3
+      name: Sonic_Jog_0
       rect:
         serializedVersion: 2
-        x: 148
-        y: 262
+        x: 0
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_4
+      name: Sonic_Jog_1
       rect:
         serializedVersion: 2
-        x: 197
-        y: 262
+        x: 49
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_5
+      name: Sonic_Jog_2
       rect:
         serializedVersion: 2
-        x: 246
-        y: 262
+        x: 98
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_6
+      name: Sonic_Jog_3
       rect:
         serializedVersion: 2
-        x: 295
-        y: 262
+        x: 147
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_7
+      name: Sonic_Jog_4
       rect:
         serializedVersion: 2
-        x: 344
-        y: 262
+        x: 196
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_8
+      name: Sonic_Jog_5
       rect:
         serializedVersion: 2
-        x: 393
-        y: 262
+        x: 245
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_9
+      name: Sonic_Jog_6
       rect:
         serializedVersion: 2
-        x: 442
-        y: 262
+        x: 294
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_10
+      name: Sonic_Jog_7
       rect:
         serializedVersion: 2
-        x: 491
-        y: 262
+        x: 343
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Skidding_11
+      name: Sonic_Jog_8
       rect:
         serializedVersion: 2
-        x: 540
-        y: 262
+        x: 392
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_0
+      name: Sonic_Jog_9
       rect:
         serializedVersion: 2
-        x: 1
-        y: 213
+        x: 441
+        y: 147
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_1
+      name: Sonic_Walking_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 213
+        x: 0
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_2
+      name: Sonic_Walking_1
       rect:
         serializedVersion: 2
-        x: 99
-        y: 213
+        x: 49
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_3
+      name: Sonic_Walking_2
       rect:
         serializedVersion: 2
-        x: 148
-        y: 213
+        x: 98
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_4
+      name: Sonic_Walking_3
       rect:
         serializedVersion: 2
-        x: 197
-        y: 213
+        x: 147
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_5
+      name: Sonic_Walking_4
       rect:
         serializedVersion: 2
-        x: 246
-        y: 213
+        x: 196
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_6
+      name: Sonic_Walking_5
       rect:
         serializedVersion: 2
-        x: 295
-        y: 213
+        x: 245
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_7
+      name: Sonic_Walking_6
       rect:
         serializedVersion: 2
-        x: 344
-        y: 213
+        x: 294
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Spindash_8
+      name: Sonic_Walking_7
       rect:
         serializedVersion: 2
-        x: 393
-        y: 213
+        x: 343
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Hurt_0
+      name: Sonic_Walking_8
       rect:
         serializedVersion: 2
-        x: 1
-        y: 164
+        x: 392
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Hurt_1
+      name: Sonic_Walking_9
       rect:
         serializedVersion: 2
-        x: 50
-        y: 164
+        x: 441
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Hurt_2
+      name: Sonic_Walking_10
       rect:
         serializedVersion: 2
-        x: 99
-        y: 164
+        x: 490
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Hurt_3
+      name: Sonic_Walking_11
       rect:
         serializedVersion: 2
-        x: 148
-        y: 164
+        x: 539
+        y: 98
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Hurt_4
+      name: Sonic_Bored_0
       rect:
         serializedVersion: 2
-        x: 197
-        y: 164
+        x: 0
+        y: 49
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Die_0
+      name: Sonic_Bored_1
       rect:
         serializedVersion: 2
-        x: 1
-        y: 107
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_Springs_0
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 50
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_Springs_1
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 50
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_Drown_0
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 107
-        width: 48
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.375}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Sonic_Breathe_0
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 1
+        x: 49
+        y: 49
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Breathe_1
+      name: Sonic_Bored_2
       rect:
         serializedVersion: 2
-        x: 50
-        y: 1
+        x: 98
+        y: 49
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Breathe_2
+      name: Sonic_Bored_3
       rect:
         serializedVersion: 2
-        x: 99
-        y: 1
+        x: 147
+        y: 49
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Breathe_3
+      name: Sonic_Bored_4
       rect:
         serializedVersion: 2
-        x: 148
-        y: 1
+        x: 196
+        y: 49
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Breathe_4
+      name: Sonic_Stopped_0
       rect:
         serializedVersion: 2
-        x: 197
-        y: 1
+        x: 0
+        y: 0
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Sonic_Breathe_5
+      name: Sonic_Stopped_1
       rect:
         serializedVersion: 2
-        x: 246
-        y: 1
+        x: 49
+        y: 0
         width: 48
         height: 48
       alignment: 9
-      pivot: {x: 0.5, y: 0.2708333}
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_Stopped_2
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 0
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_Stopped_3
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 0
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_Stopped_4
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 0
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sonic_Stopped_5
+      rect:
+        serializedVersion: 2
+        x: 245
+        y: 0
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.27083334}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
