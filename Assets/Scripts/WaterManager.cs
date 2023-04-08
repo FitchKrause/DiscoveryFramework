@@ -17,8 +17,6 @@ public class WaterManager : MonoBehaviour
         WaterLevel = WaterMark.transform.position.y;
         LevelController.CurrentLevel.Water = Water;
         LevelController.CurrentLevel.WaterLevel = WaterLevel;
-
-        WaterObject.transform.localScale = new Vector3(GameController.WindowWidth / 16f, GameController.WindowHeight / 16f, 1f);
     }
 
     private void FixedUpdate()
