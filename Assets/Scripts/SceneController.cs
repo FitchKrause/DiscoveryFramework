@@ -9,6 +9,7 @@ public class SceneController : MonoBehaviour
     public int Width;
     public int Height;
 
+    public static bool AllowPause;
     public bool Paused;
     private int PauseTimer;
 
@@ -81,6 +82,8 @@ public class SceneController : MonoBehaviour
 
     public void PauseScene(bool value)
     {
+        if (!AllowPause) return;
+
         if (PauseTimer == 0)
         {
             Paused = value;

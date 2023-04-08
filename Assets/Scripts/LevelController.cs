@@ -9,7 +9,6 @@ public class LevelController : SceneController
     public static float GlobalTimer;
 
     public static bool AllowTime;
-    public static bool AllowPause;
     public static bool Boss;
     public static bool Clear;
 

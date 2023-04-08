@@ -156,18 +156,12 @@ public class PlayerPhysics : BaseObject
     #region Player Update
     private void Update()
     {
+        #region Stage Music
         if (!SuperForm && Invincibility == 0 && !SpeedSneakers && !(PlayerAction == new ObjectState(Action09_Die) || PlayerAction == new ObjectState(Action10_Drown)) &&
              MusicController.Playing != "Stage" && !(MusicController.Playing == "1-UP" || MusicController.Playing == "Drowning" || MusicController.Playing == "Clear"))
         {
             MusicController.ToPlay = "Stage";
         }
-    }
-    #endregion
-    #region Player Update (Fixed)
-    private void FixedUpdate()
-    {
-        #region Player Input
-        int inpDir = (PlayerInput.KeyRight ? 1 : 0) - (PlayerInput.KeyLeft ? 1 : 0);
         #endregion
         #region Player Physics
         Acceleration = 0.046875f;
@@ -219,6 +213,14 @@ public class PlayerPhysics : BaseObject
             JumpForce -= 3f;
             JumpReleaseForce /= 2f;
         }
+        #endregion
+    }
+    #endregion
+    #region Player Update (Fixed)
+    private void FixedUpdate()
+    {
+        #region Player Input
+        int inpDir = (PlayerInput.KeyRight ? 1 : 0) - (PlayerInput.KeyLeft ? 1 : 0);
         #endregion
         #region Player Control (Pre)
         #region Control (Pre)
