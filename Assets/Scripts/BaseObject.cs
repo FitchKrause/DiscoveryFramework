@@ -39,11 +39,9 @@ public class BaseObject : MonoBehaviour
     [HideInInspector] public float LandingSpeed;
     [HideInInspector] public int LandFrame;
     [HideInInspector] public string CurrentAnimation;
-
-    [Header("Object Transform Values")]
+    
     [HideInInspector] public float Angle;
-
-    [Header("Object Components")]
+    
     [HideInInspector] public Collider2D ColliderBody;
     [HideInInspector] public Collider2D ColliderFloor;
     [HideInInspector] public Collider2D ColliderCeiling;
@@ -549,97 +547,4 @@ public class BaseObject : MonoBehaviour
             return default(RaycastHit2D);
         }
     }
-
-    /*public Collider2D OverlapBox(Vector2 offset, Vector2 size, bool allowPlatforms = false)
-    {
-#if UNITY_2019_1_OR_NEWER
-        List<Collider2D> results = new List<Collider2D>();
-#else
-        Collider2D[] results = new Collider2D[16];
-#endif
-
-        Vector2 pos = Quaternion.Euler(0f, 0f, GroundAngle) * offset;
-        pos.x += XPosition;
-        pos.y += YPosition;
-
-        int num = -1;
-
-#if UNITY_2019_1_OR_NEWER
-        for (int i = 0; i < Physics2D.OverlapBox(pos, size, GroundAngle, filter, results); i++)
-#else
-        for (int i = 0; i < Physics2D.OverlapBoxNonAlloc(pos, size, GroundAngle, results, CollisionLayer); i++)
-#endif
-        {
-            if (results[i] == ColliderBody) continue;
-
-            if (results[i].CompareTag("Solid") || allowPlatforms &&
-                results[i].CompareTag("Platform") && YSpeed <= 0f && (YPosition - HeightRadius) > (results[i].transform.position.y - 4f))
-            {
-                num = i;
-                break;
-            }
-            else
-            {
-                continue;
-            }
-        }
-
-        Vector2 topLeft = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(-size.x, size.y) / 2f);
-        Vector2 topRight = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(size.x, size.y) / 2f);
-        Vector2 bottomRight = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(size.x, -size.y) / 2f);
-        Vector2 bottomLeft = Quaternion.Euler(0f, 0f, GroundAngle) * (new Vector2(-size.x, -size.y) / 2f);
-
-        Debug.DrawLine(pos + topLeft, pos + topRight, Color.magenta);
-        Debug.DrawLine(pos + topRight, pos + bottomRight, Color.magenta);
-        Debug.DrawLine(pos + bottomRight, pos + bottomLeft, Color.magenta);
-        Debug.DrawLine(pos + bottomLeft, pos + topLeft, Color.magenta);
-
-        if (num > -1)
-        {
-            return results[num];
-        }
-
-        return null;
-    }
-
-    public Collider2D OverlapPoint(Vector2 offset, bool allowPlatforms = false)
-    {
-#if UNITY_2019_1_OR_NEWER
-        List<Collider2D> results = new List<Collider2D>();
-#else
-        Collider2D[] results = new Collider2D[16];
-#endif
-
-        Vector2 pos = Quaternion.Euler(0f, 0f, GroundAngle) * offset;
-        pos.x += XPosition;
-        pos.y += YPosition;
-        int num = -1;
-
-#if UNITY_2019_1_OR_NEWER
-        for (int i = 0; i < Physics2D.OverlapPoint(pos, filter, results); i++)
-#else
-        for (int i = 0; i < Physics2D.OverlapPointNonAlloc(pos, results, CollisionLayer); i++)
-#endif
-        {
-            if (results[i] == ColliderBody) continue;
-
-            if (results[i].CompareTag("Solid") || allowPlatforms &&
-                results[i].CompareTag("Platform") && YSpeed <= 0f && (YPosition - HeightRadius) > (results[i].transform.position.y - 4f))
-            {
-                num = i;
-                break;
-            }
-            else
-            {
-                continue;
-            }
-        }
-
-        if (num > -1)
-        {
-            return results[num];
-        }
-
-        return null;
-    }*/
 }
